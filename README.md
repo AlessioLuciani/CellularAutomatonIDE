@@ -7,6 +7,3 @@ INTERFACCIA EDITOR
 
 -Definiamo una lista di colori e un'interfaccia per aggiungerli.
 
-
-ssssssdddddd
-ciao
