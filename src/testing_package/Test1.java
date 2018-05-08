@@ -1,13 +1,16 @@
 package testing_package;
 
 import grid.Graph;
+import grid.GridConfCreator;
 import rules.*;
 
 import java.awt.*;
 
+import javax.swing.JFrame;
+
 public class Test1 {
     public static void main(String [] args) {
-        BaseExpressionNode1 A = new BaseExpressionNode1(2, 3, Color.BLUE);
+        /*BaseExpressionNode1 A = new BaseExpressionNode1(2, 3, Color.BLUE);
         BaseExpressionNode2 B = new BaseExpressionNode2(1,  Color.RED);
         BaseExpressionNode2 C = new BaseExpressionNode2(0,  Color.BLUE);
         BaseExpressionNode1 D = new BaseExpressionNode1(1, 1, Color.RED);
@@ -41,6 +44,14 @@ public class Test1 {
         System.out.println(andp.evaluate(graph, 1));
         System.out.println(andp.evaluate(graph, 2));
         System.out.println(andp.evaluate(graph, 3));
-        System.out.println(andp.evaluate(graph, 4));
+        System.out.println(andp.evaluate(graph, 4));*/
+    	
+    	JFrame frame = new JFrame();
+    	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    	GridConfCreator gcc = new GridConfCreator();
+    	frame.add(gcc);
+    	frame.setBounds(10, 10, 300, 300);
+    	frame.setVisible(true);
+    	System.out.println(gcc.getGridConfiguration());
     }
 }
