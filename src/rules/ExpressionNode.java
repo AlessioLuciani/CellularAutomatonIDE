@@ -1,6 +1,6 @@
 package rules;
 
-import graph.Graph;
+import grid.Graph;
 
 /**nodo genenerico dell'albero rappresentante un'espressione */
 public abstract class ExpressionNode {

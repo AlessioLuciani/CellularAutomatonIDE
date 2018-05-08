@@ -1,6 +1,6 @@
 package testing_package;
 
-import graph.Cell;
+import grid.Cell;
 
 import java.awt.*;
 import java.util.ArrayList;

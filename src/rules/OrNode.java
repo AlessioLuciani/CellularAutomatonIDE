@@ -1,6 +1,6 @@
 package rules;
 
-import graph.Graph;
+import grid.Graph;
 
 /**nodo rappresentante operatore logico or*/
 public class OrNode extends ExpressionNode {

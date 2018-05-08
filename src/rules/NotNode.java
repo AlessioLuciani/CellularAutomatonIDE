@@ -1,6 +1,6 @@
 package rules;
 
-import graph.Graph;
+import grid.Graph;
 
 /**nodo rappresentante operatore logico not*/
 public class NotNode extends ExpressionNode {

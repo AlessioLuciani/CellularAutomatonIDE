@@ -1,6 +1,6 @@
 package rules;
 
-import graph.Graph;
+import grid.Graph;
 
 import java.awt.Color;
 

@@ -1,4 +1,4 @@
-package graph;
+package grid;
 
 import java.util.ArrayList;
 

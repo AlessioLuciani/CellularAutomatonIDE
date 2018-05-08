@@ -1,6 +1,6 @@
 package testing_package;
 
-import graph.Graph;
+import grid.Graph;
 import rules.*;
 
 import java.awt.*;

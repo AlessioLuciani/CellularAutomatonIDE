@@ -1,6 +1,6 @@
 package rules;
 
-import graph.Graph;
+import grid.Graph;
 
 /**nodo rappresentante operatore logico and*/
 public class AndNode extends ExpressionNode {
