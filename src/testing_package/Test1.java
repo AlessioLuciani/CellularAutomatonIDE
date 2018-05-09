@@ -46,12 +46,12 @@ public class Test1 {
         System.out.println(andp.evaluate(graph, 3));
         System.out.println(andp.evaluate(graph, 4));*/
     	
-    	JFrame frame = new JFrame();
+    	/*JFrame frame = new JFrame();
     	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     	GridConfCreator gcc = new GridConfCreator();
     	frame.add(gcc);
     	frame.setBounds(10, 10, 300, 300);
     	frame.setVisible(true);
-    	System.out.println(gcc.getGridConfiguration());
+    	System.out.println(gcc.getGridConfiguration());*/
     }
 }
