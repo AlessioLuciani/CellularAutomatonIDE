@@ -10,6 +10,7 @@ import javax.swing.JTextField;
 import rules.BaseExpressionNode1;
 import rules.BaseExpressionNode2;
 import rules.ExpressionNode;
+import util.IntegerDocument;
 
 public class EditExpressionPanel extends JPanel {
 
@@ -39,7 +40,9 @@ public class EditExpressionPanel extends JPanel {
 		Type = "A";
 		colore = new JTextField();
 		start = new JTextField();
+		start.setDocument(new IntegerDocument());
 		end = new JTextField();
+		end.setDocument(new IntegerDocument());
 		add(new JLabel(TYPE_A[0]));
 		add(colore);
 		add(new JLabel(TYPE_A[1]));
@@ -52,6 +55,7 @@ public class EditExpressionPanel extends JPanel {
 	public EditExpressionPanel formatB() {
 		Type = "B";
 		n_vicini = new JTextField();
+		n_vicini.setDocument(new IntegerDocument());
 		colore = new JTextField();
 		add(new JLabel(TYPE_B[0]));
 		add(n_vicini);
