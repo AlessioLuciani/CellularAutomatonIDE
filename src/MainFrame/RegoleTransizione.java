@@ -1,4 +1,5 @@
 package MainFrame;
+
 import javax.swing.JPanel;
 
 import RulesCreatorWindow.CreateExpressionWindow;
@@ -14,7 +15,6 @@ import java.awt.Dimension;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
-import java.util.Collections;
 
 
 public class RegoleTransizione extends JPanel{
