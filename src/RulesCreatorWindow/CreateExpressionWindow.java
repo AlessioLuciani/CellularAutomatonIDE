@@ -59,7 +59,7 @@ public class CreateExpressionWindow extends JFrame {
 		btnOR = new JButton("OR");btnOR.setName("btnOR");
 		btnNOT = new JButton("NOT");btnNOT.setName("btnNOT");
 		btn_add = new JButton("+");btn_add.setName("btn_add");
-		btnTHEN = new JButton("THEN");btnTHEN.setName("btnTHEN");btnTHEN.setEnabled(false);
+		btnTHEN = new JButton("THEN");btnTHEN.setName("btnTHEN");check_then();
 		flag_then = false;
 		tree = new ArrayList<ExpressionNode>();
 		
@@ -104,11 +104,8 @@ public class CreateExpressionWindow extends JFrame {
 			public void mouseClicked(MouseEvent arg0) {
 				flag_then = true;
 				btnTHEN.setEnabled(false);
-				for (Component component : ButtonPanel.getComponents()) {
-					if ((component instanceof JButton)&&(!(component.getName().equals("btnTHEN")))&&(!(component.getName().equals("btn_add")))) {
-						component.setEnabled(false);
-					}
-				}
+				btn_add.setText("Save");
+				disable_buttons();
 				edit_panel = new EditExpressionPanel().formatThen();
 				BottomGroupPanel.remove(0);
 				BottomGroupPanel.add(edit_panel, 0);
@@ -157,6 +154,15 @@ public class CreateExpressionWindow extends JFrame {
 		add(BottomGroupPanel,BorderLayout.SOUTH);
 	}
 	
+	//disabilita tutti i pulsanti tranne btnTHEN e btn_add
+	private void disable_buttons(){
+		for (Component component : ButtonPanel.getComponents()) {
+			component.setEnabled(!((component instanceof JButton)
+					&&(!(component.getName().equals("btnTHEN")))
+					&&(!(component.getName().equals("btn_add")))
+					));
+			}
+		}
 	
 	//concatena tutte le righe selezionate secondo l'operatore "operand"
 	private void concatenate(String operand) {
