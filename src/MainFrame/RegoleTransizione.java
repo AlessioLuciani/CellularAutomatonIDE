@@ -1,6 +1,9 @@
 package MainFrame;
 import javax.swing.JPanel;
 
+import RulesCreatorWindow.CreateExpressionWindow;
+import rules.Rule;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
@@ -10,6 +13,7 @@ import java.awt.Dimension;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import java.util.Collections;
 
 
@@ -17,8 +21,12 @@ public class RegoleTransizione extends JPanel{
 
 	private static final long serialVersionUID = 1L;
 
+	ArrayList<Rule> forest;//lista degli alberi delle regole
+	
 	public RegoleTransizione() {
 		setLayout(null);
+		
+		forest = new ArrayList<Rule>();
 		
 		//Istanza che permettere di ottenere informazioni relative al monitor (Es: Width, Height, X, Y..)
 			Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -47,10 +55,9 @@ public class RegoleTransizione extends JPanel{
 					 * Aggiunta Del Codice di Creazione Regole
 					 * 
 					 * */
-					JFrame prova = new ProvaCreaRegole(list);
+					JFrame prova = new CreateExpressionWindow(100, 100, 450, 300, list, forest);
 					prova.pack();
 					prova.setVisible(true);
-					prova.setBounds(100, 100, 450, 300);
 					
 				}
 			});
@@ -58,9 +65,14 @@ public class RegoleTransizione extends JPanel{
 		// Rimozione regole gia' inserite
 			btnRemove.addMouseListener(new MouseAdapter() {		
 				public void mouseClicked(MouseEvent e) {
-					for (String el : list.getSelectedItems() ) {
-						list.remove(el);
+					int [] inds = list.getSelectedIndexes();
+					for(int i=inds.length-1; i>=0; i--) {
+						list.remove(inds[i]);
+						forest.remove(inds[i]);
 					}
+					/*for (String el : list.getSelectedItems() ) {
+						list.remove(el);
+					}*/
 					
 					// Dopo l'eliminaizione, seleziona tutte le righe restanti. In questo modo si deselezionano
 					for (int i = 0; i < list.getItemCount(); i++) {
@@ -68,5 +80,9 @@ public class RegoleTransizione extends JPanel{
 					}
 				}
 			});
+	}
+	
+	public ArrayList<Rule> getRuleTrees() {
+		return forest;
 	}
 }

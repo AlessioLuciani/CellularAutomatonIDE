@@ -15,8 +15,8 @@ public class BaseExpressionNode1 extends ExpressionNode {
 
     /**parametri: a <= #num vicini <= b t.c. colore = c*/
     public BaseExpressionNode1(int a, int b, Color c) {
-        num1 = a;
-        num2 = b;
+        num1 = Math.max(a, b);
+        num2 = Math.min(a, b);
         colr = c;
     }
 

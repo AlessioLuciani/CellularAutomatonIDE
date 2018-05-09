@@ -20,4 +20,9 @@ public class Rule {
     public Color getNewColor() {
     	return newColor;
     }
+    
+    @Override
+    public String toString() {
+    	return "SE "+root.toString()+" ALLORA nuovo colore = "+newColor;
+    }
 }

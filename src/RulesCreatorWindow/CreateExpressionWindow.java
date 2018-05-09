@@ -41,7 +41,10 @@ public class CreateExpressionWindow extends JFrame {
 	private ArrayList<ExpressionNode> tree;
 	Color thenColor;
 	
-	public CreateExpressionWindow(int x, int y, int width, int height) {
+	List listrules; //è la lista delle regole che va estesa
+	ArrayList<Rule> forestRules; //alberi delle regole
+	
+	public CreateExpressionWindow(int x, int y, int width, int height, List l, ArrayList<Rule> forestRules) {
 		super();
 		setBounds(x, y, width, height);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -62,6 +65,8 @@ public class CreateExpressionWindow extends JFrame {
 		btnTHEN = new JButton("THEN");btnTHEN.setName("btnTHEN");check_then();
 		flag_then = false;
 		tree = new ArrayList<ExpressionNode>();
+		listrules = l;
+		this.forestRules = forestRules;
 		
 		//Gestione click bottoni
 		btnA.addMouseListener(new MouseAdapter() {
@@ -117,9 +122,11 @@ public class CreateExpressionWindow extends JFrame {
 			public void mouseClicked(MouseEvent arg0) {
 				
 				if (edit_panel.getType()!=null) {
-					if (flag_then) {
+					if (flag_then) { //se entri qui, stai salvando la regola
 						//System.out.println(FinalString());
 						thenColor = edit_panel.getThenColor();
+						listrules.add(CreateExpressionWindow.this.getRule().toString());
+						forestRules.add(CreateExpressionWindow.this.getRule());
 						dispose();
 					}
 					else { 

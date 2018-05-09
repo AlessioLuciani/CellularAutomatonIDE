@@ -50,7 +50,7 @@ public class TestApp {
 	
 	}
 	private void initialize() {
-		frame = new CreateExpressionWindow(100, 100, 400, 400);
+		//frame = new CreateExpressionWindow(100, 100, 400, 400);
 	}
 }
 
