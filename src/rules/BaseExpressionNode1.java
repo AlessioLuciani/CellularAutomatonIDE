@@ -35,4 +35,9 @@ public class BaseExpressionNode1 extends ExpressionNode {
 
         return numGoodNeighs >= num1 && numGoodNeighs <= num2; //controllo se il numero di vicini nel range specificato
     }
+    
+    @Override
+    public String toString() {
+    	return "Il numero dei vicini di colore " + colr + " è compreso tra " + num1 +  " e " + num2;
+    }
 }

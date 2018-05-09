@@ -1,14 +1,23 @@
 package RulesCreatorWindow;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.List;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+
+import rules.AndNode;
+import rules.ExpressionNode;
+import rules.NotNode;
+import rules.OrNode;
+import rules.Rule;
 
 public class CreateExpressionWindow extends JFrame {
 
@@ -28,7 +37,9 @@ public class CreateExpressionWindow extends JFrame {
 	private EditExpressionPanel edit_panel = null;	//pannello a comparsa per inserire parametri
 	private JPanel BottomGroupPanel ;
 	private boolean flag_then;
-	private String FinalExpression;
+	
+	private ArrayList<ExpressionNode> tree;
+	Color thenColor;
 	
 	public CreateExpressionWindow(int x, int y, int width, int height) {
 		super();
@@ -50,6 +61,7 @@ public class CreateExpressionWindow extends JFrame {
 		btn_add = new JButton("+");btn_add.setName("btn_add");
 		btnTHEN = new JButton("THEN");btnTHEN.setName("btnTHEN");btnTHEN.setEnabled(false);
 		flag_then = false;
+		tree = new ArrayList<ExpressionNode>();
 		
 		//Gestione click bottoni
 		btnA.addMouseListener(new MouseAdapter() {
@@ -108,8 +120,19 @@ public class CreateExpressionWindow extends JFrame {
 			public void mouseClicked(MouseEvent arg0) {
 				
 				if (edit_panel.getType()!=null) {
-					if (flag_then) {System.out.println(FinalString());dispose();}
-					else exp_list.add(edit_panel.create_String());
+					if (flag_then) {
+						//System.out.println(FinalString());
+						thenColor = edit_panel.getThenColor();
+						dispose();
+					}
+					else { 
+						edit_panel.buildNode();
+						ExpressionNode e = edit_panel.getExpr();
+						tree.add(e);
+						exp_list.add(e.toString());
+						//exp_list.add(edit_panel.create_String());
+					}
+					
 				}
 				check_then();
 			}});
@@ -137,9 +160,42 @@ public class CreateExpressionWindow extends JFrame {
 	
 	//concatena tutte le righe selezionate secondo l'operatore "operand"
 	private void concatenate(String operand) {
-		String concat_string = "";
-		String[] items = exp_list.getSelectedItems();
-		if (items.length==1) {if (operand.equals("NOT")) concat_string += "NOT ("+ items[0]+")";}
+		//String concat_string = "";
+		//String[] items = exp_list.getSelectedItems();
+		int [] inds = exp_list.getSelectedIndexes();
+	
+		if(inds.length == 1) {
+			if(operand.equals("NOT")) {
+				ExpressionNode tmp = new NotNode(tree.get(inds[0]));
+				tree.set(inds[0], tmp);
+				exp_list.remove(inds[0]);
+				exp_list.add(tmp.toString(), 0);
+			}
+		} 
+		if(inds.length > 1) {
+			ExpressionNode act;
+			if(operand.equals("AND"))
+				act = new AndNode(tree.get(inds[0]), tree.get(inds[1]));
+			else
+				act = new OrNode(tree.get(inds[0]), tree.get(inds[1]));
+			
+			for(int i=2; i<inds.length; i++) {
+				ExpressionNode tmp;
+				if(operand.equals("AND"))
+					tmp = new AndNode(act, tree.get(inds[i]));
+				else
+					tmp = new OrNode(act, tree.get(inds[i]));
+				act = tmp;
+			}
+			
+			for(int i=inds.length-1; i>=0; i--) {
+				exp_list.remove(inds[i]);
+				tree.remove(inds[i]);
+			}
+			exp_list.add(act.toString());
+			tree.add(act);
+		}
+		/*if (items.length==1) {if (operand.equals("NOT")) concat_string += "NOT ("+ items[0]+")";}
 		else if (items.length>1) {
 			concat_string = "(";
 			for (int i = 0; i < items.length-1; i++) {
@@ -153,10 +209,14 @@ public class CreateExpressionWindow extends JFrame {
 		
 		exp_list.remove(items[items.length-1]);
 		exp_list.add(concat_string);
-		System.out.println(concat_string);
+		System.out.println(concat_string);*/
 	}
 	
-	private String FinalString() {return "SE "+exp_list.getItem(0)+" ALLORA "+edit_panel.create_String();}
+	public Rule getRule() {
+		return new Rule(tree.get(0), thenColor);
+	}
+	
+	//private String FinalString() {return "SE "+exp_list.getItem(0)+" ALLORA "+edit_panel.create_String();}
 	
 	private void check_then() {btnTHEN.setEnabled(exp_list.getItemCount()==1);}
 	

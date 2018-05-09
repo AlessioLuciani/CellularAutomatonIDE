@@ -1,9 +1,15 @@
 package RulesCreatorWindow;
 
+import java.awt.Color;
+
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+
+import rules.BaseExpressionNode1;
+import rules.BaseExpressionNode2;
+import rules.ExpressionNode;
 
 public class EditExpressionPanel extends JPanel {
 
@@ -14,12 +20,15 @@ public class EditExpressionPanel extends JPanel {
 	static private final String[] TYPE_B = {"Il ","° vicino è di colore "};
 	static private final String[] TYPE_THEN = {"La cella assume il colore "};
 	
-	static final private int height = 10;
+	//static final private int height = 10;
 	private JTextField colore;
 	private JTextField start;
 	private JTextField end;
 	private JTextField n_vicini;
 	private String Type = null;
+	
+	private ExpressionNode expr;
+	private Color thenColor;
 	
 	
 	public EditExpressionPanel() {
@@ -57,6 +66,32 @@ public class EditExpressionPanel extends JPanel {
 		add(new JLabel(TYPE_THEN[0]));
 		add(colore);
 		return this;	
+	}
+	
+	public ExpressionNode getExpr() {
+		return expr;
+	}
+	
+	public Color getThenColor() {
+		return thenColor;
+	}
+	
+	/**crea campi expr/thenColor*/
+	public void buildNode() {
+		if(Type.equals("A")) {
+			int a = Integer.parseInt(start.getText());
+			int b = Integer.parseInt(end.getText());
+			Color c = null; //TODO: metti colore!
+			expr = new BaseExpressionNode1(a, b, c);
+		}
+		if(Type.equals("B")) {
+			int k = Integer.parseInt(n_vicini.getText());
+			Color c = null; //TODO: metti colore!
+			expr = new BaseExpressionNode2(k, c);
+		}
+		if(Type.equals("THEN")) {
+			thenColor = null; //TODO: metti colore!
+		}
 	}
 	
 	public String create_String() {

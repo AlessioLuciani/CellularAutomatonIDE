@@ -15,4 +15,9 @@ public class AndNode extends ExpressionNode {
     public boolean evaluate(Graph graph, int cell) {
         return children[0].evaluate(graph, cell) && children[1].evaluate(graph, cell);
     }
+    
+    @Override
+    public String toString() {
+    	return "(" + children[0].toString()+" AND "+children[1].toString()+")";
+    }
 }

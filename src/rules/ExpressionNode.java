@@ -15,8 +15,8 @@ public abstract class ExpressionNode {
     @Override
     public String toString() {
         String res = "";
-        for(ExpressionNode child : children)
-            res += child.toString();
+        //for(ExpressionNode child : children)
+        //    res += child.toString();
         return res;
     }
 }

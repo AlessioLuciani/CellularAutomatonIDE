@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 import javax.swing.JTextField;
 import RulesCreatorWindow.CreateExpressionWindow;
 import RulesCreatorWindow.EditExpressionPanel;
+import rules.Rule;
 
 public class TestApp {
 
@@ -46,13 +47,10 @@ public class TestApp {
 		
 		EditExpressionPanel t = new EditExpressionPanel().formatA();
 		frame.getContentPane().add(t);
-		
+	
 	}
 	private void initialize() {
 		frame = new CreateExpressionWindow(100, 100, 400, 400);
-		
-		
-		
 	}
 }
 
