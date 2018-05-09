@@ -12,4 +12,17 @@ public class Rule {
         this.root = root;
         newColor = newState;
     }
+    
+    public ExpressionNode getRoot() {
+    	return root;
+    }
+    
+    public Color getNewColor() {
+    	return newColor;
+    }
+    
+    @Override
+    public String toString() {
+    	return "SE "+root.toString()+" ALLORA nuovo colore = "+newColor;
+    }
 }

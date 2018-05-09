@@ -15,4 +15,9 @@ public class OrNode extends ExpressionNode {
     public boolean evaluate(Graph graph, int cell) {
         return children[0].evaluate(graph, cell) || children[1].evaluate(graph, cell);
     }
+    
+    @Override
+    public String toString() {
+    	return "(" + children[0].toString()+" OR "+children[1].toString()+")";
+    }
 }

@@ -14,4 +14,9 @@ public class NotNode extends ExpressionNode {
     public boolean evaluate(Graph graph, int cell) {
         return !children[0].evaluate(graph, cell);
     }
+    
+    @Override
+    public String toString() {
+    	return "(NOT "+children[0].toString()+")";
+    }
 }

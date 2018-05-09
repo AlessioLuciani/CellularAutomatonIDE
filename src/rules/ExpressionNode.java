@@ -10,13 +10,4 @@ public abstract class ExpressionNode {
      * per una certa cella su un certo grafo (cioè griglia)
      * */
     protected abstract boolean evaluate(Graph graph, int cell);
-
-    /**fornisce una stringa che descrive l'albero dell'espressione*/ //TODO: ancora non fa niente
-    @Override
-    public String toString() {
-        String res = "";
-        for(ExpressionNode child : children)
-            res += child.toString();
-        return res;
-    }
 }

@@ -30,4 +30,9 @@ public class BaseExpressionNode2 extends ExpressionNode {
         int indn = graph.getCell(cell).getKthNeighbor(indChild);//controlla condizione dell'espressione
         return graph.getCell(indn).getState().equals(colr);
     }
+    
+    @Override
+    public String toString() {
+    	return "Il " + indChild + "° vicino è di colore " + colr;
+    }
 }

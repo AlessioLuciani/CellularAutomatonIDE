@@ -15,8 +15,8 @@ public class BaseExpressionNode1 extends ExpressionNode {
 
     /**parametri: a <= #num vicini <= b t.c. colore = c*/
     public BaseExpressionNode1(int a, int b, Color c) {
-        num1 = a;
-        num2 = b;
+        num1 = Math.max(a, b);
+        num2 = Math.min(a, b);
         colr = c;
     }
 
@@ -34,5 +34,10 @@ public class BaseExpressionNode1 extends ExpressionNode {
         }
 
         return numGoodNeighs >= num1 && numGoodNeighs <= num2; //controllo se il numero di vicini nel range specificato
+    }
+    
+    @Override
+    public String toString() {
+    	return "Il numero dei vicini di colore " + colr + " è compreso tra " + num1 +  " e " + num2;
     }
 }
