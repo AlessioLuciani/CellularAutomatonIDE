@@ -1,5 +1,7 @@
 package grid;
 
+import java.awt.Color;
+import java.awt.Graphics;
 import java.util.ArrayList;
 
 /**grafo rappresentare una griglia*/
@@ -21,5 +23,16 @@ public class Graph {
     public Cell getCell(int cell) {
         if(cell <= 0 || cell > nodes.size()) return null;
         return nodes.get(cell-1);
+    }
+    
+    /**stampa grafo sulla graphics passata (con eventuale colore del bordo celle, null per non avere bordo)*/
+    public void drawGraph(Graphics g, Color borderColor) {
+    	for(Cell c : nodes)
+    		c.render(g, borderColor);
+    }
+    
+    /**numero nodi nel grafo*/
+    public int getNumNodes() {
+    	return nodes.size();
     }
 }

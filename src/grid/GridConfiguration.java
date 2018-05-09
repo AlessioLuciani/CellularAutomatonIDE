@@ -14,6 +14,16 @@ public class GridConfiguration {
 		numCellsY = ny;
 	}
 	
+	/**quanto deve essere larga un'immagine per contenete tutta la griglia?*/
+	public int getBufferImageWidth() {
+		return len * numCellsX;
+	}
+	
+	/**quanto deve essere alta un'immagine per contenere tutta la griglia?*/
+	public int getBufferImageHeight() {
+		return len * numCellsY;
+	}
+	
 	@Override
 	public String toString() {
 		return form.name()+" "+len+" "+numCellsX+" "+numCellsY;

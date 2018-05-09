@@ -27,4 +27,10 @@ public class ListCell extends Cell {
     public int getNumNeighbors() {
         return ngs.size();
     }
+
+	@Override
+	public void render(Graphics g, Color borderColor) {
+		// TODO Auto-generated method stub
+		
+	}
 }
