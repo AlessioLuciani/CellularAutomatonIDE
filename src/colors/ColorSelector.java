@@ -3,15 +3,17 @@ package colors;
 
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
-
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-
+import javax.swing.JColorChooser;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+import java.awt.event.WindowEvent;
 
 /**
  * JPanel utilizzato per la scelta dei colori.
@@ -19,8 +21,10 @@ import java.awt.event.ActionListener;
  *                                                         WORK IN PROGRESS!!
  */
 
-public class ColorSelector extends JPanel {
-
+public class ColorSelector extends JFrame {
+	
+	private Color chosenColor;
+	
 	private JButton dotPink;
 	private JButton dotRed;
 	private JButton dotOrange;
@@ -28,12 +32,15 @@ public class ColorSelector extends JPanel {
 	private JButton dotBlack;
 	private JButton dotGreen;
 	private JButton dotBlue;
-	private JButton dotCyan;
+	private JButton plus;
 
 	public ColorSelector() {
 		
 		// Layout generale
 		setLayout(new GridLayout(3, 1, 0, 0));
+		
+		setSize(250, 300);
+		setResizable(false);
 		
 		// Pannelli spaziatori
 		JPanel upperText = new JPanel();
@@ -46,7 +53,7 @@ public class ColorSelector extends JPanel {
 		panel_2.setBorder(BorderFactory.createEmptyBorder());
 		colorsFirstRow.setBorder(BorderFactory.createEmptyBorder());
 		colorsSecondRow.setBorder(BorderFactory.createEmptyBorder());
-		upperText.setLayout(new GridLayout(3, 3, 0, 0));
+		upperText.setLayout(new GridLayout(3, 3, 80, 0));
 		colorsFirstRow.setLayout(new GridLayout(1, 4, 0, 0));
 		colorsSecondRow.setLayout(new GridLayout(1, 4, 0, 0));
 		add(upperText);
@@ -63,16 +70,31 @@ public class ColorSelector extends JPanel {
 		txtrSelCol.setOpaque(false);
 		
 		
-		// Colori
+		// Button OK
+		JButton btnOk = new JButton();
+		btnOk.setText("OK");
+		btnOk.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				closeWindow();
+			}
+			
+		});
+		panel_2.add(btnOk);
+		
+		
+		// Pulsanti colori
 		
 		dotPink = new JButton(new ImageIcon(getClass().getResource("dot_pink.png")));
 		dotPink.setBorder(BorderFactory.createEmptyBorder());
 		dotPink.addActionListener(new ActionListener() {
 			@Override
 		    public void actionPerformed(ActionEvent e) {
-		        //your actions
+		        
 				resetAllColors();
 				dotPink.setIcon(new ImageIcon(getClass().getResource("dot_checked_pink.png")));
+				chosenColor = new Color(229, 73, 159);
 		    }
 		});
 		colorsFirstRow.add(dotPink);
@@ -82,9 +104,9 @@ public class ColorSelector extends JPanel {
 		dotRed.addActionListener(new ActionListener() {
 			@Override
 		    public void actionPerformed(ActionEvent e) {
-		        //your actions
 				resetAllColors();
 				dotRed.setIcon(new ImageIcon(getClass().getResource("dot_checked_red.png")));
+				chosenColor = new Color(206, 16, 45);
 		    }
 		});
 		colorsFirstRow.add(dotRed);
@@ -94,9 +116,9 @@ public class ColorSelector extends JPanel {
 		dotOrange.addActionListener(new ActionListener() {
 			@Override
 		    public void actionPerformed(ActionEvent e) {
-		        //your actions
-				resetAllColors();
+		        				resetAllColors();
 				dotOrange.setIcon(new ImageIcon(getClass().getResource("dot_checked_orange.png")));
+				chosenColor = new Color(224, 90, 38);
 		    }
 		});
 		colorsFirstRow.add(dotOrange);
@@ -106,9 +128,9 @@ public class ColorSelector extends JPanel {
 		dotYellow.addActionListener(new ActionListener() {
 			@Override
 		    public void actionPerformed(ActionEvent e) {
-		        //your actions
-				resetAllColors();
+		        				resetAllColors();
 				dotYellow.setIcon(new ImageIcon(getClass().getResource("dot_checked_yellow.png")));
+				chosenColor = new Color(255, 255, 40);
 		    }
 		});
 		colorsFirstRow.add(dotYellow);
@@ -118,9 +140,9 @@ public class ColorSelector extends JPanel {
 		dotBlack.addActionListener(new ActionListener() {
 			@Override
 		    public void actionPerformed(ActionEvent e) {
-		        //your actions
-				resetAllColors();
+		        				resetAllColors();
 				dotBlack.setIcon(new ImageIcon(getClass().getResource("dot_checked_black.png")));
+				chosenColor = new Color(0, 0, 0);
 		    }
 		});
 		colorsSecondRow.add(dotBlack);
@@ -130,9 +152,9 @@ public class ColorSelector extends JPanel {
 		dotGreen.addActionListener(new ActionListener() {
 			@Override
 		    public void actionPerformed(ActionEvent e) {
-		        //your actions
-				resetAllColors();
+		        				resetAllColors();
 				dotGreen.setIcon(new ImageIcon(getClass().getResource("dot_checked_green.png")));
+				chosenColor = new Color(15, 198, 58);
 		    }
 		});
 		colorsSecondRow.add(dotGreen);
@@ -142,28 +164,72 @@ public class ColorSelector extends JPanel {
 		dotBlue.addActionListener(new ActionListener() {
 			@Override
 		    public void actionPerformed(ActionEvent e) {
-		        //your actions
-				resetAllColors();
+		        				resetAllColors();
 				dotBlue.setIcon(new ImageIcon(getClass().getResource("dot_checked_blue.png")));
+				chosenColor = new Color(62, 171, 239);
 		    }
 		});
 		colorsSecondRow.add(dotBlue);
 		
-		dotCyan = new JButton(new ImageIcon(getClass().getResource("dot_cyan.png")));
-		dotCyan.setBorder(BorderFactory.createEmptyBorder());
-		dotCyan.addActionListener(new ActionListener() {
+		// Pulsante più
+		
+		
+		plus = new JButton(new ImageIcon(getClass().getResource("plus.png")));
+		plus.setBorder(BorderFactory.createEmptyBorder());
+		plus.addActionListener(new ActionListener() {
 			@Override
 		    public void actionPerformed(ActionEvent e) {
-		        //your actions
-				resetAllColors();
-				dotCyan.setIcon(new ImageIcon(getClass().getResource("dot_checked_cyan.png")));
+		        				resetAllColors();
+		        				
+		        // Paletta colori complessa
+		        			
+				
+				final JColorChooser chooser = new JColorChooser();
+			    ActionListener okListener = new ActionListener() {
+			      public void actionPerformed(ActionEvent evt) {
+			    	  
+			    	// Aggiungi colore scelto
+			        chosenColor = chooser.getColor();
+			        
+			        closeWindow();
+			      }
+			    };
+	
+			    ActionListener cancelListener = new ActionListener() {
+			      public void actionPerformed(ActionEvent evt) {
+			        
+			      }
+			    };
+	
+			    boolean modal = false;
+	
+			    JDialog dialog = JColorChooser.createDialog(new JPanel(), "Seleziona un colore", modal, chooser, okListener,
+			        cancelListener);
+	
+			    
+			    dialog.setVisible(true);
 		    }
 		});
-		colorsSecondRow.add(dotCyan);
+		colorsSecondRow.add(plus);
 
 	}
 	
+
+
+
+	/**
+	 * Restituisce il colore che è stato scelto.
+	 * @return
+	 */
+	public Color getChosenColor() {
+		return chosenColor;
+	}
+	
+	/**
+	 * Rimuove il colore che è stato selezionato al momento.
+	 */
 	private void resetAllColors() {
+		chosenColor = null;
 		dotPink.setIcon(new ImageIcon(getClass().getResource("dot_pink.png")));
 		dotRed.setIcon(new ImageIcon(getClass().getResource("dot_red.png")));
 		dotOrange.setIcon(new ImageIcon(getClass().getResource("dot_orange.png")));
@@ -171,7 +237,12 @@ public class ColorSelector extends JPanel {
 		dotBlack.setIcon(new ImageIcon(getClass().getResource("dot_black.png")));
 		dotGreen.setIcon(new ImageIcon(getClass().getResource("dot_green.png")));
 		dotBlue.setIcon(new ImageIcon(getClass().getResource("dot_blue.png")));
-		dotCyan.setIcon(new ImageIcon(getClass().getResource("dot_cyan.png")));
 	}
-
+	
+	/**
+	 * Chiude la finestra attualmente aperta.
+	 */
+	private void closeWindow() {
+		dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+	}
 }
