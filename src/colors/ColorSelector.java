@@ -14,6 +14,8 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * JPanel utilizzato per la scelta dei colori.
@@ -33,6 +35,8 @@ public class ColorSelector extends JFrame {
 	private JButton dotGreen;
 	private JButton dotBlue;
 	private JButton plus;
+	
+    
 
 	public ColorSelector() {
 		
@@ -41,6 +45,7 @@ public class ColorSelector extends JFrame {
 		
 		setSize(250, 300);
 		setResizable(false);
+		
 		
 		// Pannelli spaziatori
 		JPanel upperText = new JPanel();
@@ -61,7 +66,7 @@ public class ColorSelector extends JFrame {
 		upperText.add(panel_2);
 		add(colorsFirstRow);
 		add(colorsSecondRow);
-		
+	
 		// Etichetta TextArea 
 		JTextArea txtrSelCol = new JTextArea();
 		panel_2.add(txtrSelCol);
@@ -184,7 +189,7 @@ public class ColorSelector extends JFrame {
 		        // Paletta colori complessa
 		        			
 				
-				final JColorChooser chooser = new JColorChooser();
+				final MyChooser chooser = new MyChooser(new ArrayList<>()) ;
 			    ActionListener okListener = new ActionListener() {
 			      public void actionPerformed(ActionEvent evt) {
 			    	  
