@@ -21,14 +21,14 @@ import java.awt.event.ActionListener;
 
 public class ColorSelector extends JPanel {
 
-	JButton dotPink;
-	JButton dotRed;
-	JButton dotOrange;
-	JButton dotYellow;
-	JButton dotBlack;
-	JButton dotGreen;
-	JButton dotBlue;
-	JButton dotCyan;
+	private JButton dotPink;
+	private JButton dotRed;
+	private JButton dotOrange;
+	private JButton dotYellow;
+	private JButton dotBlack;
+	private JButton dotGreen;
+	private JButton dotBlue;
+	private JButton dotCyan;
 
 	public ColorSelector() {
 		
