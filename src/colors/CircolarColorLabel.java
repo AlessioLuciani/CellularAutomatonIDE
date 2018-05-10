@@ -3,9 +3,15 @@ package colors;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.image.ImageObserver;
+
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+
+
 
 
 
@@ -16,15 +22,34 @@ public class CircolarColorLabel extends JLabel {
 	 */
 	private static final long serialVersionUID = 1L;
 	private Color color;
+	private int dim;
 	private boolean isClicked;
+	private boolean Entered;
+	private boolean Exited;
+	private static double opacity = 0.50; //percentuale di opacità
 	
-	public CircolarColorLabel(Color color) {
+	public CircolarColorLabel(Color color,int dim) {
 		this.color = color;
 		isClicked = false;
-		setSize(30, 30);
-		setMaximumSize(new Dimension(30, 30));
-		setMinimumSize(new Dimension(30, 30));
-		setBounds(0, 0, 50, 50);
+		Exited = false;
+		Entered = false;
+		setSize(dim,dim);
+		this.dim = dim;
+		setMaximumSize(new Dimension(dim, dim));
+		setMinimumSize(new Dimension(dim, dim));
+		setBounds(0, 0, dim, dim);
+	
+		
+	}
+	
+	public CircolarColorLabel(Color color,int x, int y,int dim) {
+		this.color = color;
+		isClicked = false;
+		setSize(dim, dim);
+		this.dim = dim;
+		setMaximumSize(new Dimension(dim, dim));
+		setMinimumSize(new Dimension(dim,dim));
+		setBounds(x, y, dim, dim);
 		this.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
@@ -39,26 +64,12 @@ public class CircolarColorLabel extends JLabel {
 		
 	}
 	
-	public CircolarColorLabel(Color color,int x, int y) {
-		this.color = color;
-		isClicked = false;
-		setSize(30, 30);
-		setMaximumSize(new Dimension(30, 30));
-		setMinimumSize(new Dimension(30, 30));
-		setBounds(x, y, 50, 50);
-		this.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				CircolarColorLabel label = (CircolarColorLabel)arg0.getSource();
-				
-				isClicked = !isClicked;
-				label.repaint();
-				System.out.println("Clicked "+isClicked);
-				
-			}
-		});
-		
+	public void switchClick() {
+		isClicked = !isClicked;
+		repaint();		
 	}
+	
+	public void setClick(boolean value) {this.isClicked = value;}
 	
 	@Override
 	public void paint(Graphics arg0) {
@@ -76,25 +87,21 @@ public class CircolarColorLabel extends JLabel {
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		
-		g.setColor(color);
-		//forma tonda
-		//g.fillOval(0, 0, g.getClipBounds().width, g.getClipBounds().height);
+		g.setColor(new Color(color.getRed(), color.getGreen(), color.getBlue(),(int)(color.getAlpha()*opacity) ));
 		
-		//forma quadrata smussata
-		g.fillRoundRect(0, 0, g.getClipBounds().width, g.getClipBounds().height, 10, 10);
-		if (isClicked) {
+		if (isClicked) {g.setColor(new Color(color.getRed(), color.getGreen(), color.getBlue(),255 ));}
+		
+		else { 
+			if (Entered) {g.setColor(new Color(color.getRed(), color.getGreen(), color.getBlue(),255));}
+			if (Exited) {g.setColor(new Color(color.getRed(), color.getGreen(), color.getBlue(),(int)(color.getAlpha()*opacity) ));}
 			
-			//bordo alla selezione
-			g.setColor(Color.RED);
-			//g.drawOval(0, 0, g.getClipBounds().width, g.getClipBounds().height);
-			g.drawRoundRect(0, 0, g.getClipBounds().width, g.getClipBounds().height, 15, 15);
-			
-			//X alla selezione
-			//g.drawLine(0, 0,g.getClipBounds().width , g.getClipBounds().height);
-			//g.drawLine(g.getClipBounds().width, 0, 0, g.getClipBounds().height);
 		}
-		
+			
+		g.fillOval(0, 0, g.getClipBounds().width, g.getClipBounds().height);
 		
 	}
+
+	public void setEntered(boolean b) {Entered=b;}
+	public void setExited(boolean b) {Exited=b;}
 
 }
