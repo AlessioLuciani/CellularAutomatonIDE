@@ -24,6 +24,11 @@ public class GridConfiguration {
 		return len * numCellsY;
 	}
 	
+	/**lato per contenere singola cella*/
+	public int getLen() {
+		return len;
+	}
+	
 	@Override
 	public String toString() {
 		return form.name()+" "+len+" "+numCellsX+" "+numCellsY;

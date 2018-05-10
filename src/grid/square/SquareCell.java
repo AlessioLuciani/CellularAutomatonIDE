@@ -50,10 +50,10 @@ public class SquareCell extends Cell {
 		int c = (myId-1) % matrix.getWidth();
 		int len = matrix.getSize();
 		g.setColor(this.getState());
-		g.fillRect(c * len, r * len, len, len);
+		g.fillRect(c * len, r * len, len-1, len-1);
 		if(borderColor != null) {
 			g.setColor(borderColor);
-			g.drawRect(c * len, r * len, len, len);
+			g.drawRect(c * len, r * len, len-1, len-1);
 		}
 	}
 }
