@@ -12,6 +12,6 @@ public class Prova {
     	col.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
     	col.setVisible(true);
-    
+    	
     }
 }
