@@ -98,12 +98,19 @@ public class EditExpressionPanel extends JPanel {
 		}
 	}
 	
-	public String create_String() {
-		if (Type.equals("A")) return TYPE_A[0]+colore.getText()+TYPE_A[1]+start.getText()+TYPE_A[2]+end.getText();
-		else if (Type.equals("THEN")) return TYPE_THEN[0]+colore.getText();
-		return TYPE_B[0]+n_vicini.getText()+TYPE_B[1]+colore.getText();
+	/**controlla se tutti i campi del form sono completati*/
+	public boolean isCompleted() {
+		if(Type.equals("A")) 
+			return !start.getText().equals("") && !end.getText().equals("") && !colore.getText().equals("");
+		if(Type.equals("B")) 
+			return !n_vicini.getText().equals("") && !colore.getText().equals("");
+		if(Type.equals("THEN")) 
+			return !colore.getText().equals("");
+		return false;
 	}
 	
-	public String getType() {return Type;}
+	public String getType() {
+		return Type;
+	}
 
 }

@@ -11,9 +11,7 @@ import javax.swing.JButton;
 import javax.swing.colorchooser.AbstractColorChooserPanel;
 
 class MyChooserPanel extends AbstractColorChooserPanel {
-	  /**
-		 * 
-		 */
+
 	private static final long serialVersionUID = 1L;
 
 	public void buildChooser() {

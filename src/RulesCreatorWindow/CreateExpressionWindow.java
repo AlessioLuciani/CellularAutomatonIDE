@@ -4,8 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.List;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
@@ -19,9 +19,8 @@ import rules.NotNode;
 import rules.OrNode;
 import rules.Rule;
 
+/** Form che consente di aggiungere nuove espressioni */
 public class CreateExpressionWindow extends JFrame {
-
-	/* Form che consente di aggiungere nuove espressioni */
 	
 	private static final long serialVersionUID = 1L;
 
@@ -47,7 +46,7 @@ public class CreateExpressionWindow extends JFrame {
 	public CreateExpressionWindow(int x, int y, int width, int height, List l, ArrayList<Rule> forestRules) {
 		super();
 		setBounds(x, y, width, height);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		getContentPane().setLayout(new BorderLayout());
 		
 		//Inizializzazione Attributi
@@ -69,44 +68,55 @@ public class CreateExpressionWindow extends JFrame {
 		this.forestRules = forestRules;
 		
 		//Gestione click bottoni
-		btnA.addMouseListener(new MouseAdapter() {
+		btnA.addActionListener(new ActionListener() {
 			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				
+			public void actionPerformed(ActionEvent arg0) {
 				edit_panel = new EditExpressionPanel().formatA();
 				BottomGroupPanel.remove(0);
 				BottomGroupPanel.add(edit_panel, 0);
 				check_then();
 				revalidate();
-				
-			}});
+			}
+		});
 		
-		btnB.addMouseListener(new MouseAdapter() {
+		btnB.addActionListener(new ActionListener() {
 			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				
+			public void actionPerformed(ActionEvent arg0) {
 				edit_panel = new EditExpressionPanel().formatB();
 				BottomGroupPanel.remove(0);
 				BottomGroupPanel.add(edit_panel, 0);
 				check_then();
 				revalidate();
-			}});
+			}
+		});
 		
-		btnAND.addMouseListener(new MouseAdapter() {
+		btnAND.addActionListener(new ActionListener() {
 			@Override
-			public void mouseClicked(MouseEvent arg0) {concatenate("AND");check_then();}});
+			public void actionPerformed(ActionEvent arg0) {
+				concatenate("AND");
+				check_then();
+			}
+		});
 		
-		btnOR.addMouseListener(new MouseAdapter() {
+		btnOR.addActionListener(new ActionListener() {
 			@Override
-			public void mouseClicked(MouseEvent arg0) {concatenate("OR");check_then();}});
+			public void actionPerformed(ActionEvent arg0) {
+				concatenate("OR");
+				check_then();
+			}
+		});
 		
-		btnNOT.addMouseListener(new MouseAdapter() {
+		btnNOT.addActionListener(new ActionListener() {
 			@Override
-			public void mouseClicked(MouseEvent arg0) {concatenate("NOT");check_then();}});
+			public void actionPerformed(ActionEvent arg0) {
+				concatenate("NOT");
+				check_then();
+			}
+		});
 		
-		btnTHEN.addMouseListener(new MouseAdapter() {
+		btnTHEN.addActionListener(new ActionListener() {
 			@Override
-			public void mouseClicked(MouseEvent arg0) {
+			public void actionPerformed(ActionEvent arg0) {
 				flag_then = true;
 				btnTHEN.setEnabled(false);
 				btn_add.setText("Save");
@@ -115,31 +125,29 @@ public class CreateExpressionWindow extends JFrame {
 				BottomGroupPanel.remove(0);
 				BottomGroupPanel.add(edit_panel, 0);
 				revalidate();
-			}});
+			}
+		});
 		
-		btn_add.addMouseListener(new MouseAdapter() {
+		btn_add.addActionListener(new ActionListener() {
 			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				
-				if (edit_panel.getType()!=null) {
+			public void actionPerformed(ActionEvent arg0) {
+				if (edit_panel.getType()!=null && edit_panel.isCompleted()) { //controlla che il form sia compilato
 					if (flag_then) { //se entri qui, stai salvando la regola
-						//System.out.println(FinalString());
 						thenColor = edit_panel.getThenColor();
 						listrules.add(CreateExpressionWindow.this.getRule().toString());
 						forestRules.add(CreateExpressionWindow.this.getRule());
 						dispose();
 					}
-					else { 
+					else {
 						edit_panel.buildNode();
 						ExpressionNode e = edit_panel.getExpr();
 						tree.add(e);
 						exp_list.add(e.toString());
-						//exp_list.add(edit_panel.create_String());
 					}
-					
 				}
 				check_then();
-			}});
+			}
+		});
 		
 		
 		
@@ -173,19 +181,18 @@ public class CreateExpressionWindow extends JFrame {
 	
 	//concatena tutte le righe selezionate secondo l'operatore "operand"
 	private void concatenate(String operand) {
-		//String concat_string = "";
-		//String[] items = exp_list.getSelectedItems();
 		int [] inds = exp_list.getSelectedIndexes();
 	
-		if(inds.length == 1) {
+		if(inds.length == 1) { //1 operando: controlla se è una not
 			if(operand.equals("NOT")) {
 				ExpressionNode tmp = new NotNode(tree.get(inds[0]));
 				tree.set(inds[0], tmp);
 				exp_list.remove(inds[0]);
 				exp_list.add(tmp.toString(), 0);
 			}
-		} 
-		if(inds.length > 1) {
+		}
+		
+		if(inds.length > 1) { //piu' di un operando: controlla se sono tante or/and
 			ExpressionNode act;
 			if(operand.equals("AND"))
 				act = new AndNode(tree.get(inds[0]), tree.get(inds[1]));
@@ -201,35 +208,18 @@ public class CreateExpressionWindow extends JFrame {
 				act = tmp;
 			}
 			
-			for(int i=inds.length-1; i>=0; i--) {
+			for(int i=inds.length-1; i>=0; i--) { //dalla fine all'inizio per non creare problemi alle liste
 				exp_list.remove(inds[i]);
 				tree.remove(inds[i]);
 			}
 			exp_list.add(act.toString());
 			tree.add(act);
 		}
-		/*if (items.length==1) {if (operand.equals("NOT")) concat_string += "NOT ("+ items[0]+")";}
-		else if (items.length>1) {
-			concat_string = "(";
-			for (int i = 0; i < items.length-1; i++) {
-				concat_string+= (items[i]+" "+operand+" ");
-				exp_list.remove(items[i]);
-				//exp_list.remove(i);
-			}
-			concat_string+=items[items.length-1]+")";
-		}
-		else return;
-		
-		exp_list.remove(items[items.length-1]);
-		exp_list.add(concat_string);
-		System.out.println(concat_string);*/
 	}
 	
 	public Rule getRule() {
 		return new Rule(tree.get(0), thenColor);
 	}
-	
-	//private String FinalString() {return "SE "+exp_list.getItem(0)+" ALLORA "+edit_panel.create_String();}
 	
 	private void check_then() {btnTHEN.setEnabled(exp_list.getItemCount()==1);}
 	

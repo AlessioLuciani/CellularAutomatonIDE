@@ -4,35 +4,10 @@ import java.awt.EventQueue;
 import java.awt.Toolkit;
 
 import javax.swing.JFrame;
-import java.awt.GridLayout;
-import java.awt.Component;
 import javax.swing.JPanel;
-import javax.swing.JPanel;
-import javax.swing.border.Border;
-import javax.swing.JButton;
-import javax.swing.JFrame;
 
-import java.awt.List;
-import java.awt.Toolkit;
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.util.Collections;
-import java.awt.GridLayout;
-import java.awt.Insets;
-
-import javax.swing.JLabel;
-import java.awt.BorderLayout;
-import java.awt.Component;
-
-import javax.swing.BoxLayout;
-import javax.swing.AbstractAction;
-import javax.swing.Box;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 public class Main {
 

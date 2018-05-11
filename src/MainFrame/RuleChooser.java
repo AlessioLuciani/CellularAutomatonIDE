@@ -19,6 +19,8 @@ import java.util.ArrayList;
 
 public class RuleChooser extends JPanel{
 	
+		private static final long serialVersionUID = 1L;
+
 		//lista degli alberi delle regole
 		ArrayList<Rule> forest;
 		
@@ -79,6 +81,7 @@ public class RuleChooser extends JPanel{
 		}
 	
 	// Apertura modulo per la creazione delle regole
+	@SuppressWarnings("serial")
 	Action actionbtnNew = new AbstractAction() {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
@@ -90,6 +93,7 @@ public class RuleChooser extends JPanel{
 	};
 	
 	// Rimozione delle regole selezionate
+	@SuppressWarnings("serial")
 	Action actionbtnRemove = new AbstractAction() {
 		
 		@Override

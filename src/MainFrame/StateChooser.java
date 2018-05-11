@@ -1,35 +1,21 @@
 package MainFrame;
+
 import javax.swing.JPanel;
-import javax.swing.border.Border;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 
 import java.awt.List;
-import java.awt.Toolkit;
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.util.Collections;
-import java.awt.GridLayout;
-import java.awt.Insets;
 
-import javax.swing.JLabel;
-import java.awt.BorderLayout;
-import java.awt.Component;
-
-import javax.swing.BoxLayout;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
-import javax.swing.Box;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
-import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 
 public class StateChooser extends JPanel{
 	
+	private static final long serialVersionUID = 1L;
+
 	List list;
 
 	public StateChooser() {
@@ -84,6 +70,7 @@ public class StateChooser extends JPanel{
 	}
 	
 	// Apertura modulo per l'inserimento stati
+	@SuppressWarnings("serial")
 	Action actionbtnNew = new AbstractAction() {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
@@ -100,6 +87,7 @@ public class StateChooser extends JPanel{
 	};
 	
 	// Rimozione degli stati selezionati
+	@SuppressWarnings("serial")
 	Action actionbtnRemove = new AbstractAction() {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
