@@ -7,14 +7,37 @@ import javax.swing.JFrame;
 import java.awt.GridLayout;
 import java.awt.Component;
 import javax.swing.JPanel;
+import javax.swing.JPanel;
+import javax.swing.border.Border;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+
+import java.awt.List;
+import java.awt.Toolkit;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.Collections;
+import java.awt.GridLayout;
+import java.awt.Insets;
+
+import javax.swing.JLabel;
+import java.awt.BorderLayout;
+import java.awt.Component;
+
+import javax.swing.BoxLayout;
+import javax.swing.AbstractAction;
+import javax.swing.Box;
+import java.awt.GridBagLayout;
+import java.awt.GridBagConstraints;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class Main {
 
 	private JFrame frame;
 
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -28,47 +51,53 @@ public class Main {
 		});
 	}
 
-	/**
-	 * Create the application.
-	 */
 	public Main() {
 		initialize();
 	}
 
-	/**
-	 * Initialize the contents of the frame.
-	 */
 	private void initialize() {
 		frame = new JFrame();
 		
+		// Istanza che permette di accedere a info come screenSize etc
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
 		frame.setBounds(100, 100, (int)(screenSize.getWidth()*0.8), (int)(screenSize.getHeight()*0.8));
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(new GridLayout(2, 0));
+		JPanel pannello = new JPanel();
+		frame.getContentPane().add(pannello);
 		
-		// Modulo gestione regole di transizione. Si trova nel BottomPanel
-		JPanel RegoleTransizione = new RegoleTransizione();
-
+		// Creazione layout
+		GridBagLayout gridBagLayout = new GridBagLayout();
+		gridBagLayout.columnWidths = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+		gridBagLayout.columnWeights = new double[]{0.01, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1};
+		gridBagLayout.rowWeights = new double[]{0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1};
+		pannello.setLayout(gridBagLayout);
 		
 		
-		// Parte superiore della finestra
-			JPanel TopPanel = new JPanel();
-			TopPanel.setLayout(new GridLayout(2, 0));
+		// Pannello gestione stati
+		JPanel statePanel = new StateChooser();
 		
-		// Parte inferiore della finestra
-			JPanel BottomPanel = new JPanel();
-			BottomPanel.setLayout(new GridLayout(2, 0));
-			
-			BottomPanel.add(new Component() {private static final long serialVersionUID = 1L;});
-			
-		// Aggiunta modulo per la creazione delle regole	
-			BottomPanel.add(RegoleTransizione);
+		// Aggiunta pannello gestione stati
+		GridBagConstraints gbc_statePanel = new GridBagConstraints();
+		gbc_statePanel.fill = GridBagConstraints.BOTH;
+		gbc_statePanel.gridx = 1;
+		gbc_statePanel.gridy = 17;
+		gbc_statePanel.gridheight = 5;
+		gbc_statePanel.gridwidth = 2;
+		pannello.add(statePanel, gbc_statePanel);
 		
-		// Visualizzazione della finestra
-			frame.getContentPane().add(TopPanel);
-			frame.getContentPane().add(BottomPanel);
-
+		// Pannello gestione regole di transizione
+		JPanel rulePanel = new RuleChooser();
+		
+		// Aggiunta pannello gestione regole
+		GridBagConstraints gbc_rulePanel = new GridBagConstraints();
+		gbc_rulePanel.fill = GridBagConstraints.BOTH;
+		gbc_rulePanel.gridx = 1;
+		gbc_rulePanel.gridy = 23;
+		gbc_rulePanel.gridheight = 5;
+		gbc_rulePanel.gridwidth = 24;
+		pannello.add(rulePanel, gbc_rulePanel);
 	}
 
 }
