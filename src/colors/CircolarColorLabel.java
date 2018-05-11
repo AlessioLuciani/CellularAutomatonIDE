@@ -11,6 +11,8 @@ import java.awt.image.ImageObserver;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
+import jdk.jfr.SettingControl;
+
 
 
 
@@ -71,11 +73,7 @@ public class CircolarColorLabel extends JLabel {
 	
 	public void setClick(boolean value) {this.isClicked = value;}
 	
-	@Override
-	public void paint(Graphics arg0) {
-		// TODO Auto-generated method stub
-		super.paint(arg0);
-	}
+	
 	
 	public CircolarColorLabel Check() {
 		Graphics g = getGraphics();
@@ -83,10 +81,23 @@ public class CircolarColorLabel extends JLabel {
 		return this;
 	}
 	
+	public void setEntered(boolean b) {Entered=b;}
+	public void setExited(boolean b) {Exited=b;}
+	public Color getColor() {return color;}
+	
+	@Override
+	public void paint(Graphics arg0) {
+		// TODO Auto-generated method stub
+		super.paint(arg0);
+	}
+	
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		
+		g.setColor(color);
+		g.fillOval(0, 0, g.getClipBounds().width, g.getClipBounds().height);
+		g.setColor(Color.WHITE);
+		g.fillOval(0, 0, g.getClipBounds().width-3, g.getClipBounds().height-3);
 		g.setColor(new Color(color.getRed(), color.getGreen(), color.getBlue(),(int)(color.getAlpha()*opacity) ));
 		
 		if (isClicked) {g.setColor(new Color(color.getRed(), color.getGreen(), color.getBlue(),255 ));}
@@ -96,12 +107,13 @@ public class CircolarColorLabel extends JLabel {
 			if (Exited) {g.setColor(new Color(color.getRed(), color.getGreen(), color.getBlue(),(int)(color.getAlpha()*opacity) ));}
 			
 		}
-			
-		g.fillOval(0, 0, g.getClipBounds().width, g.getClipBounds().height);
+		
+		
+		g.fillOval(0, 0, g.getClipBounds().width-3, g.getClipBounds().height-3);
+		
 		
 	}
 
-	public void setEntered(boolean b) {Entered=b;}
-	public void setExited(boolean b) {Exited=b;}
+	
 
 }
