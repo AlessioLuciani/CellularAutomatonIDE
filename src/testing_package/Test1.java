@@ -2,6 +2,7 @@ package testing_package;
 
 import grid.Graph;
 import grid.GridConfCreator;
+import grid.square.MatrixGraph;
 import rules.*;
 
 import java.awt.*;
@@ -10,6 +11,12 @@ import javax.swing.JFrame;
 
 public class Test1 {
     public static void main(String [] args) {
+    	MatrixGraph graph = new MatrixGraph(3, 3, 1);
+    	for(int i=1; i<=graph.getNumNodes(); i++) {
+    		for(int j=0; j<=graph.getCell(i).getNumNeighbors(); j++)
+    			System.out.print(graph.getCell(i).getKthNeighbor(j)+" ");
+    		System.out.println();
+    	}
         /*BaseExpressionNode1 A = new BaseExpressionNode1(2, 3, Color.BLUE);
         BaseExpressionNode2 B = new BaseExpressionNode2(1,  Color.RED);
         BaseExpressionNode2 C = new BaseExpressionNode2(0,  Color.BLUE);

@@ -24,7 +24,6 @@ public class GridRenderPanel extends JPanel {
 	
 	private Graph graph;
 	private Color borderColor;
-	private GridConfiguration gridConf;
 	
 	private Image buffer;
 	
@@ -39,7 +38,6 @@ public class GridRenderPanel extends JPanel {
 	/**gli passiamo il grafo da renderizzare e il colore del bordo delle celle (null per non averlo)*/
 	public GridRenderPanel(Graph g, GridConfiguration gconf, Color borderColor) {
 		graph = g;
-		this.gridConf = gconf;
 		this.borderColor = borderColor;
 		buffer = new BufferedImage(gconf.getBufferImageWidth(), gconf.getBufferImageHeight(), BufferedImage.TYPE_INT_RGB);
 		this.setBounds(0, 0, gconf.getBufferImageWidth(), gconf.getBufferImageHeight());
@@ -81,6 +79,17 @@ public class GridRenderPanel extends JPanel {
 		//g.drawImage(buffer, 0, 0, this.getWidth(), this.getHeight(), 0, 0, this.getWidth(), this.getHeight(), null);
 	}
 	
+	/**restituisce indice cella a delle determinate coordinate (prese sul panel, con i listener del mouse); -1 se non esiste*/
+	public int getCellAtCoordinate(int x, int y) {
+		double tmpX = x, tmpY = y;
+		tmpX /= zoomFactor; //togliamo lo zoom
+		tmpY /= zoomFactor;
+		tmpX -= deltaX; //togliamo le traslazioni
+		tmpY -= deltaY;
+		if(tmpX >= buffer.getWidth(null) || tmpY >= buffer.getHeight(null) || tmpX < 0 || tmpY < 0) return -1;
+		return graph.getCellAtCoordinate((int)tmpX, (int)tmpY);
+	}
+	
 	/**inizializza mouse listeners*/
 	private void initListeners() {
 		
@@ -89,6 +98,14 @@ public class GridRenderPanel extends JPanel {
 			public void mousePressed(MouseEvent evt) {
 				tmpX = evt.getX();
 				tmpY = evt.getY();
+				
+				/*int c = getCellAtCoordinate(evt.getX(), evt.getY());
+				if(c != -1) {
+					graph.getCell(c).setState(Color.RED);
+					ArrayList<Integer> al = new ArrayList<>();
+					al.add(c);
+					GridRenderPanel.this.synchWithGraph(al);
+				}*/
 			}
 		};
 		
@@ -100,8 +117,12 @@ public class GridRenderPanel extends JPanel {
 				tmpX = evt.getX();
 				tmpY = evt.getY();
 				
-				deltaX = Math.max(Math.min(0, deltaX + dx), -buffer.getWidth(null) + gridConf.getLen()); //aggiorna spostamenti globali
-				deltaY = Math.max(Math.min(0, deltaY + dy), -buffer.getHeight(null) + gridConf.getLen());
+				//calcolati il valore minimo che possono raggiungere i delta (sono sempre negativi)
+				double mindx = Math.min(-((double)buffer.getWidth(null) - (double)GridRenderPanel.this.getWidth()/zoomFactor), 0);
+				double mindy = Math.min(-((double)buffer.getHeight(null) - (double)GridRenderPanel.this.getHeight()/zoomFactor), 0);
+				
+				deltaX = Math.max(Math.min(0, deltaX + dx), Math.min(mindx, deltaX)); //aggiorna spostamenti globali
+				deltaY = Math.max(Math.min(0, deltaY + dy), Math.min(mindy, deltaY));
 	
 				GridRenderPanel.this.invalidate();
 				GridRenderPanel.this.repaint();

@@ -30,10 +30,10 @@ public class SquareCell extends Cell {
 		
 		int r = (myId-1) / matrix.getWidth();
 		int c = (myId-1) % matrix.getWidth();
-		if(k == 1 || k == 4 || k == 6) r--;
-		if(k == 3 || k == 5 || k == 8) r++;
-		if(k == 1 || k == 2 || k == 3) c--;
-		if(k == 6 || k == 7 || k == 8) c++;
+		if(k == 1 || k == 4 || k == 6) c--;
+		if(k == 3 || k == 5 || k == 8) c++;
+		if(k == 1 || k == 2 || k == 3) r--;
+		if(k == 6 || k == 7 || k == 8) r++;
 		if(r < 0 || c < 0 || r >= matrix.getHeight() || c >= matrix.getWidth() || k < 0 || k > 8)
 			return -1;
 		return matrix.getWidth() * r + c + 1;

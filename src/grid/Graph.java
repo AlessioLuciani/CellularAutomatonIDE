@@ -31,6 +31,11 @@ public class Graph {
     		c.render(g, borderColor);
     }
     
+    /**restituisce indice cella alle coordinate specificate (si assume che il grafo abbia una rappresentazione grafica definita); -1 se non esiste*/
+    public int getCellAtCoordinate(int x, int y) {
+    	return -1;
+    }
+    
     /**numero nodi nel grafo*/
     public int getNumNodes() {
     	return nodes.size();

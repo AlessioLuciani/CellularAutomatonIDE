@@ -5,8 +5,8 @@ import grid.Graph;
 import java.awt.Color;
 
 /**
- * nodo di un'espressione di base di tipo1, cioè:
- * se il numero di vicini di colore 'c' è compreso tra 'a' e 'b', allora....
+ * nodo di un'espressione di base di tipo1, cioe':
+ * se il numero di vicini di colore 'c' e' compreso tra 'a' e 'b', allora....
  * */
 public class BaseExpressionNode1 extends ExpressionNode {
 
@@ -29,6 +29,7 @@ public class BaseExpressionNode1 extends ExpressionNode {
         int N = graph.getCell(cell).getNumNeighbors();
         for(int i=1; i<=N; i++) { //scorro vicini della cella
             int idn = graph.getCell(cell).getKthNeighbor(i);
+            if(idn < 1) continue;
             if(graph.getCell(idn).getState().equals(colr)) //controllo colore del vicino
                 numGoodNeighs++;
         }

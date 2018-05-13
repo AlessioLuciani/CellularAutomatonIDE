@@ -15,6 +15,16 @@ public class MatrixGraph extends Graph {
 			nodes.add(new SquareCell(i, this));
 	}
 	
+	/**metodo implementato per la matrice*/
+	@Override
+	public int getCellAtCoordinate(int x, int y) {
+		int xround = x/getSize(); 
+		int yround = y/getSize();
+		int id = yround * getWidth() + xround;
+		if(id + 1 > this.getNumNodes()) return -1;
+		return id+1;
+	}
+	
 	/**dimensione singola cella*/
 	public int getSize() {
 		return size;
