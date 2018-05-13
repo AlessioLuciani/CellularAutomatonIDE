@@ -40,7 +40,7 @@ public class CircolarColorLabel extends JLabel {
 		setMaximumSize(new Dimension(dim, dim));
 		setMinimumSize(new Dimension(dim, dim));
 		setBounds(0, 0, dim, dim);
-	
+		setVisible(true);
 		
 	}
 	

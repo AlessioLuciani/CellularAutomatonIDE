@@ -1,12 +1,16 @@
 package testing_package;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.EventQueue;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
-import javax.swing.JTextField;
-import RulesCreatorWindow.CreateExpressionWindow;
 import RulesCreatorWindow.EditExpressionPanel;
-import rules.Rule;
+import colors.CustomColorPicker;
+import colors.CustomPalette;
 
 public class TestApp {
 
@@ -50,7 +54,37 @@ public class TestApp {
 	
 	}
 	private void initialize() {
-		//frame = new CreateExpressionWindow(100, 100, 400, 400);
+		List<Color> colorlist = new ArrayList<>();
+ 		colorlist.add(Color.RED);
+ 		colorlist.add(Color.PINK);
+ 		colorlist.add(Color.ORANGE);
+ 		colorlist.add(Color.BLACK);
+ 		colorlist.add(Color.MAGENTA);
+ 		colorlist.add(Color.GREEN);
+ 		colorlist.add(Color.BLACK);
+ 		colorlist.add(Color.CYAN);
+ 		colorlist.add(Color.BLACK);
+ 		frame = new CustomColorPicker(colorlist);
+ 		//frame = new JFrame();
+ 		
+		
+		/*CircolarColorLabel lbl1 = new CircolarColorLabel(Color.RED, 10);
+		CircolarColorLabel lbl2 = new CircolarColorLabel(Color.RED, 10);
+		CircolarColorLabel lbl3 = new CircolarColorLabel(Color.RED, 10);
+		CircolarColorLabel lbl4 = new CircolarColorLabel(Color.RED, 10);
+		CircolarColorLabel lbl5 = new CircolarColorLabel(Color.RED, 10);
+		lbl1.setName("1");
+		lbl2.setName("2");
+		lbl3.setName("3");
+		lbl4.setName("4");
+		lbl5.setName("5");
+		List<CircolarColorLabel> labels = new ArrayList<>();
+		labels.add(lbl1);
+		labels.add(lbl2);
+		labels.add(lbl3);
+		labels.add(lbl4);
+		labels.add(lbl5);*/
+		frame.setVisible(true);
 	}
 }
 
