@@ -7,6 +7,8 @@ public class MatrixGraph extends Graph {
 	
 	protected int w, h, size;
 	
+	public MatrixGraph() {}
+	
 	public MatrixGraph(int w, int h, int size) {
 		this.w = w;
 		this.h = h;

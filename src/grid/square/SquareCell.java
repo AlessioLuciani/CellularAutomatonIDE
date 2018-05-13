@@ -7,13 +7,11 @@ import grid.Cell;
 
 /**cella quadrata*/
 public class SquareCell extends Cell {
-
-	protected int myId;
 	protected MatrixGraph matrix;
 	
 	/**dobbiamo passargli il suo id (cosi sa chi è), e matrice di cui fa parte*/
 	public SquareCell(int myId, MatrixGraph graph) {
-		this.myId = myId;
+		super(myId);
 		matrix = graph;
 	}
 	
@@ -46,11 +44,11 @@ public class SquareCell extends Cell {
 
 	@Override
 	public void render(Graphics g, Color borderColor) {
-		int r = (myId-1) / matrix.getWidth();
+		int r = (myId-1) / matrix.getWidth(); //dall'id riesco a riprendere riga e colonna
 		int c = (myId-1) % matrix.getWidth();
 		int len = matrix.getSize();
 		g.setColor(this.getState());
-		g.fillRect(c * len, r * len, len-1, len-1);
+		g.fillRect(c * len, r * len, len-1, len-1); //a questo punto è facile trovare coordinate
 		if(borderColor != null) {
 			g.setColor(borderColor);
 			g.drawRect(c * len, r * len, len-1, len-1);

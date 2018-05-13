@@ -6,6 +6,13 @@ import java.awt.Graphics;
 /**singola cella del grafo, cioe' nodo*/
 public abstract class Cell {
     protected Color state;
+    protected int myId; //identificativo della cella
+    
+    public Cell() {}
+    
+    public Cell(int myId) {
+    	this.myId = myId;
+    }
 
     /**stato cella*/
     public Color getState() {

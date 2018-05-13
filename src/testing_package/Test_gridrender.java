@@ -18,18 +18,19 @@ import grid.Graph;
 import grid.GridConfiguration;
 import grid.GridRenderPanel;
 import grid.square.MatrixGraph;
+import grid.triangle.TriangularGraph;
 
 public class Test_gridrender {
 	public static void main(String [] args) {
 		JFrame frame = new JFrame();
-		final int w = 100, h = 100, s = 10;
-		Graph g = new MatrixGraph(w, h, s);
+		final int w = 100, h = 50, s = 30;
+		GridConfiguration gconf = new GridConfiguration(CellForm.TRIANGLE, s, w, h);
+		Graph g = new TriangularGraph(gconf.getNumCellsX(), gconf.getNumCellsY(), gconf.getLen()); //new MatrixGraph(w, h, s);
 		
 		for(int i=1; i<=g.getNumNodes(); i++) {
 			g.getCell(i).setState(Color.YELLOW);
 		}
 		
-		GridConfiguration gconf = new GridConfiguration(CellForm.SQUARE, s, w, h);
 		GridRenderPanel panel = new GridRenderPanel(g, gconf, Color.BLACK);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 

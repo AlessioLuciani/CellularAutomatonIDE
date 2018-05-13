@@ -11,12 +11,12 @@ import javax.swing.JFrame;
 
 public class Test1 {
     public static void main(String [] args) {
-    	MatrixGraph graph = new MatrixGraph(3, 3, 1);
+    	/*MatrixGraph graph = new MatrixGraph(3, 3, 1);
     	for(int i=1; i<=graph.getNumNodes(); i++) {
     		for(int j=0; j<=graph.getCell(i).getNumNeighbors(); j++)
     			System.out.print(graph.getCell(i).getKthNeighbor(j)+" ");
     		System.out.println();
-    	}
+    	}*/
         /*BaseExpressionNode1 A = new BaseExpressionNode1(2, 3, Color.BLUE);
         BaseExpressionNode2 B = new BaseExpressionNode2(1,  Color.RED);
         BaseExpressionNode2 C = new BaseExpressionNode2(0,  Color.BLUE);
@@ -53,12 +53,12 @@ public class Test1 {
         System.out.println(andp.evaluate(graph, 3));
         System.out.println(andp.evaluate(graph, 4));*/
     	
-    	/*JFrame frame = new JFrame();
+    	JFrame frame = new JFrame();
     	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     	GridConfCreator gcc = new GridConfCreator();
     	frame.add(gcc);
     	frame.setBounds(10, 10, 300, 300);
     	frame.setVisible(true);
-    	System.out.println(gcc.getGridConfiguration());*/
+    	System.out.println(gcc.getGridConfiguration());
     }
 }

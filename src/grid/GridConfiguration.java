@@ -16,7 +16,22 @@ public class GridConfiguration {
 	
 	/**quanto deve essere larga un'immagine per contenete tutta la griglia?*/
 	public int getBufferImageWidth() {
-		return len * numCellsX;
+		switch(form) {
+			case TRIANGLE: return len + (int)((double)len/2.0 * (getNumCellsX() - 1));
+			default: return len * getNumCellsX();
+		}
+	}
+	
+	/**restituisce numero celle in orizzontale NB: potrebbe non essere il valore del campo*/
+	public int getNumCellsX() {
+		switch(form) {
+			case TRIANGLE: return numCellsX%2 == 0 ? numCellsX+1 : numCellsX;
+			default: return numCellsX;
+		}
+	}
+	
+	public int getNumCellsY() {
+		return numCellsY;
 	}
 	
 	/**quanto deve essere alta un'immagine per contenere tutta la griglia?*/
