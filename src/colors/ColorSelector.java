@@ -9,21 +9,34 @@ import javax.swing.JButton;
 import javax.swing.JColorChooser;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
 import java.awt.Color;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
 import java.awt.GridLayout;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 
 /**
  * JPanel utilizzato per la scelta dei colori.
- * 
- *                                                         WORK IN PROGRESS!!
  */
 
 public class ColorSelector extends JFrame {
 	
+	private static final long serialVersionUID = 1L;
+
+	/**
+	 * Colore scelto.
+	 */
 	private Color chosenColor;
+	
+	/**
+	 * Valore booleano che vale true se il colore è stato scelto.
+	 */
+	private boolean isColorChosen = false;
 	
 	private JButton dotPink;
 	private JButton dotRed;
@@ -39,6 +52,10 @@ public class ColorSelector extends JFrame {
 		// Layout generale
 		setLayout(new GridLayout(3, 1, 0, 0));
 		
+		GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+        GraphicsDevice defaultScreen = ge.getDefaultScreenDevice();
+		Rectangle rect = defaultScreen.getDefaultConfiguration().getBounds();
+		setLocation((int) rect.getMaxX()/2, (int) rect.getMaxY()/2);
 		setSize(250, 300);
 		setResizable(false);
 		
@@ -69,7 +86,6 @@ public class ColorSelector extends JFrame {
 		txtrSelCol.setEditable(false);
 		txtrSelCol.setOpaque(false);
 		
-		
 		// Button OK
 		JButton btnOk = new JButton();
 		btnOk.setText("OK");
@@ -77,7 +93,7 @@ public class ColorSelector extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				closeWindow();
+				onOkPressed();
 			}
 			
 		});
@@ -186,12 +202,11 @@ public class ColorSelector extends JFrame {
 				
 				final JColorChooser chooser = new JColorChooser();
 			    ActionListener okListener = new ActionListener() {
-			      public void actionPerformed(ActionEvent evt) {
-			    	  
+			      public void actionPerformed(ActionEvent evt) {  
 			    	// Aggiungi colore scelto
 			        chosenColor = chooser.getColor();
-			        
-			        closeWindow();
+			    	  
+			    	onOkPressed();
 			      }
 			    };
 	
@@ -213,8 +228,6 @@ public class ColorSelector extends JFrame {
 		colorsSecondRow.add(plus);
 
 	}
-	
-
 
 
 	/**
@@ -223,6 +236,14 @@ public class ColorSelector extends JFrame {
 	 */
 	public Color getChosenColor() {
 		return chosenColor;
+	}
+	
+	/**
+	 * Restituisce vero se il colore è stato scelto.
+	 * @return
+	 */
+	public boolean isColorChosen() {
+		return isColorChosen;
 	}
 	
 	/**
@@ -240,9 +261,34 @@ public class ColorSelector extends JFrame {
 	}
 	
 	/**
-	 * Chiude la finestra attualmente aperta.
+	 * Viene chiamato al click dell'ok.
+	 * Controlla se il colore è stato scelto, e in questo caso chiude la finestra.
+	 */
+	private void onOkPressed() {
+		if (chosenColor != null) closeWindow();
+		else {
+			JOptionPane optionPane = new JOptionPane("Selezionare un colore", JOptionPane.WARNING_MESSAGE);
+			JDialog dialog = optionPane.createDialog("Attenzione");
+			dialog.setAlwaysOnTop(true);
+			dialog.setVisible(true); 
+		}
+	}
+	
+	/**
+	 * Dichiara che è stato scelto un colore e
+	 * chiude la finestra attualmente aperta.
 	 */
 	private void closeWindow() {
+		isColorChosen = true;
+		dispose();
+	}
+
+	/**
+	 * Chiude il selettore di colori.
+	 */
+	public void kill() {
 		dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
 	}
+
 }
+

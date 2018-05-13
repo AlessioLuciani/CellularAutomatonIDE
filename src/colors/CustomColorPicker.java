@@ -5,12 +5,16 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.FlowLayout;
 import java.awt.Polygon;
+import java.awt.event.ActionEvent;
 import java.util.List;
 
+import javax.swing.AbstractAction;
+import javax.swing.Action;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.text.html.StyleSheet.BoxPainter;
 
 public class CustomColorPicker extends JFrame {
 
@@ -25,33 +29,44 @@ public class CustomColorPicker extends JFrame {
 		JButton btnOK = new JButton("OK");
 		JButton btnCANCEL = new JButton("CANCEL");
 		
-		JPanel midPanel = new JPanel();
-		midPanel.setLayout(new FlowLayout());
-		midPanel.setBackground(Color.YELLOW);
-		midPanel.setBounds(80, 80, 100, 100);
+		JPanel ButtonPanel = new JPanel();	//contiene i pulsanti ok e cancel
+		JPanel MidPanel = new JPanel();		//contiene la paletta
+		CustomPalette palette = new CustomPalette(ColorList);	//paleta dei colori
 		
-		JPanel ButtonPanel = new JPanel();
 		ButtonPanel.setLayout(new BoxLayout(ButtonPanel,BoxLayout.X_AXIS));
-		ButtonPanel.setSize(200,200);
-		
-		CustomPalette palette = new CustomPalette(ColorList);
-		palette.setAlignmentX(JPanel.CENTER_ALIGNMENT);
+		ButtonPanel.setSize(btnOK.getWidth()+btnCANCEL.getWidth(), btnOK.getHeight());
 		
 		
-		setBounds(50, 50, (int)(palette.getSize().getWidth()+1), (int)(palette.getSize().getHeight()+1));
+		MidPanel.setLayout(null);
+		MidPanel.setSize(palette.getWidth(),palette.getHeight());
+		System.out.println(MidPanel.getSize());
+		
 
+		palette.setVisible(true);
+		palette.setLocation(0, 0);
 		
-		midPanel.add(palette);
+		
+		
+		MidPanel.add(palette);
 		//midPanel.add("Previw forma")); 	//da fare il prima possibile
 		
 		ButtonPanel.add(btnOK);
 		ButtonPanel.add(btnCANCEL);
 		
-		add(midPanel,BorderLayout.CENTER);
+		add(MidPanel,BorderLayout.CENTER);
 		add(ButtonPanel,BorderLayout.SOUTH);
 
-		
+		setBounds(50, 50,Math.max(MidPanel.getWidth(),ButtonPanel.getWidth()),MidPanel.getHeight()+ButtonPanel.getHeight()+10);
+		System.out.println(ButtonPanel.getSize());
+		System.out.println(getSize());
 	}	
 	
-	
+	Action OKclick = new AbstractAction() {
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			System.out.println(((JButton)e.getSource()).getSize());
+			
+		}
+	};
 }
