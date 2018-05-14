@@ -1,4 +1,4 @@
-package colors;
+package util.colors;
 
 
 import javax.swing.JPanel;
@@ -46,7 +46,7 @@ public class ColorSelector extends JFrame {
 	private JButton dotGreen;
 	private JButton dotBlue;
 	private JButton plus;
-
+	
 	public ColorSelector() {
 		
 		// Layout generale
@@ -101,87 +101,86 @@ public class ColorSelector extends JFrame {
 		
 		
 		// Pulsanti colori
-		
-		dotPink = new JButton(new ImageIcon(getClass().getResource("res/dot_pink.png")));
+		dotPink = new JButton(new ImageIcon(ColorSelector.class.getResource("res/dot_pink.png")));
 		dotPink.setBorder(BorderFactory.createEmptyBorder());
 		dotPink.addActionListener(new ActionListener() {
 			@Override
 		    public void actionPerformed(ActionEvent e) {
 		        
 				resetAllColors();
-				dotPink.setIcon(new ImageIcon(getClass().getResource("res/dot_checked_pink.png")));
+				dotPink.setIcon(new ImageIcon(ColorSelector.class.getResource("res/dot_checked_pink.png")));
 				chosenColor = new Color(229, 73, 159);
 		    }
 		});
 		colorsFirstRow.add(dotPink);
 		
-		dotRed = new JButton(new ImageIcon(getClass().getResource("res/dot_red.png")));
+		dotRed = new JButton(new ImageIcon(ColorSelector.class.getResource("res/dot_red.png")));
 		dotRed.setBorder(BorderFactory.createEmptyBorder());
 		dotRed.addActionListener(new ActionListener() {
 			@Override
 		    public void actionPerformed(ActionEvent e) {
 				resetAllColors();
-				dotRed.setIcon(new ImageIcon(getClass().getResource("res/dot_checked_red.png")));
+				dotRed.setIcon(new ImageIcon(ColorSelector.class.getResource("res/dot_checked_red.png")));
 				chosenColor = new Color(206, 16, 45);
 		    }
 		});
 		colorsFirstRow.add(dotRed);
 		
-		dotOrange = new JButton(new ImageIcon(getClass().getResource("res/dot_orange.png")));
+		dotOrange = new JButton(new ImageIcon(ColorSelector.class.getResource("res/dot_orange.png")));
 		dotOrange.setBorder(BorderFactory.createEmptyBorder());
 		dotOrange.addActionListener(new ActionListener() {
 			@Override
 		    public void actionPerformed(ActionEvent e) {
 		        				resetAllColors();
-				dotOrange.setIcon(new ImageIcon(getClass().getResource("res/dot_checked_orange.png")));
+				dotOrange.setIcon(new ImageIcon(ColorSelector.class.getResource("res/dot_checked_orange.png")));
 				chosenColor = new Color(224, 90, 38);
 		    }
 		});
 		colorsFirstRow.add(dotOrange);
 		
-		dotYellow = new JButton(new ImageIcon(getClass().getResource("res/dot_yellow.png")));
+		dotYellow = new JButton(new ImageIcon(ColorSelector.class.getResource("res/dot_yellow.png")));
 		dotYellow.setBorder(BorderFactory.createEmptyBorder());
 		dotYellow.addActionListener(new ActionListener() {
 			@Override
 		    public void actionPerformed(ActionEvent e) {
 		        				resetAllColors();
-				dotYellow.setIcon(new ImageIcon(getClass().getResource("res/dot_checked_yellow.png")));
+				dotYellow.setIcon(new ImageIcon(ColorSelector.class.getResource("res/dot_checked_yellow.png")));
 				chosenColor = new Color(255, 255, 40);
 		    }
 		});
 		colorsFirstRow.add(dotYellow);
 		
-		dotBlack = new JButton(new ImageIcon(getClass().getResource("res/dot_black.png")));
+		dotBlack = new JButton(new ImageIcon(ColorSelector.class.getResource("res/dot_black.png")));
 		dotBlack.setBorder(BorderFactory.createEmptyBorder());
 		dotBlack.addActionListener(new ActionListener() {
 			@Override
 		    public void actionPerformed(ActionEvent e) {
 		        				resetAllColors();
-				dotBlack.setIcon(new ImageIcon(getClass().getResource("res/dot_checked_black.png")));
+				dotBlack.setIcon(new ImageIcon(ColorSelector.class.getResource("res/dot_checked_black.png")));
 				chosenColor = new Color(0, 0, 0);
 		    }
 		});
 		colorsSecondRow.add(dotBlack);
 		
-		dotGreen = new JButton(new ImageIcon(getClass().getResource("res/dot_green.png")));
+		dotGreen = new JButton(new ImageIcon(ColorSelector.class.getResource("res/dot_green.png")));
 		dotGreen.setBorder(BorderFactory.createEmptyBorder());
 		dotGreen.addActionListener(new ActionListener() {
 			@Override
 		    public void actionPerformed(ActionEvent e) {
 		        				resetAllColors();
-				dotGreen.setIcon(new ImageIcon(getClass().getResource("res/dot_checked_green.png")));
+				dotGreen.setIcon(new ImageIcon(ColorSelector.class.getResource("res/dot_checked_green.png")));
 				chosenColor = new Color(15, 198, 58);
 		    }
 		});
 		colorsSecondRow.add(dotGreen);
 		
-		dotBlue = new JButton(new ImageIcon(getClass().getResource("res/dot_blue.png")));
+		dotBlue = new JButton(new ImageIcon(ColorSelector.class.getResource("res/dot_blue.png")));
 		dotBlue.setBorder(BorderFactory.createEmptyBorder());
 		dotBlue.addActionListener(new ActionListener() {
 			@Override
 		    public void actionPerformed(ActionEvent e) {
 		        				resetAllColors();
-				dotBlue.setIcon(new ImageIcon(getClass().getResource("res/dot_checked_blue.png")));
+				dotBlue.setIcon(new ImageIcon(ColorSelector.class.getResource("res/dot_checked_blue.png")));
 				chosenColor = new Color(62, 171, 239);
 		    }
 		});
@@ -190,7 +189,7 @@ public class ColorSelector extends JFrame {
 		// Pulsante più
 		
 		
-		plus = new JButton(new ImageIcon(getClass().getResource("res/plus.png")));
+		plus = new JButton(new ImageIcon(ColorSelector.class.getResource("res/plus.png")));
 		plus.setBorder(BorderFactory.createEmptyBorder());
 		plus.addActionListener(new ActionListener() {
 			@Override
@@ -251,13 +250,13 @@ public class ColorSelector extends JFrame {
 	 */
 	private void resetAllColors() {
 		chosenColor = null;
-		dotPink.setIcon(new ImageIcon(getClass().getResource("res/dot_pink.png")));
-		dotRed.setIcon(new ImageIcon(getClass().getResource("res/dot_red.png")));
-		dotOrange.setIcon(new ImageIcon(getClass().getResource("res/dot_orange.png")));
-		dotYellow.setIcon(new ImageIcon(getClass().getResource("res/dot_yellow.png")));
-		dotBlack.setIcon(new ImageIcon(getClass().getResource("res/dot_black.png")));
-		dotGreen.setIcon(new ImageIcon(getClass().getResource("res/dot_green.png")));
-		dotBlue.setIcon(new ImageIcon(getClass().getResource("res/dot_blue.png")));
+		dotPink.setIcon(new ImageIcon(ColorSelector.class.getResource("res/dot_pink.png")));
+		dotRed.setIcon(new ImageIcon(ColorSelector.class.getResource("res/dot_red.png")));
+		dotOrange.setIcon(new ImageIcon(ColorSelector.class.getResource("res/dot_orange.png")));
+		dotYellow.setIcon(new ImageIcon(ColorSelector.class.getResource("res/dot_yellow.png")));
+		dotBlack.setIcon(new ImageIcon(ColorSelector.class.getResource("res/dot_black.png")));
+		dotGreen.setIcon(new ImageIcon(ColorSelector.class.getResource("res/dot_green.png")));
+		dotBlue.setIcon(new ImageIcon(ColorSelector.class.getResource("res/dot_blue.png")));
 	}
 	
 	/**
@@ -280,7 +279,13 @@ public class ColorSelector extends JFrame {
 	 */
 	private void closeWindow() {
 		isColorChosen = true;
+		colorChosen(chosenColor);
 		dispose();
+	}
+	
+	/**fai override di questo per ottenere colore*/
+	public void colorChosen(Color c) {
+		
 	}
 
 	/**

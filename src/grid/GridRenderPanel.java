@@ -90,60 +90,72 @@ public class GridRenderPanel extends JPanel {
 		return graph.getCellAtCoordinate((int)tmpX, (int)tmpY);
 	}
 	
+	void mousePressedCallback(MouseEvent evt) {
+		tmpX = evt.getX();
+		tmpY = evt.getY();
+		
+		/*int c = getCellAtCoordinate(evt.getX(), evt.getY());
+		if(c != -1) {
+			graph.getCell(c).setState(Color.RED);
+			ArrayList<Integer> al = new ArrayList<>();
+			al.add(c);
+			GridRenderPanel.this.synchWithGraph(al);
+		}*/	
+	}
+	
+	void mouseDraggedCallback(MouseEvent evt) {
+		double dx = (evt.getX() - tmpX)/zoomFactor; //calcola spostamento su x e y
+		double dy = (evt.getY() - tmpY)/zoomFactor;
+		tmpX = evt.getX();
+		tmpY = evt.getY();
+		
+		//calcolati il valore minimo che possono raggiungere i delta (sono sempre negativi)
+		double mindx = Math.min(-((double)buffer.getWidth(null) - (double)GridRenderPanel.this.getWidth()/zoomFactor), 0);
+		double mindy = Math.min(-((double)buffer.getHeight(null) - (double)GridRenderPanel.this.getHeight()/zoomFactor), 0);
+		
+		deltaX = Math.max(Math.min(0, deltaX + dx), Math.min(mindx, deltaX)); //aggiorna spostamenti globali
+		deltaY = Math.max(Math.min(0, deltaY + dy), Math.min(mindy, deltaY));
+
+		GridRenderPanel.this.invalidate();
+		GridRenderPanel.this.repaint();
+		if(GridRenderPanel.this.getParent() != null) {
+			GridRenderPanel.this.getParent().invalidate();
+			GridRenderPanel.this.getParent().repaint();
+		}	
+	}
+	
+	void mouseWheelMovedCallback(MouseWheelEvent evt) {
+		if(-evt.getUnitsToScroll() > 0)
+			zoomFactor *= 1.3;
+		if(-evt.getUnitsToScroll() < 0)
+			zoomFactor /= 1.3;
+		GridRenderPanel.this.invalidate();
+		GridRenderPanel.this.repaint();
+		GridRenderPanel.this.getParent().invalidate();
+		GridRenderPanel.this.getParent().repaint();	
+	}
+	
 	/**inizializza mouse listeners*/
 	private void initListeners() {
 		
 		mouseListener = new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent evt) {
-				tmpX = evt.getX();
-				tmpY = evt.getY();
-				
-				/*int c = getCellAtCoordinate(evt.getX(), evt.getY());
-				if(c != -1) {
-					graph.getCell(c).setState(Color.RED);
-					ArrayList<Integer> al = new ArrayList<>();
-					al.add(c);
-					GridRenderPanel.this.synchWithGraph(al);
-				}*/
+				mousePressedCallback(evt);
 			}
 		};
 		
 		motionListener = new MouseMotionAdapter() {
 			@Override
 			public void mouseDragged(MouseEvent evt) { //trascinando il mouse si sposta l'immagine
-				double dx = (evt.getX() - tmpX)/zoomFactor; //calcola spostamento su x e y
-				double dy = (evt.getY() - tmpY)/zoomFactor;
-				tmpX = evt.getX();
-				tmpY = evt.getY();
-				
-				//calcolati il valore minimo che possono raggiungere i delta (sono sempre negativi)
-				double mindx = Math.min(-((double)buffer.getWidth(null) - (double)GridRenderPanel.this.getWidth()/zoomFactor), 0);
-				double mindy = Math.min(-((double)buffer.getHeight(null) - (double)GridRenderPanel.this.getHeight()/zoomFactor), 0);
-				
-				deltaX = Math.max(Math.min(0, deltaX + dx), Math.min(mindx, deltaX)); //aggiorna spostamenti globali
-				deltaY = Math.max(Math.min(0, deltaY + dy), Math.min(mindy, deltaY));
-	
-				GridRenderPanel.this.invalidate();
-				GridRenderPanel.this.repaint();
-				if(GridRenderPanel.this.getParent() != null) {
-					GridRenderPanel.this.getParent().invalidate();
-					GridRenderPanel.this.getParent().repaint();
-				}
+				mouseDraggedCallback(evt);
 			}
 		};
 		
 		wheelListener = new MouseWheelListener() {
 			@Override
 			public void mouseWheelMoved(MouseWheelEvent evt) {
-				if(-evt.getUnitsToScroll() > 0)
-					zoomFactor *= 1.3;
-				if(-evt.getUnitsToScroll() < 0)
-					zoomFactor /= 1.3;
-				GridRenderPanel.this.invalidate();
-				GridRenderPanel.this.repaint();
-				GridRenderPanel.this.getParent().invalidate();
-				GridRenderPanel.this.getParent().repaint();
+				mouseWheelMovedCallback(evt);
 			}
 		};
 	}

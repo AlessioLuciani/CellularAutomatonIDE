@@ -8,9 +8,10 @@ import java.util.List;
 
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
-import RulesCreatorWindow.EditExpressionPanel;
-import colors.CustomColorPicker;
-import colors.CustomPalette;
+
+import main_frame.rules_creator.EditExpressionPanel;
+import util.colors.CustomColorPicker;
+import util.colors.CustomPalette;
 
 public class TestApp {
 

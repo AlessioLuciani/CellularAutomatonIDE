@@ -7,6 +7,7 @@ import java.awt.GridLayout;
 import java.awt.Label;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.Random;
 
 import javax.swing.JButton;
@@ -23,9 +24,9 @@ import grid.triangle.TriangularGraph;
 public class Test_gridrender {
 	public static void main(String [] args) {
 		JFrame frame = new JFrame();
-		final int w = 100, h = 50, s = 30;
-		GridConfiguration gconf = new GridConfiguration(CellForm.TRIANGLE, s, w, h);
-		Graph g = new TriangularGraph(gconf.getNumCellsX(), gconf.getNumCellsY(), gconf.getLen()); //new MatrixGraph(w, h, s);
+		final int w = 100, h = 100, s = 10;
+		GridConfiguration gconf = new GridConfiguration(CellForm.SQUARE, s, w, h);
+		Graph g = new MatrixGraph(gconf.getNumCellsX(), gconf.getNumCellsY(), gconf.getLen()); //new MatrixGraph(w, h, s);
 		
 		for(int i=1; i<=g.getNumNodes(); i++) {
 			g.getCell(i).setState(Color.YELLOW);
@@ -40,13 +41,15 @@ public class Test_gridrender {
 		b7.addActionListener(new ActionListener() {
 			@Override
 		    public void actionPerformed(ActionEvent e) {
-
+				
+				ArrayList<Integer> li = new ArrayList<Integer>();
 				Random rand = new Random();
 				for(int i=0; i<10; i++) {
 					int ind = rand.nextInt(w*h) + 1;
+					li.add(ind);
 					g.getCell(ind).setState(Color.BLUE);
 				}
-				panel.synchWithGraph(); 
+				panel.synchWithGraph(li); 
 				frame.invalidate();
 				frame.repaint();
 		    }

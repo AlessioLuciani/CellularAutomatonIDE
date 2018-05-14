@@ -1,4 +1,4 @@
-package RulesCreatorWindow;
+package main_frame.rules_creator;
 
 import java.awt.Color;
 

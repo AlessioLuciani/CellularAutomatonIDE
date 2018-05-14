@@ -1,4 +1,4 @@
-package MainFrame;
+package main_frame.states;
 
 import javax.swing.JPanel;
 import javax.swing.JButton;

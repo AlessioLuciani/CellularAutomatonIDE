@@ -1,7 +1,6 @@
-package MainFrame;
+package main_frame.rules_creator;
 
 
-import RulesCreatorWindow.CreateExpressionWindow;
 import rules.Rule;
 
 import javax.swing.AbstractAction;
@@ -85,7 +84,6 @@ public class RuleChooser extends JPanel{
 	Action actionbtnNew = new AbstractAction() {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-					
 			JFrame ruleCreator = new CreateExpressionWindow(100, 100, 450, 300, list, forest);
 			ruleCreator.pack();
 			ruleCreator.setVisible(true);
