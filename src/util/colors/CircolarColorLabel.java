@@ -35,7 +35,7 @@ public class CircolarColorLabel extends JLabel {
 		this.dim = dim;
 		setMaximumSize(new Dimension(dim, dim));
 		setMinimumSize(new Dimension(dim, dim));
-		setBounds(0, 0, dim, dim);
+		setBounds(0, 0, this.dim, this.dim);
 		setVisible(true);
 		
 	}
@@ -47,7 +47,7 @@ public class CircolarColorLabel extends JLabel {
 		this.dim = dim;
 		setMaximumSize(new Dimension(dim, dim));
 		setMinimumSize(new Dimension(dim,dim));
-		setBounds(x, y, dim, dim);
+		setBounds(x, y, this.dim, this.dim);
 		this.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {

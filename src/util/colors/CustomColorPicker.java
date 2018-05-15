@@ -11,6 +11,7 @@ import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 public class CustomColorPicker extends JFrame {
@@ -43,7 +44,7 @@ public class CustomColorPicker extends JFrame {
 		ButtonPanel.setSize(btnOK.getWidth(), btnOK.getHeight());
 		
 		
-		MidPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+		//MidPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
 		MidPanel.setLayout(null);
 		MidPanel.setSize(palette.getWidth(),palette.getHeight());
 				
@@ -59,20 +60,21 @@ public class CustomColorPicker extends JFrame {
 	}	
 	
 	private void setChoosedColor(){this.selectedColor = palette.getSelectedColor();}
-	public void colorChosen(){}
-
-	private void launchWarning(){}
+	public void colorChosen() {} //da reimplementare
+	public Color getSelectedColor() {return selectedColor;} //ritorna il colore selezionato
+	private void launchWarning(){JOptionPane.showMessageDialog(this, "Seleziona un Colore", "Nessun colore selezionato", JOptionPane.WARNING_MESSAGE);}
 	
 	ActionListener OKclick = new ActionListener() {
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			setChoosedColor();
-			if (selectedColor==null){System.out.println("Seleziona un colore");}
+			if (selectedColor==null){launchWarning();}
 			else{dispose();}
 			
 		}
 	};
+	
 		
 		
 }

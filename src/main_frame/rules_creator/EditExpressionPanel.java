@@ -1,8 +1,21 @@
 package main_frame.rules_creator;
 
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Graphics;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
+import java.util.List;
 
 import javax.swing.BoxLayout;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -11,6 +24,8 @@ import rules.BaseExpressionNode1;
 import rules.BaseExpressionNode2;
 import rules.ExpressionNode;
 import util.IntegerDocument;
+import util.colors.ColorPickerResultLabel;
+import util.colors.CustomColorPicker;
 
 public class EditExpressionPanel extends JPanel {
 
@@ -22,23 +37,27 @@ public class EditExpressionPanel extends JPanel {
 	static private final String[] TYPE_THEN = {"La cella assume il colore "};
 	
 	//static final private int height = 10;
-	private JTextField colore;
+	private JLabel colore;
 	private JTextField start;
 	private JTextField end;
 	private JTextField n_vicini;
 	private String Type = null;
+	private List<Color> availableColors;
 	
 	private ExpressionNode expr;
 	private Color thenColor;
 	
 	
-	public EditExpressionPanel() {
+	public EditExpressionPanel(List<Color> Colors) {
 		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
+		//setLayout(new FlowLayout());
+		this.availableColors = Colors;
 	}
 	
 	public EditExpressionPanel formatA() {
 		Type = "A";
-		colore = new JTextField();
+		//colore = new JLabel();colore.setText("   ");colore.setOpaque(true);colore.setBackground(Color.WHITE);
+		colore = new ColorPickerResultLabel(availableColors);
 		start = new JTextField();
 		start.setDocument(new IntegerDocument());
 		end = new JTextField();
@@ -56,7 +75,7 @@ public class EditExpressionPanel extends JPanel {
 		Type = "B";
 		n_vicini = new JTextField();
 		n_vicini.setDocument(new IntegerDocument());
-		colore = new JTextField();
+		colore = new ColorPickerResultLabel(availableColors);
 		add(new JLabel(TYPE_B[0]));
 		add(n_vicini);
 		add(new JLabel(TYPE_B[1]));
@@ -66,7 +85,7 @@ public class EditExpressionPanel extends JPanel {
 	
 	public EditExpressionPanel formatThen() {
 		Type = "THEN";
-		colore = new JTextField();
+		colore = new ColorPickerResultLabel(availableColors);
 		add(new JLabel(TYPE_THEN[0]));
 		add(colore);
 		return this;	
@@ -113,4 +132,8 @@ public class EditExpressionPanel extends JPanel {
 		return Type;
 	}
 
+	
+	
+
+	
 }
