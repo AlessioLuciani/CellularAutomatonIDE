@@ -61,7 +61,7 @@ public class GridInitializerPanel extends JPanel {
 			@Override
 			protected void mouseDraggedCallback(MouseEvent evt) {
 				if (isGridDraggable)
-				super.mouseDraggedCallback(evt);
+					super.mouseDraggedCallback(evt);
 				if (areCellsColorable)
 					mousePressedCallback(evt);
 			}
@@ -76,10 +76,9 @@ public class GridInitializerPanel extends JPanel {
 						ArrayList<Integer> al = new ArrayList<>();
 						al.add(c);
 						this.synchWithGraph(al);
+					}
+				}
 			}
-				}}
-			
-			
 		};
 		BorderLayout layout = new BorderLayout();
 		setLayout(layout);

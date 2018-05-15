@@ -3,7 +3,6 @@ package main_frame.rules_creator;
 
 import rules.Rule;
 
-import javax.swing.AbstractAction;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;

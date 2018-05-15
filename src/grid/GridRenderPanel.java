@@ -67,6 +67,10 @@ public class GridRenderPanel extends JPanel {
 			graph.getCell(ind).render(buffer.getGraphics(), borderColor);
 		this.invalidate();
 		this.repaint();
+		if(GridRenderPanel.this.getParent() != null) {
+			GridRenderPanel.this.getParent().invalidate();
+			GridRenderPanel.this.getParent().repaint();
+		}	
 	}
 	
 	@Override
