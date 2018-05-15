@@ -8,17 +8,27 @@ import java.awt.List;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import java.awt.GridBagLayout;
+import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 
-public class StateChooser extends JPanel{
+public class StateChoser extends JPanel{
 	
 	private static final long serialVersionUID = 1L;
 
+	// Contenitore di tutte le regole di transizione gia' create
 	List list;
 
-	public StateChooser() {
+	//lista degli stati
+	ArrayList<Color> listColor;
+	
+	public StateChoser() {
+		
+		//lista degli stati
+		listColor = new ArrayList<Color>();
 		
 		// Creazione Layout
 		GridBagLayout gridBagLayout = new GridBagLayout();
@@ -34,12 +44,12 @@ public class StateChooser extends JPanel{
 		
 		// Pulsante che richiama la procedura che inserisce gli stati
 		JButton btnNew = new JButton("   New   ");
-		btnNew.setAction(actionbtnNew);		
+		btnNew.addActionListener(actionbtnNew);		
 		btnNew.setText("   New    ");
 
 		// Pulsante che richiama la procedura che elimina gli stati selezionati
 		JButton btnRemove = new JButton("Remove");
-		btnRemove.setAction(actionbtnRemove);		
+		btnRemove.addActionListener(actionbtnRemove);		
 		btnRemove.setText("Remove");
 		
 		// Aggiunta contenitore stati
@@ -70,25 +80,21 @@ public class StateChooser extends JPanel{
 	}
 	
 	// Apertura modulo per l'inserimento stati
-	@SuppressWarnings("serial")
-	Action actionbtnNew = new AbstractAction() {
+	ActionListener actionbtnNew = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			
 			/*
-			 *  Codice scelta stati
+			 *  Codice scelta stati passando listColor
 			 * 
 			 * 
 			 * */
-			// JFrame ruleCreator = new CreateExpressionWindow(100, 100, 450, 300, list, forest);
-			// ruleCreator.pack();
-			// ruleCreator.setVisible(true);
+			
 		}
 	};
 	
 	// Rimozione degli stati selezionati
-	@SuppressWarnings("serial")
-	Action actionbtnRemove = new AbstractAction() {
+	ActionListener actionbtnRemove = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			int [] inds = list.getSelectedIndexes();
@@ -102,4 +108,9 @@ public class StateChooser extends JPanel{
 			}
 		}
 	};
+	
+	// Semplice funzione che restituisce l'insieme degli stati rappresentati ognuno da un colore
+	public ArrayList<Color> getStates(){
+		return this.listColor;
+	}
 }

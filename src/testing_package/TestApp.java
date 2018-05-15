@@ -9,9 +9,7 @@ import java.util.List;
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 
-import main_frame.rules_creator.EditExpressionPanel;
-import util.colors.CustomColorPicker;
-import util.colors.CustomPalette;
+import util.colors.ColorPickerFrame;
 
 public class TestApp {
 
@@ -43,17 +41,7 @@ public class TestApp {
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void test() {
-		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 300);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(new BoxLayout(frame.getContentPane(),BoxLayout.Y_AXIS));
-		
-		
-		EditExpressionPanel t = new EditExpressionPanel().formatA();
-		frame.getContentPane().add(t);
 	
-	}
 	private void initialize() {
 		List<Color> colorlist = new ArrayList<>();
  		colorlist.add(Color.RED);
@@ -65,7 +53,19 @@ public class TestApp {
  		colorlist.add(Color.BLACK);
  		colorlist.add(Color.CYAN);
  		colorlist.add(Color.BLACK);
- 		frame = new CustomColorPicker(colorlist);
+ 		colorlist.add(Color.GREEN);
+ 		colorlist.add(Color.BLACK);
+ 		colorlist.add(Color.CYAN);
+ 		colorlist.add(Color.BLACK);
+ 		colorlist.add(Color.GREEN);
+ 		colorlist.add(Color.BLACK);
+ 		colorlist.add(Color.CYAN);
+ 		colorlist.add(Color.BLACK);
+ 		colorlist.add(Color.GREEN);
+ 		colorlist.add(Color.BLACK);
+ 		colorlist.add(Color.CYAN);
+ 		colorlist.add(Color.BLACK);
+		frame = ColorPickerFrame.inizialize(colorlist);
  		//frame = new JFrame();
  		
 		
@@ -88,9 +88,3 @@ public class TestApp {
 		frame.setVisible(true);
 	}
 }
-
-
-
-
-
-

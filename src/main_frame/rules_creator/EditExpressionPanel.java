@@ -1,6 +1,7 @@
 package main_frame.rules_creator;
 
 import java.awt.Color;
+import java.util.List;
 
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
@@ -11,6 +12,7 @@ import rules.BaseExpressionNode1;
 import rules.BaseExpressionNode2;
 import rules.ExpressionNode;
 import util.IntegerDocument;
+import util.colors.ColorPickerResultLabel;
 
 public class EditExpressionPanel extends JPanel {
 
@@ -22,23 +24,27 @@ public class EditExpressionPanel extends JPanel {
 	static private final String[] TYPE_THEN = {"La cella assume il colore "};
 	
 	//static final private int height = 10;
-	private JTextField colore;
+	private JLabel colore;
 	private JTextField start;
 	private JTextField end;
 	private JTextField n_vicini;
 	private String Type = null;
+	private List<Color> availableColors;
 	
 	private ExpressionNode expr;
 	private Color thenColor;
 	
 	
-	public EditExpressionPanel() {
+	public EditExpressionPanel(List<Color> Colors) {
 		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
+		//setLayout(new FlowLayout());
+		this.availableColors = Colors;
 	}
 	
 	public EditExpressionPanel formatA() {
 		Type = "A";
-		colore = new JTextField();
+		//colore = new JLabel();colore.setText("   ");colore.setOpaque(true);colore.setBackground(Color.WHITE);
+		colore = new ColorPickerResultLabel(availableColors);
 		start = new JTextField();
 		start.setDocument(new IntegerDocument());
 		end = new JTextField();
@@ -56,7 +62,7 @@ public class EditExpressionPanel extends JPanel {
 		Type = "B";
 		n_vicini = new JTextField();
 		n_vicini.setDocument(new IntegerDocument());
-		colore = new JTextField();
+		colore = new ColorPickerResultLabel(availableColors);
 		add(new JLabel(TYPE_B[0]));
 		add(n_vicini);
 		add(new JLabel(TYPE_B[1]));
@@ -66,7 +72,7 @@ public class EditExpressionPanel extends JPanel {
 	
 	public EditExpressionPanel formatThen() {
 		Type = "THEN";
-		colore = new JTextField();
+		colore = new ColorPickerResultLabel(availableColors);
 		add(new JLabel(TYPE_THEN[0]));
 		add(colore);
 		return this;	
@@ -85,16 +91,16 @@ public class EditExpressionPanel extends JPanel {
 		if(Type.equals("A")) {
 			int a = Integer.parseInt(start.getText());
 			int b = Integer.parseInt(end.getText());
-			Color c = null; //TODO: metti colore!
+			Color c = colore.getBackground(); 
 			expr = new BaseExpressionNode1(a, b, c);
 		}
 		if(Type.equals("B")) {
 			int k = Integer.parseInt(n_vicini.getText());
-			Color c = null; //TODO: metti colore!
+			Color c = colore.getBackground();
 			expr = new BaseExpressionNode2(k, c);
 		}
 		if(Type.equals("THEN")) {
-			thenColor = null; //TODO: metti colore!
+			thenColor = colore.getBackground(); 
 		}
 	}
 	
@@ -111,6 +117,5 @@ public class EditExpressionPanel extends JPanel {
 	
 	public String getType() {
 		return Type;
-	}
-
+	}	
 }
