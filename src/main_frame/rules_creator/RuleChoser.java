@@ -86,17 +86,12 @@ public class RuleChoser extends JPanel{
 	ActionListener actionbtnNew = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-<<<<<<< HEAD:src/main_frame/rules_creator/RuleChooser.java
 			java.util.List<Color> cl = new ArrayList<>();
 			cl.add(Color.GREEN);
 			cl.add(Color.BLACK);
 			cl.add(Color.ORANGE);
-			JFrame ruleCreator = new CreateExpressionWindow(100, 100, 450, 300, list, forest,cl);
-			ruleCreator.pack();
-=======
-			JFrame ruleCreator = new CreateExpressionWindow(100, 100, 450, 300, list, forest, listColor);
+			JFrame ruleCreator = new CreateExpressionWindow(100, 100, 450, 300, list, forest, cl);
 			ruleCreator.setBounds(100, 100, 450, 300);
->>>>>>> a2758aea6285555fba36d07bb07c77a620f79c2e:src/main_frame/rules_creator/RuleChoser.java
 			ruleCreator.setVisible(true);
 		}
 	};
