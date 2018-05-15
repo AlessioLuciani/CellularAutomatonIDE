@@ -1,21 +1,9 @@
 package main_frame.rules_creator;
 
 import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Graphics;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
 import java.util.List;
 
 import javax.swing.BoxLayout;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -25,7 +13,6 @@ import rules.BaseExpressionNode2;
 import rules.ExpressionNode;
 import util.IntegerDocument;
 import util.colors.ColorPickerResultLabel;
-import util.colors.CustomColorPicker;
 
 public class EditExpressionPanel extends JPanel {
 
@@ -104,16 +91,16 @@ public class EditExpressionPanel extends JPanel {
 		if(Type.equals("A")) {
 			int a = Integer.parseInt(start.getText());
 			int b = Integer.parseInt(end.getText());
-			Color c = null; //TODO: metti colore!
+			Color c = colore.getBackground(); //TODO: metti colore!
 			expr = new BaseExpressionNode1(a, b, c);
 		}
 		if(Type.equals("B")) {
 			int k = Integer.parseInt(n_vicini.getText());
-			Color c = null; //TODO: metti colore!
+			Color c = colore.getBackground(); //TODO: metti colore!
 			expr = new BaseExpressionNode2(k, c);
 		}
 		if(Type.equals("THEN")) {
-			thenColor = null; //TODO: metti colore!
+			thenColor = colore.getBackground(); //TODO: metti colore!
 		}
 	}
 	
@@ -130,10 +117,5 @@ public class EditExpressionPanel extends JPanel {
 	
 	public String getType() {
 		return Type;
-	}
-
-	
-	
-
-	
+	}	
 }

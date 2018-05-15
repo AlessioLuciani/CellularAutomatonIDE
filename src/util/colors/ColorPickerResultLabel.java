@@ -11,8 +11,6 @@ import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
-import main_frame.rules_creator.EditExpressionPanel;
-
 public class ColorPickerResultLabel extends JLabel{
 
 	/**
@@ -54,7 +52,7 @@ public class ColorPickerResultLabel extends JLabel{
 		this.repaint();
 	}
 	
-	private Color getColor() {return this.getBackground();}		
+	public Color getColor() {return this.getBackground();}		
 	
 	@Override
 	protected void paintComponent(Graphics g) {
