@@ -7,6 +7,7 @@ import java.awt.GridLayout;
 import java.awt.Label;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -32,7 +33,12 @@ public class Test_gridrender {
 			g.getCell(i).setState(Color.YELLOW);
 		}
 		
-		GridRenderPanel panel = new GridRenderPanel(g, gconf, Color.BLACK);
+		GridRenderPanel panel = new GridRenderPanel(g, gconf, Color.BLACK) {
+			@Override
+			public void mouseDraggedCallback(MouseEvent evt) {
+				super.mouseDraggedCallback(evt);
+			}
+		};
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		frame.setBounds(0, 0, 800, 800);

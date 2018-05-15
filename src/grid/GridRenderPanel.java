@@ -90,7 +90,7 @@ public class GridRenderPanel extends JPanel {
 		return graph.getCellAtCoordinate((int)tmpX, (int)tmpY);
 	}
 	
-	void mousePressedCallback(MouseEvent evt) {
+	protected void mousePressedCallback(MouseEvent evt) {
 		tmpX = evt.getX();
 		tmpY = evt.getY();
 		
@@ -103,7 +103,7 @@ public class GridRenderPanel extends JPanel {
 		}*/	
 	}
 	
-	void mouseDraggedCallback(MouseEvent evt) {
+	protected void mouseDraggedCallback(MouseEvent evt) {
 		double dx = (evt.getX() - tmpX)/zoomFactor; //calcola spostamento su x e y
 		double dy = (evt.getY() - tmpY)/zoomFactor;
 		tmpX = evt.getX();
@@ -124,7 +124,7 @@ public class GridRenderPanel extends JPanel {
 		}	
 	}
 	
-	void mouseWheelMovedCallback(MouseWheelEvent evt) {
+	protected void mouseWheelMovedCallback(MouseWheelEvent evt) {
 		if(-evt.getUnitsToScroll() > 0)
 			zoomFactor *= 1.3;
 		if(-evt.getUnitsToScroll() < 0)
