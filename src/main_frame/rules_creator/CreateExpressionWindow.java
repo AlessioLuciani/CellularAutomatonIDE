@@ -36,7 +36,6 @@ public class CreateExpressionWindow extends JFrame {
 	private EditExpressionPanel edit_panel = null;	//pannello a comparsa per inserire parametri
 	private JPanel BottomGroupPanel ;
 	private boolean flag_then;
-	private java.util.List<Color> availableColors;
 	
 	private ArrayList<ExpressionNode> tree;
 	Color thenColor;
@@ -44,7 +43,7 @@ public class CreateExpressionWindow extends JFrame {
 	List listrules; //è la lista delle regole che va estesa
 	ArrayList<Rule> forestRules; //alberi delle regole
 	
-	public CreateExpressionWindow(int x, int y, int width, int height, List l, ArrayList<Rule> forestRules, java.util.List<Color> availableColors) {
+	public CreateExpressionWindow(int x, int y, int width, int height, List l, ArrayList<Rule> forestRules) {
 		super();
 		setBounds(x, y, width, height);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -55,8 +54,7 @@ public class CreateExpressionWindow extends JFrame {
 		exp_list.setMultipleMode(true);
 		ButtonPanel = new JPanel();
 		ButtonPanel.setLayout(new BoxLayout(ButtonPanel, BoxLayout.X_AXIS));
-		this.availableColors = availableColors;
-		edit_panel = new EditExpressionPanel(this.availableColors);
+		edit_panel = new EditExpressionPanel();
 		btnA = new JButton("A");btnA.setName("btnA");
 		btnB = new JButton("B");btnB.setName("btnB");
 		btnAND = new JButton("AND");btnAND.setName("btnAND");
@@ -73,7 +71,7 @@ public class CreateExpressionWindow extends JFrame {
 		btnA.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				edit_panel = new EditExpressionPanel(availableColors).formatA();
+				edit_panel = new EditExpressionPanel().formatA();
 				BottomGroupPanel.remove(0);
 				BottomGroupPanel.add(edit_panel, 0);
 				check_then();
@@ -84,7 +82,7 @@ public class CreateExpressionWindow extends JFrame {
 		btnB.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				edit_panel = new EditExpressionPanel(availableColors).formatB();
+				edit_panel = new EditExpressionPanel().formatB();
 				BottomGroupPanel.remove(0);
 				BottomGroupPanel.add(edit_panel, 0);
 				check_then();
@@ -123,7 +121,7 @@ public class CreateExpressionWindow extends JFrame {
 				btnTHEN.setEnabled(false);
 				btn_add.setText("Save");
 				disable_buttons();
-				edit_panel = new EditExpressionPanel(availableColors).formatThen();
+				edit_panel = new EditExpressionPanel().formatThen();
 				BottomGroupPanel.remove(0);
 				BottomGroupPanel.add(edit_panel, 0);
 				revalidate();
