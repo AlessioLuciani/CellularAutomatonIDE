@@ -1,11 +1,18 @@
 package testing_package;
 
+import grid.Cell;
+import grid.CellForm;
 import grid.Graph;
 import grid.GridConfCreator;
+import grid.GridConfiguration;
 import grid.square.MatrixGraph;
+import grid.square.SquareCell;
+import grid.triangle.TriangularGraph;
+import main_frame.errors_panel.ErrorsPanel;
 import rules.*;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
 
@@ -55,10 +62,31 @@ public class Test1 {
     	
     	JFrame frame = new JFrame();
     	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    	GridConfCreator gcc = new GridConfCreator();
+    	ErrorsPanel gcc = new ErrorsPanel();
     	frame.add(gcc);
     	frame.setBounds(10, 10, 300, 300);
     	frame.setVisible(true);
-    	System.out.println(gcc.getGridConfiguration());
+    	
+    	GridConfiguration gconf = new GridConfiguration(CellForm.TRIANGLE, 10, 10, 10);
+    	ArrayList<Color> colors = new ArrayList<Color>();
+    	colors.add(Color.BLACK); colors.add(Color.RED); colors.add(Color.YELLOW);
+    	MatrixGraph graph = new MatrixGraph(10, 10, 10);
+    	
+    	ArrayList<Rule> rules = new ArrayList<Rule>();
+    	BaseExpressionNode1 a = new BaseExpressionNode1(0, 0, Color.RED);
+    	BaseExpressionNode2 b = new BaseExpressionNode2(0, Color.RED);
+    	BaseExpressionNode1 c = new BaseExpressionNode1(0, 0, Color.RED);
+    	AndNode and1 = new AndNode(a, b);
+    	NotNode not1 = new NotNode(c);
+    	OrNode or1 = new OrNode(and1, not1);
+    	rules.add(new Rule(or1, Color.YELLOW));
+    	rules.add(new Rule(or1, Color.BLACK));
+    	
+    	//graph.getCell(1).setState(Color.BLUE);
+    	gcc.update(colors, gconf, rules, graph, true);
+    	
+    	//System.out.println(gcc.getGridConfiguration());
+    	//Graph graph = new TriangularGraph(0, 0, 0);
+    	//System.out.println((graph instanceof MatrixGraph)+" "+(graph instanceof TriangularGraph));
     }
 }

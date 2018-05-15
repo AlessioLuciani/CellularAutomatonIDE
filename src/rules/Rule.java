@@ -2,6 +2,8 @@ package rules;
 
 import java.awt.Color;
 
+import util.StaticUtil;
+
 /**definisce una regola dell'automa: definita dall'albero dell'espressione e dal nuovo colore che si assume se la condizione è vera*/
 public class Rule {
     protected ExpressionNode root;
@@ -23,6 +25,7 @@ public class Rule {
     
     @Override
     public String toString() {
-    	return "SE "+root.toString()+" ALLORA nuovo colore = "+newColor;
+    	String colorStr = StaticUtil.colorToRgbString(newColor);
+    	return "SE "+root.toString()+" ALLORA nuovo colore = "+colorStr;
     }
 }

@@ -44,6 +44,11 @@ public class GridConfiguration {
 		return len;
 	}
 	
+	/**restituisce forma cella*/
+	public CellForm getForm() {
+		return form;
+	}
+	
 	@Override
 	public String toString() {
 		return form.name()+" "+len+" "+numCellsX+" "+numCellsY;

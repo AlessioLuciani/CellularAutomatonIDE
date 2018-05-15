@@ -10,6 +10,7 @@ public class MatrixGraph extends Graph {
 	public MatrixGraph() {}
 	
 	public MatrixGraph(int w, int h, int size) {
+		super();
 		this.w = w;
 		this.h = h;
 		this.size = size;

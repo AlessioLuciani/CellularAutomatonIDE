@@ -1,8 +1,10 @@
 package rules;
 
 import grid.Graph;
+import util.StaticUtil;
 
 import java.awt.Color;
+import java.util.HashSet;
 
 /**
  * nodo di un'espressione di base di tipo2, cioe':
@@ -34,6 +36,13 @@ public class BaseExpressionNode2 extends ExpressionNode {
     
     @Override
     public String toString() {
-    	return "Il " + indChild + "° vicino è di colore " + colr;
+    	String colorStr = StaticUtil.colorToRgbString(colr);
+    	return "Il " + indChild + "° vicino è di colore " + colorStr;
+    }
+    
+    @Override
+    public void getColors(HashSet<Color> colors) {
+    	super.getColors(colors);
+    	colors.add(colr);
     }
 }

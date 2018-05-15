@@ -12,6 +12,7 @@ public abstract class Cell {
     
     public Cell(int myId) {
     	this.myId = myId;
+    	state = Color.BLACK;
     }
 
     /**stato cella*/

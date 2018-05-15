@@ -1,8 +1,10 @@
 package rules;
 
 import grid.Graph;
+import util.StaticUtil;
 
 import java.awt.Color;
+import java.util.HashSet;
 
 /**
  * nodo di un'espressione di base di tipo1, cioe':
@@ -39,6 +41,13 @@ public class BaseExpressionNode1 extends ExpressionNode {
     
     @Override
     public String toString() {
-    	return "Il numero dei vicini di colore " + colr + " è compreso tra " + num1 +  " e " + num2;
+    	String colorStr = StaticUtil.colorToRgbString(colr);
+    	return "Il numero dei vicini di colore " + colorStr + " è compreso tra " + num1 +  " e " + num2;
+    }
+    
+    @Override
+    public void getColors(HashSet<Color> colors) {
+    	super.getColors(colors);
+    	colors.add(colr);
     }
 }
