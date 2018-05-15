@@ -10,6 +10,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import java.awt.List;
+import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
@@ -84,7 +85,11 @@ public class RuleChooser extends JPanel{
 	Action actionbtnNew = new AbstractAction() {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			JFrame ruleCreator = new CreateExpressionWindow(100, 100, 450, 300, list, forest);
+			java.util.List<Color> cl = new ArrayList<>();
+			cl.add(Color.GREEN);
+			cl.add(Color.BLACK);
+			cl.add(Color.ORANGE);
+			JFrame ruleCreator = new CreateExpressionWindow(100, 100, 450, 300, list, forest,cl);
 			ruleCreator.pack();
 			ruleCreator.setVisible(true);
 		}

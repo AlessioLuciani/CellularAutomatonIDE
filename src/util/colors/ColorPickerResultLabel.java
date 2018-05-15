@@ -27,7 +27,7 @@ public class ColorPickerResultLabel extends JLabel{
 		setSize(10,20);
 		setText("   ");
 		setOpaque(true);
-		setBackground(Color.WHITE);
+		setBackground(availableColors.get(0));
 	}
 	
 	MouseAdapter onColorClicked = new MouseAdapter() {
