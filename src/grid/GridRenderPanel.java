@@ -54,7 +54,7 @@ public class GridRenderPanel extends JPanel {
 		synchWithGraph();
 	}
 	
-	/**metodo da chiamare nel caso in cui gli stati dei nodi siano stati modificati: ridisegna TUTTI i nodi del grafo sul buffer (che poi sar‡ stampato a video)*/
+	/**metodo da chiamare nel caso in cui gli stati dei nodi siano stati modificati: ridisegna TUTTI i nodi del grafo sul buffer (che poi sar√† stampato a video)*/
 	public void synchWithGraph() {
 		graph.drawGraph(buffer.getGraphics(), borderColor);
 		this.invalidate();
