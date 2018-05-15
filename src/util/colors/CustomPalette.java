@@ -1,23 +1,20 @@
 package util.colors;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import javafx.scene.layout.Border;
 
 public class CustomPalette extends JPanel {
+	
+	/*
+	 * Palette di colori inizializzata con una lista
+	 */
 
 	private static final long serialVersionUID = 1L;
 	private static int cell_size = 30;				//dimenzione di ogni cella colorata
@@ -29,26 +26,28 @@ public class CustomPalette extends JPanel {
 		
 		Cells = new ArrayList<>();					//lista di tutte le celle (non serve nel codice ma c'è in caso di utilizzo futuro)
 		int nColor = ColorList.size();				//numero di celle colorate
-		int nRows = (int)Math.sqrt(nColor);			//numero di righe della matrice delle celle
+		int nRows = 0;								//numero di righe della matrice delle celle
 		int nCols = (int)(Math.sqrt(nColor)+1);		//numero di colonne della matrice delle celle
-		SelectedCell = null;						//cella selezionata dall'utente
+		SelectedCell = null;							//cella selezionata dall'utente
 		
 		setLayout(null);
-		setSize((nCols+1)*(cell_size+cell_spacing),nRows*(cell_size+cell_spacing));
 		
 		int cont=0;
 		int x = 0;
-		int y = 0;
 		while(cont<nColor) {
-			if (x>=nCols) {x=0;y++;}
-			CircolarColorLabel cell = new CircolarColorLabel(ColorList.get((y*nCols)+x), cell_size);
+			if (x>=nCols) {x=0;nRows++;}
+			CircolarColorLabel cell = new CircolarColorLabel(ColorList.get((nRows*nCols)+x), cell_size);
 			Cells.add(cell);
 			cell.addMouseListener(mouse_event);
-			cell.setLocation(cell_size*x+cell_spacing, cell_size*y);
+			cell.setLocation((cell_size*x)+cell_spacing, cell_size*nRows);
 			add(cell);
 			cont++;
 			x++;
 		}
+		
+		nRows++;
+		setMinimumSize(new Dimension((nCols)*(cell_size+cell_spacing),(nRows*(cell_size+cell_spacing))));
+		setSize((nCols)*(cell_size+cell_spacing),nRows*(cell_size+cell_spacing));
 	}
 	
 	//cambia la nuova selezionata con la vecchia e sistema la grafica
@@ -69,7 +68,6 @@ public class CustomPalette extends JPanel {
 			ChangeSelected(((CircolarColorLabel)e.getSource()));		//aggiorno la cella selezionata
 			((CircolarColorLabel)e.getSource()).setClick(true);;
 			((CircolarColorLabel)e.getSource()).repaint();
-			System.out.println(((CircolarColorLabel)e.getSource()).getColor());
 		}
 		
 		@Override
@@ -89,5 +87,10 @@ public class CustomPalette extends JPanel {
 		}
 		
 	};
+	
+	public Color getSelectedColor(){
+		if(SelectedCell!=null) return SelectedCell.getColor();
+		return null;
+	}
 		
 	}

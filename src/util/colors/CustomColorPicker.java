@@ -2,71 +2,77 @@ package util.colors;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Polygon;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.List;
 
-import javax.swing.AbstractAction;
-import javax.swing.Action;
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.text.html.StyleSheet.BoxPainter;
 
 public class CustomColorPicker extends JFrame {
+	
+	/*
+	 * ColorPicker inizializzabile con una lista di colori
+	 */
 
 	private static final long serialVersionUID = 1L;
 	private Color selectedColor;
+	private JButton btnOK;
+	private JPanel ButtonPanel;		//contiene i pulsanti ok e cancel
+	private JPanel MidPanel;		//contiene la paletta
+	private CustomPalette palette;
 	
 	public CustomColorPicker(List<Color> ColorList) {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setLayout(new BorderLayout());
 		
 		selectedColor = null;
-		JButton btnOK = new JButton("OK");
-		JButton btnCANCEL = new JButton("CANCEL");
+		btnOK = new JButton("OK");
+		btnOK.addActionListener(OKclick);
+		btnOK.setSize(83, 26);
 		
-		JPanel ButtonPanel = new JPanel();	//contiene i pulsanti ok e cancel
-		JPanel MidPanel = new JPanel();		//contiene la paletta
-		CustomPalette palette = new CustomPalette(ColorList);	//paleta dei colori
+		ButtonPanel = new JPanel();	//contiene i pulsanti ok e cancel
+		MidPanel = new JPanel();		//contiene la paletta
+		palette = new CustomPalette(ColorList);	//paleta dei colori
 		
-		ButtonPanel.setLayout(new BoxLayout(ButtonPanel,BoxLayout.X_AXIS));
-		ButtonPanel.setSize(btnOK.getWidth()+btnCANCEL.getWidth(), btnOK.getHeight());
+		ButtonPanel.setLayout(new GridLayout(1,2));
+		ButtonPanel.setSize(btnOK.getWidth(), btnOK.getHeight());
 		
 		
+		MidPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
 		MidPanel.setLayout(null);
 		MidPanel.setSize(palette.getWidth(),palette.getHeight());
-		System.out.println(MidPanel.getSize());
-		
-
-		palette.setVisible(true);
-		palette.setLocation(0, 0);
-		
-		
-		
+				
 		MidPanel.add(palette);
 		//midPanel.add("Previw forma")); 	//da fare il prima possibile
 		
 		ButtonPanel.add(btnOK);
-		ButtonPanel.add(btnCANCEL);
 		
-		add(MidPanel,BorderLayout.CENTER);
-		add(ButtonPanel,BorderLayout.SOUTH);
+		getContentPane().add(MidPanel,BorderLayout.CENTER);
+		getContentPane().add(ButtonPanel,BorderLayout.SOUTH);
 
-		setBounds(50, 50,Math.max(MidPanel.getWidth(),ButtonPanel.getWidth()),MidPanel.getHeight()+ButtonPanel.getHeight()+10);
-		System.out.println(ButtonPanel.getSize());
-		System.out.println(getSize());
+		setSize(new Dimension(Math.max(MidPanel.getWidth(),ButtonPanel.getWidth())+10,MidPanel.getHeight()+ButtonPanel.getHeight()+32));
 	}	
 	
-	Action OKclick = new AbstractAction() {
+	private void setChoosedColor(){this.selectedColor = palette.getSelectedColor();}
+	public void colorChosen(){}
+
+	private void launchWarning(){}
+	
+	ActionListener OKclick = new ActionListener() {
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			System.out.println(((JButton)e.getSource()).getSize());
+			setChoosedColor();
+			if (selectedColor==null){System.out.println("Seleziona un colore");}
+			else{dispose();}
 			
 		}
 	};
+		
+		
 }

@@ -1,17 +1,13 @@
 package util.colors;
 
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.image.ImageObserver;
-
-import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
-import jdk.jfr.SettingControl;
 
 
 
@@ -20,7 +16,7 @@ import jdk.jfr.SettingControl;
 public class CircolarColorLabel extends JLabel {
 	
 	/**
-	 * 
+	 * Label colorata cliccabile
 	 */
 	private static final long serialVersionUID = 1L;
 	private Color color;
@@ -110,7 +106,6 @@ public class CircolarColorLabel extends JLabel {
 		
 		
 		g.fillOval(0, 0, g.getClipBounds().width-3, g.getClipBounds().height-3);
-		
 		
 	}
 
