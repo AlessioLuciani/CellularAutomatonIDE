@@ -91,16 +91,16 @@ public class EditExpressionPanel extends JPanel {
 		if(Type.equals("A")) {
 			int a = Integer.parseInt(start.getText());
 			int b = Integer.parseInt(end.getText());
-			Color c = colore.getBackground(); //TODO: metti colore!
+			Color c = colore.getBackground(); 
 			expr = new BaseExpressionNode1(a, b, c);
 		}
 		if(Type.equals("B")) {
 			int k = Integer.parseInt(n_vicini.getText());
-			Color c = colore.getBackground(); //TODO: metti colore!
+			Color c = colore.getBackground();
 			expr = new BaseExpressionNode2(k, c);
 		}
 		if(Type.equals("THEN")) {
-			thenColor = colore.getBackground(); //TODO: metti colore!
+			thenColor = colore.getBackground(); 
 		}
 	}
 	

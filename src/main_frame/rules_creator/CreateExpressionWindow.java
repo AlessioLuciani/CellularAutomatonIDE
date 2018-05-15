@@ -134,6 +134,7 @@ public class CreateExpressionWindow extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				if (edit_panel.getType()!=null && edit_panel.isCompleted()) { //controlla che il form sia compilato
+					edit_panel.buildNode();
 					if (flag_then) { //se entri qui, stai salvando la regola
 						thenColor = edit_panel.getThenColor();
 						listrules.add(CreateExpressionWindow.this.getRule().toString());
@@ -141,7 +142,6 @@ public class CreateExpressionWindow extends JFrame {
 						dispose();
 					}
 					else {
-						edit_panel.buildNode();
 						ExpressionNode e = edit_panel.getExpr();
 						tree.add(e);
 						exp_list.add(e.toString());
