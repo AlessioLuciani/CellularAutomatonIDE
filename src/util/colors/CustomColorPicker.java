@@ -3,7 +3,10 @@ package util.colors;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
 import java.awt.GridLayout;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
@@ -28,6 +31,12 @@ public class CustomColorPicker extends JFrame {
 	
 	public CustomColorPicker(List<Color> ColorList) {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+		GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+        GraphicsDevice defaultScreen = ge.getDefaultScreenDevice();
+		Rectangle rect = defaultScreen.getDefaultConfiguration().getBounds();
+		setLocation((int) rect.getMaxX()/2, (int) rect.getMaxY()/2);
+		
 		setLayout(new BorderLayout());
 		
 		selectedColor = null;
