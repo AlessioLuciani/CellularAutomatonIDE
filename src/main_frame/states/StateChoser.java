@@ -1,6 +1,9 @@
 package main_frame.states;
 
 import javax.swing.JPanel;
+
+import util.colors.ColorSelector;
+
 import javax.swing.JButton;
 
 import java.awt.List;
@@ -82,11 +85,9 @@ public class StateChoser extends JPanel{
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			
-			/*
-			 *  Codice scelta stati passando listColor
-			 * 
-			 * 
-			 * */
+			ColorSelector stateChoser = new ColorSelector(list, listColor);
+			stateChoser.setBounds(100, 100, 250, 300);
+			stateChoser.setVisible(true);
 			
 		}
 	};
@@ -98,12 +99,14 @@ public class StateChoser extends JPanel{
 			int [] inds = list.getSelectedIndexes();
 			for(int i=inds.length-1; i>=0; i--) {
 				list.remove(inds[i]);
+				listColor.remove(inds[i]);
 			}
 			
 			// Dopo l'eliminaizione, seleziona tutte le righe restanti. In questo modo si deselezionano
 			for (int i = 0; i < list.getItemCount(); i++) {
 				list.deselect(i);
 			}
+			
 		}
 	};
 	

@@ -1,10 +1,12 @@
 package main_frame.menu_bar;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -13,6 +15,16 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
+import grid.Graph;
+import grid.GridConfCreator;
+import grid.GridConfiguration;
+import grid.square.MatrixGraph;
+import main_frame.errors_panel.ErrorsPanel;
+import main_frame.menu_bar.run_configuration.RunConfiguration;
+import main_frame.rules_creator.RuleChoser;
+import main_frame.states.StateChoser;
+import rules.Rule;
+
 // import RunConfiguration;
 
 public class MenuBar extends JMenuBar {
@@ -20,7 +32,21 @@ public class MenuBar extends JMenuBar {
 	// Istanza che permette di accedere a info come screenSize etc
 	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
-	public MenuBar() {
+	// Informazioni per test Errori
+	StateChoser state;
+	GridConfCreator grid;
+	RuleChoser rules;
+	MatrixGraph graph;
+	ErrorsPanel errorPanel;
+	
+	public MenuBar(StateChoser state, GridConfCreator grid, RuleChoser rules,  MatrixGraph graph, ErrorsPanel err) {
+		
+		//Inizializzo Informazioni per testing di Errori
+		this.state = state;
+		this.grid = grid;
+		this.rules = rules;
+		this.graph = graph;
+		this.errorPanel = err;
 		
 		// File
 		JMenu menuFile = new JMenu("File");
@@ -57,9 +83,9 @@ public class MenuBar extends JMenuBar {
 	ActionListener setConfiguration = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			//JFrame runConf = new RunConfiguration();
-			//runConf.setBounds( (int)(screenSize.getWidth()/4),  (int)(screenSize.getHeight()/4), (int)(screenSize.getWidth()*0.35), (int)(screenSize.getHeight()*0.45));
-			//runConf.setVisible(true);
+			JFrame runConf = new RunConfiguration();
+			runConf.setBounds( (int)(screenSize.getWidth()/4),  (int)(screenSize.getHeight()/4), (int)(screenSize.getWidth()*0.35), (int)(screenSize.getHeight()*0.45));
+			runConf.setVisible(true);
 		}
 	};
 	
@@ -67,7 +93,7 @@ public class MenuBar extends JMenuBar {
 	ActionListener runConfiguration = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			System.out.println("runConfiguration");
+			errorPanel.update(state.getStates(), grid.getGridConfiguration(), rules.getRuleTrees(), graph, true);
 		}
 	};
 	

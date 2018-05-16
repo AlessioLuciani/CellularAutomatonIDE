@@ -3,6 +3,8 @@ package util.colors;
 
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
+import rules.Rule;
+
 import javax.swing.colorchooser.AbstractColorChooserPanel;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -16,10 +18,12 @@ import java.awt.Color;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.GridLayout;
+import java.awt.List;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
 
 /**
  * JPanel utilizzato per la scelta dei colori.
@@ -48,7 +52,14 @@ public class ColorSelector extends JFrame {
 	private JButton dotBlue;
 	private JButton plus;
 	
-	public ColorSelector() {
+	List list; 
+	ArrayList<Color> listColor; 
+	
+	public ColorSelector(List l, ArrayList<Color> listColor) {
+		
+		list = l;
+		this.listColor = listColor;
+		
 		
 		// Layout generale
 		setLayout(new GridLayout(3, 1, 0, 0));
@@ -213,7 +224,7 @@ public class ColorSelector extends JFrame {
 			      public void actionPerformed(ActionEvent evt) {  
 			    	// Aggiungi colore scelto
 			        chosenColor = chooser.getColor();
-			    	  
+			    	 		        
 			    	onOkPressed();
 			      }
 			    };
@@ -273,7 +284,14 @@ public class ColorSelector extends JFrame {
 	 * Controlla se il colore è stato scelto, e in questo caso chiude la finestra.
 	 */
 	private void onOkPressed() {
-		if (chosenColor != null) closeWindow();
+		if (chosenColor != null) {
+			
+			listColor.add(chosenColor);
+			list.add(chosenColor.toString());
+			
+			closeWindow();
+			
+		}
 		else {
 			JOptionPane optionPane = new JOptionPane("Selezionare un colore", JOptionPane.WARNING_MESSAGE);
 			JDialog dialog = optionPane.createDialog("Attenzione");

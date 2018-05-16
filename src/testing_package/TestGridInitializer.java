@@ -25,7 +25,7 @@ public class TestGridInitializer {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(600, 500);
 		
-		final int w = 50, h = 50, s = 30;
+		final int w = 100, h = 100, s = 28;
 		GridConfiguration gconf = new GridConfiguration(CellForm.SQUARE, s, w, h);
 		Graph g = new MatrixGraph(gconf.getNumCellsX(), gconf.getNumCellsY(), gconf.getLen());
 		

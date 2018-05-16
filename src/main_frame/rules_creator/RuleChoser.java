@@ -20,6 +20,7 @@ public class RuleChoser extends JPanel{
 	
 		private static final long serialVersionUID = 1L;
 		
+		//lista di stati 
 		ArrayList<Color> listColor;
 
 		//lista degli alberi delle regole
@@ -30,6 +31,7 @@ public class RuleChoser extends JPanel{
 			
 		public RuleChoser(ArrayList<Color> listcolor){
 			
+			//lista di stati 
 			listColor = listcolor;
 			
 			//lista degli alberi delle regole
@@ -85,13 +87,11 @@ public class RuleChoser extends JPanel{
 	ActionListener actionbtnNew = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			java.util.List<Color> cl = new ArrayList<>();
-			cl.add(Color.GREEN);
-			cl.add(Color.BLACK);
-			cl.add(Color.ORANGE);
-			JFrame ruleCreator = new CreateExpressionWindow(100, 100, 450, 300, list, forest, cl);
-			ruleCreator.setBounds(100, 100, 450, 300);
-			ruleCreator.setVisible(true);
+			if (!listColor.isEmpty()) {
+				CreateExpressionWindow ruleCreator = new CreateExpressionWindow(100, 100, 450, 300, list, forest, listColor);
+				ruleCreator.setBounds(100, 100, 400, 300);
+				ruleCreator.setVisible(true);
+			}
 		}
 	};
 		
