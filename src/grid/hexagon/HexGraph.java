@@ -16,11 +16,11 @@ public class HexGraph extends MatrixGraph {
 	public int getCellAtCoordinate(int x, int y) {
 		int row = y / (size / 4); //dividi orizzontalmente l'esagono in 4 parti (2 triangoli, 2 rettangoli)
 		if(row%3 > 0) {
-			int r = y / (3*size / 4);
+			int r = row / 3;
 			if((r%2 == 0 && x > size * w) || (r%2 == 1 && x < size/2))
 				return -1;
 			int col = (x - (r%2 == 0 ? 0 : size/2)) / size;
-			return r * w + col + 1;
+			return r * this.getWidth() + col + 1;
 		} else {
 			int r = row / 3;
 			int c = x / (size/2);

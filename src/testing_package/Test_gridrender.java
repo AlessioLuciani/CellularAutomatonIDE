@@ -26,7 +26,7 @@ import grid.triangle.TriangularGraph;
 public class Test_gridrender {
 	public static void main(String [] args) {
 		JFrame frame = new JFrame();
-		final int w = 100, h = 100, s = 25;
+		final int w = 100, h = 100, s = 30;
 		GridConfiguration gconf = new GridConfiguration(CellForm.HEXAGON, s, w, h);
 		Graph g = new HexGraph(gconf.getNumCellsX(), gconf.getNumCellsY(), gconf.getLen()); //new MatrixGraph(w, h, s);
 		
