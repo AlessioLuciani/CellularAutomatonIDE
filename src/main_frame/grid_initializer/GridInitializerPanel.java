@@ -3,9 +3,12 @@ package main_frame.grid_initializer;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -47,6 +50,7 @@ public class GridInitializerPanel extends JPanel {
 		
 		
 		// Pannello generale
+		
 		GridRenderPanel grid = new GridRenderPanel(graph, gridConfiguration, Color.BLACK) {
 
 			private static final long serialVersionUID = 1L;
