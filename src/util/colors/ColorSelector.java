@@ -48,6 +48,8 @@ public class ColorSelector extends JFrame {
 	private JButton dotBlue;
 	private JButton plus;
 	
+	private JDialog dialog;
+	
 	public ColorSelector() {
 		// Layout generale
 		setLayout(new GridLayout(3, 1, 0, 0));
@@ -225,7 +227,7 @@ public class ColorSelector extends JFrame {
 	
 			    boolean modal = false;
 	
-			    JDialog dialog = JColorChooser.createDialog(new JPanel(), "Seleziona un colore", modal, chooser, okListener,
+			    dialog = JColorChooser.createDialog(new JPanel(), "Seleziona un colore", modal, chooser, okListener,
 			        cancelListener);
 	
 			    
@@ -290,6 +292,7 @@ public class ColorSelector extends JFrame {
 	private void closeWindow() {
 		isColorChosen = true;
 		colorChosen(chosenColor);
+		if (dialog != null) dialog.dispose();
 		dispose();
 	}
 	
