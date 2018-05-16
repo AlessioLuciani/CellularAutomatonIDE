@@ -1,5 +1,6 @@
 package main_frame.errors_panel;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.List;
 import java.util.ArrayList;
@@ -27,6 +28,7 @@ public class ErrorsPanel extends JPanel {
 	private String message = "Errori trovati nell'automa!";
 	
 	public ErrorsPanel() {
+		setLayout(new BorderLayout());
 		Border compound;
 		Border redline = BorderFactory.createLineBorder(Color.RED);
 		compound = BorderFactory.createCompoundBorder(null, null);
