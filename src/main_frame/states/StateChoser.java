@@ -1,6 +1,7 @@
 package main_frame.states;
 
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 import util.JLabelJListRender;
 import util.StaticUtil;
@@ -67,7 +68,8 @@ public class StateChoser extends JPanel{
 		gbc_list.gridx = 0;
 		gbc_list.gridy = 0;
 		gbc_list.gridheight = 4;
-		add(labelList, gbc_list);
+		JScrollPane sp = new JScrollPane(labelList);
+		add(sp, gbc_list);
 		
 		// Aggiunta pulsante New
 		GridBagConstraints gbc_btnNew = new GridBagConstraints();
