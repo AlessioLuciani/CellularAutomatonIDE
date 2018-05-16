@@ -2,7 +2,6 @@ package util.colors;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.FontMetrics;
 import java.awt.Graphics;
 
 import javax.swing.JLabel;
@@ -22,6 +21,8 @@ public class ColoredRGBLabel extends JLabel{
 		setOpaque(true);
 	}
 	
+	public Color getColor() {return color;}
+	
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
@@ -32,7 +33,6 @@ public class ColoredRGBLabel extends JLabel{
 		g.fillRect(0, 0, y, y);
 		//g.fillRect(0, 0, Label2.this.getHeight(), Label2.this.getHeight());g.setColor(Color.BLACK);
 		//g.setColor(Color.BLACK);
-		FontMetrics fm = g.getFontMetrics();
 		Font f = new Font(Font.SANS_SERIF,Font.CENTER_BASELINE,y/2);
 		g.setFont(f);
 		//int centeredY = (int)(fm.getAscent()+fm.getDescent())/2;

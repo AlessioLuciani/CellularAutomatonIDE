@@ -1,19 +1,20 @@
 package testing_package;
 
 import java.awt.Color;
-import java.awt.Component;
-import java.awt.color.ColorSpace;
-
 import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
-import javax.swing.ListCellRenderer;
 import javax.swing.SwingUtilities;
  
 public class test_JList extends JFrame {
 	
-    private JList<JLabel> countryList;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	private JList<JLabel> countryList;
     
     JLabel jlbl = new JLabel("ciao");
     
