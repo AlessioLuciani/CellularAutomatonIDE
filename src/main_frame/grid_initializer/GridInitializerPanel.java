@@ -3,36 +3,25 @@ package main_frame.grid_initializer;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
-import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.Toolkit;
-import java.awt.datatransfer.FlavorMap;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.util.ArrayList;
-import java.util.Random;
 
-import javax.sound.midi.VoiceStatus;
-import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 
 
 import grid.*;
 import util.colors.ColorPickerResultLabel;
-import util.colors.ColorSelector;
-import util.colors.CustomColorPicker;
-import util.colors.CustomPalette;
 
 /**
  * Inizializzatore del pannello di simulazione.
@@ -62,6 +51,8 @@ public class GridInitializerPanel extends JPanel {
 		
 		// Pannello generale
 		GridRenderPanel grid = new GridRenderPanel(graph, gridConfiguration, Color.BLACK) {
+
+			private static final long serialVersionUID = 1L;
 
 			@Override
 			protected void mouseDraggedCallback(MouseEvent evt) {
@@ -95,7 +86,8 @@ public class GridInitializerPanel extends JPanel {
 						if(i != -1 && !chosenColor.equals(graph.getCell(i).getState())) {
 							graph.getCell(i).setState(chosenColor);
 							al.add(i);
-					}}
+						}
+					}
 					this.synchWithGraph(al);
 				}
 			}
@@ -118,6 +110,8 @@ public class GridInitializerPanel extends JPanel {
 		btnColor = new JButton(new ImageIcon(GridInitializerPanel.class.getResource("res/brush.png")));
 		btnColorAll = new JButton(new ImageIcon(GridInitializerPanel.class.getResource("res/bucket.png")));
 		btnChosenColor = new ColorPickerResultLabel(colors) {
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			protected void onWindowClosed() {
 				super.onWindowClosed();

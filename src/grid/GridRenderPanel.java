@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.RenderingHints;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -21,7 +22,8 @@ import javax.swing.JPanel;
 public class GridRenderPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
-	
+
+	private static final double BASE_ZOOM = 0.45; //1.3;
 	private Graph graph;
 	private Color borderColor;
 	
@@ -75,6 +77,8 @@ public class GridRenderPanel extends JPanel {
 	
 	@Override
 	public void paintComponent(Graphics g) {
+		if(zoomFactor < 1)
+			((Graphics2D)g).setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
 		AffineTransform transf = new AffineTransform(); //serve per gestire trasformazioni tipo zoom/traslazione
 		transf.scale(zoomFactor, zoomFactor);//trasformazioni processate in LIFO: prima ci spostiamo poi zoomiamo
 		transf.translate(deltaX, deltaY); 
@@ -129,10 +133,12 @@ public class GridRenderPanel extends JPanel {
 	}
 	
 	protected void mouseWheelMovedCallback(MouseWheelEvent evt) {
+		int unit = Math.abs(evt.getUnitsToScroll());
+		
 		if(-evt.getUnitsToScroll() > 0)
-			zoomFactor *= 1.3;
+			zoomFactor *= BASE_ZOOM * (double)unit;
 		if(-evt.getUnitsToScroll() < 0)
-			zoomFactor /= 1.3;
+			zoomFactor /= BASE_ZOOM * (double)unit;
 		GridRenderPanel.this.invalidate();
 		GridRenderPanel.this.repaint();
 		GridRenderPanel.this.getParent().invalidate();

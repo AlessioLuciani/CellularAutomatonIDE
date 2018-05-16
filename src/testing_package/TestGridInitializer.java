@@ -25,14 +25,10 @@ public class TestGridInitializer {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(600, 500);
 		
-		final int w = 100, h = 100, s = 30;
-		GridConfiguration gconf = new GridConfiguration(CellForm.HEXAGON, s, w, h);
-		Graph g = new HexGraph(gconf.getNumCellsX(), gconf.getNumCellsY(), gconf.getLen());
-		
-		for(int i=1; i<=g.getNumNodes(); i++) {
-			g.getCell(i).setState(Color.YELLOW);
-		}
-		
+		final int w = 100, h = 100, s = 20;
+		GridConfiguration gconf = new GridConfiguration(CellForm.TRIANGLE, s, w, h);
+		Graph g = Graph.buildGraph(gconf, Color.YELLOW);
+	
 		ArrayList<Color> colors = new ArrayList<>();
 		for (int i = 0; i < 10; i++) {
 			colors.add(new Color(new Random().nextInt(255),new Random().nextInt(255),new Random().nextInt(255)));

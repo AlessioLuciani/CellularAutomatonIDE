@@ -4,6 +4,10 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.util.ArrayList;
 
+import grid.hexagon.HexGraph;
+import grid.square.MatrixGraph;
+import grid.triangle.TriangularGraph;
+
 /**grafo rappresentare una griglia*/
 public class Graph {
 
@@ -39,5 +43,19 @@ public class Graph {
     /**numero nodi nel grafo*/
     public int getNumNodes() {
     	return nodes.size();
+    }
+    
+    /**costruisce grafo in base alla configurazione della griglia (e con stato di default)*/
+    public static Graph buildGraph(GridConfiguration gconf, Color defaultState) {
+    	Graph graph = null;
+    	int cx = gconf.getNumCellsX(), cy = gconf.getNumCellsY(), len = gconf.getLen();
+    	switch(gconf.getForm()) {
+    		case TRIANGLE: graph = new TriangularGraph(cx, cy, len); break;
+    		case SQUARE: graph = new MatrixGraph(cx, cy, len); break;
+    		case HEXAGON: graph = new HexGraph(cx, cy, len); break;
+    	}
+    	for(int i=1; i<=graph.getNumNodes(); i++)
+    		graph.getCell(i).setState(defaultState);
+    	return graph;
     }
 }
