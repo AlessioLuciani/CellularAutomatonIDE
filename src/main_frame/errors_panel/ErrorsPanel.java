@@ -29,6 +29,7 @@ public class ErrorsPanel extends JPanel {
 	
 	public ErrorsPanel() {
 		setLayout(new BorderLayout());
+		
 		Border compound;
 		Border redline = BorderFactory.createLineBorder(Color.RED);
 		compound = BorderFactory.createCompoundBorder(null, null);
