@@ -4,7 +4,6 @@ package main_frame.rules_creator;
 import rules.Rule;
 
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import java.awt.List;
@@ -88,7 +87,15 @@ public class RuleChoser extends JPanel{
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			if (!listColor.isEmpty()) {
-				CreateExpressionWindow ruleCreator = new CreateExpressionWindow(100, 100, 450, 300, list, forest, listColor);
+				
+				@SuppressWarnings("serial")
+				CreateExpressionWindow ruleCreator = new CreateExpressionWindow(100, 100, 450, 300, listColor) {
+					@Override
+					public void ruleCreated(Rule r) {
+						forest.add(r);
+						list.add(r.toString());
+					}
+				};
 				ruleCreator.setBounds(100, 100, 400, 300);
 				ruleCreator.setVisible(true);
 			}

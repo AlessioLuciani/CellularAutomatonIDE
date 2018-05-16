@@ -2,6 +2,7 @@ package main_frame.states;
 
 import javax.swing.JPanel;
 
+import util.StaticUtil;
 import util.colors.ColorSelector;
 
 import javax.swing.JButton;
@@ -74,10 +75,6 @@ public class StateChoser extends JPanel{
 		gbc_btnRemove.gridx = 2;
 		gbc_btnRemove.gridy = 3;
 		add(btnRemove, gbc_btnRemove);
-		
-		
-		
-	
 	}
 	
 	// Apertura modulo per l'inserimento stati
@@ -85,7 +82,16 @@ public class StateChoser extends JPanel{
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			
-			ColorSelector stateChoser = new ColorSelector(list, listColor);
+			@SuppressWarnings("serial")
+			ColorSelector stateChoser = new ColorSelector() {
+				@Override
+				public void colorChosen(Color c) {
+					if(!listColor.contains(c)) {
+						list.add(StaticUtil.colorToRgbString(c));
+						listColor.add(c);
+					}
+				}
+			};
 			stateChoser.setBounds(100, 100, 250, 300);
 			stateChoser.setVisible(true);
 			

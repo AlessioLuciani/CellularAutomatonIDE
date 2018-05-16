@@ -30,9 +30,6 @@ import util.colors.ColorPickerResultLabel;
  */
 public class GridInitializerPanel extends JPanel {
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	
 	private int currentCursor;

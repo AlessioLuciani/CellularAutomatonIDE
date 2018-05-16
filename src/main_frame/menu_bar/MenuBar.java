@@ -1,34 +1,27 @@
 package main_frame.menu_bar;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
-import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-
-import javax.swing.AbstractAction;
-import javax.swing.Action;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
-import grid.Graph;
 import grid.GridConfCreator;
-import grid.GridConfiguration;
 import grid.square.MatrixGraph;
 import main_frame.errors_panel.ErrorsPanel;
 import main_frame.menu_bar.run_configuration.RunConfiguration;
 import main_frame.rules_creator.RuleChoser;
 import main_frame.states.StateChoser;
-import rules.Rule;
 
 // import RunConfiguration;
 
 public class MenuBar extends JMenuBar {
 	
+	private static final long serialVersionUID = 1L;
+
 	// Istanza che permette di accedere a info come screenSize etc
 	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 

@@ -48,13 +48,13 @@ public class HexCell extends Cell {
 		int x[] = new int[6];
 		int y[] = new int[6];
 		if(row%2 == 0) {
-			x[0] = col * hgraph.getSize() + hgraph.getSize() / 2;	
+			x[0] = col * hgraph.getSize() + hgraph.getSize() / 2; //alto al centro
 		} else {
 			x[0] = col * hgraph.getSize() + hgraph.getSize();
 		}
 		
-		y[0] = row * (hgraph.getSize() - hgraph.getSize()/4);
-		x[1] = x[0] - hgraph.getSize()/2;
+		y[0] = row * (hgraph.getSize() - hgraph.getSize()/4); 
+		x[1] = x[0] - hgraph.getSize()/2; //tutti gli altri in senso antiorario
 		y[1] = y[0] + hgraph.getSize()/4;
 		x[2] = x[1];
 		y[2] = y[1] + hgraph.getSize()/2;

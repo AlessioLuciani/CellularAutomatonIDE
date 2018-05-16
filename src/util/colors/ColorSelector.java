@@ -1,9 +1,7 @@
 package util.colors;
 
-
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
-import rules.Rule;
 
 import javax.swing.colorchooser.AbstractColorChooserPanel;
 import javax.swing.BorderFactory;
@@ -18,12 +16,10 @@ import java.awt.Color;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.GridLayout;
-import java.awt.List;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
-import java.util.ArrayList;
 
 /**
  * JPanel utilizzato per la scelta dei colori.
@@ -52,15 +48,7 @@ public class ColorSelector extends JFrame {
 	private JButton dotBlue;
 	private JButton plus;
 	
-	List list; 
-	ArrayList<Color> listColor; 
-	
-	public ColorSelector(List l, ArrayList<Color> listColor) {
-		
-		list = l;
-		this.listColor = listColor;
-		
-		
+	public ColorSelector() {
 		// Layout generale
 		setLayout(new GridLayout(3, 1, 0, 0));
 		
@@ -285,12 +273,7 @@ public class ColorSelector extends JFrame {
 	 */
 	private void onOkPressed() {
 		if (chosenColor != null) {
-			
-			listColor.add(chosenColor);
-			list.add(chosenColor.toString());
-			
 			closeWindow();
-			
 		}
 		else {
 			JOptionPane optionPane = new JOptionPane("Selezionare un colore", JOptionPane.WARNING_MESSAGE);

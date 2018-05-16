@@ -39,12 +39,9 @@ public class CreateExpressionWindow extends JFrame {
 	private java.util.List<Color> availableColors;
 	
 	private ArrayList<ExpressionNode> tree;
-	Color thenColor;
+	private Color thenColor;
 	
-	List listrules; //è la lista delle regole che va estesa
-	ArrayList<Rule> forestRules; //alberi delle regole
-	
-	public CreateExpressionWindow(int x, int y, int width, int height, List l, ArrayList<Rule> forestRules, java.util.List<Color> availableColors) {
+	public CreateExpressionWindow(int x, int y, int width, int height, java.util.List<Color> availableColors) {
 		super();
 		setBounds(x, y, width, height);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -66,8 +63,6 @@ public class CreateExpressionWindow extends JFrame {
 		btnTHEN = new JButton("THEN");btnTHEN.setName("btnTHEN");check_then();
 		flag_then = false;
 		tree = new ArrayList<ExpressionNode>();
-		listrules = l;
-		this.forestRules = forestRules;
 		
 		//Gestione click bottoni
 		btnA.addActionListener(new ActionListener() {
@@ -137,8 +132,7 @@ public class CreateExpressionWindow extends JFrame {
 					edit_panel.buildNode();
 					if (flag_then) { //se entri qui, stai salvando la regola
 						thenColor = edit_panel.getThenColor();
-						listrules.add(CreateExpressionWindow.this.getRule().toString());
-						forestRules.add(CreateExpressionWindow.this.getRule());
+						ruleCreated(getRule());
 						dispose();
 					}
 					else {
@@ -150,8 +144,6 @@ public class CreateExpressionWindow extends JFrame {
 				check_then();
 			}
 		});
-		
-		
 		
 		// il BottomPanel contiene ButtonPanel e edit_panel
 		BottomGroupPanel = new JPanel();
@@ -170,6 +162,10 @@ public class CreateExpressionWindow extends JFrame {
 		BottomGroupPanel.add(ButtonPanel);
 		add(BottomGroupPanel,BorderLayout.SOUTH);
 	}
+
+	
+	/**callback per regola creata*/
+	public void ruleCreated(Rule r) {} 
 	
 	//disabilita tutti i pulsanti tranne btnTHEN e btn_add
 	private void disable_buttons(){

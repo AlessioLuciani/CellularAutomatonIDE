@@ -17,7 +17,7 @@ public class ProvaColor {
     	ArrayList<Color> colori = new ArrayList<>();
     	
     	//for (int i = 0; i < 3; i++) {
-    	 {	ColorSelector col = new ColorSelector(null, null) {
+    	 {	ColorSelector col = new ColorSelector() {
     			@Override
     			public void colorChosen(Color c) {
     				System.out.println(c);

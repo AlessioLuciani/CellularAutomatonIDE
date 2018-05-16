@@ -9,10 +9,6 @@ import java.awt.event.MouseEvent;
 import javax.swing.JLabel;
 
 
-
-
-
-
 public class CircolarColorLabel extends JLabel {
 	
 	/**

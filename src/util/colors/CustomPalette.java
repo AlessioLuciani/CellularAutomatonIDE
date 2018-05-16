@@ -64,7 +64,7 @@ public class CustomPalette extends JPanel {
 	MouseAdapter mouse_event = new MouseAdapter() {
 		@Override
 		public void mouseClicked(MouseEvent e) {
-			super.mouseClicked(e);
+			//super.mouseClicked(e);
 			ChangeSelected(((CircolarColorLabel)e.getSource()));		//aggiorno la cella selezionata
 			((CircolarColorLabel)e.getSource()).setClick(true);;
 			((CircolarColorLabel)e.getSource()).repaint();

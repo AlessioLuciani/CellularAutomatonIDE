@@ -25,13 +25,14 @@ public class ColorPickerResultLabel extends JLabel{
 		setSize(10,20);
 		setText("   ");
 		setOpaque(true);
-		setBackground(availableColors.get(0));
+		if(availableColors.size() > 0)
+			setBackground(availableColors.get(0));
 	}
 	
 	MouseAdapter onColorClicked = new MouseAdapter() {
 		@Override
 		public void mouseClicked(MouseEvent e) {
-			super.mouseClicked(e);
+			//super.mouseClicked(e);
 			JFrame colorPicker = new CustomColorPicker(availableColors);
 			colorPicker.addWindowListener(onCloseWindow);
 			colorPicker.setVisible(true);

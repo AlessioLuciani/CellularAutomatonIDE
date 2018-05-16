@@ -1,28 +1,19 @@
 package main_frame.menu_bar.run_configuration;
 
-import java.awt.Dimension;
-import java.awt.EventQueue;
-
-import javax.swing.AbstractAction;
 import javax.swing.JFrame;
 import java.awt.GridBagLayout;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import javax.swing.JRadioButton;
-import java.awt.Panel;
-import java.awt.BorderLayout;
-import java.awt.Rectangle;
-import java.awt.Component;
-import javax.swing.Box;
-
 public class RunConfiguration extends JFrame {
+	
+	private static final long serialVersionUID = 1L;
+	
 	
 	JRadioButton rdbtnSincrono;
 	JRadioButton rdbtnAsincrono;
