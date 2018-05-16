@@ -19,15 +19,16 @@ import grid.CellForm;
 import grid.Graph;
 import grid.GridConfiguration;
 import grid.GridRenderPanel;
+import grid.hexagon.HexGraph;
 import grid.square.MatrixGraph;
 import grid.triangle.TriangularGraph;
 
 public class Test_gridrender {
 	public static void main(String [] args) {
 		JFrame frame = new JFrame();
-		final int w = 100, h = 100, s = 10;
-		GridConfiguration gconf = new GridConfiguration(CellForm.SQUARE, s, w, h);
-		Graph g = new MatrixGraph(gconf.getNumCellsX(), gconf.getNumCellsY(), gconf.getLen()); //new MatrixGraph(w, h, s);
+		final int w = 100, h = 100, s = 20;
+		GridConfiguration gconf = new GridConfiguration(CellForm.HEXAGON, s, w, h);
+		Graph g = new HexGraph(gconf.getNumCellsX(), gconf.getNumCellsY(), gconf.getLen()); //new MatrixGraph(w, h, s);
 		
 		for(int i=1; i<=g.getNumNodes(); i++) {
 			g.getCell(i).setState(Color.YELLOW);

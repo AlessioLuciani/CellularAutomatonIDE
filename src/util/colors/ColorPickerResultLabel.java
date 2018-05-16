@@ -43,8 +43,11 @@ public class ColorPickerResultLabel extends JLabel{
 		public void windowClosed(WindowEvent e) {
 			super.windowClosing(e);
 			setColor(((CustomColorPicker)e.getSource()).getSelectedColor());
+			onWindowClosed();
 		}			
 	};
+	
+	protected void onWindowClosed() {}
 	
 	private void setColor(Color color){
 		if (color==null) return;

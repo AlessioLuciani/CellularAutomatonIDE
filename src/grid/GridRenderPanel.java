@@ -104,7 +104,7 @@ public class GridRenderPanel extends JPanel {
 			ArrayList<Integer> al = new ArrayList<>();
 			al.add(c);
 			GridRenderPanel.this.synchWithGraph(al);
-		}*/	
+		}*/
 	}
 	
 	protected void mouseDraggedCallback(MouseEvent evt) {

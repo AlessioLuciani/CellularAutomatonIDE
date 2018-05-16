@@ -3,9 +3,9 @@ package util.colors;
 
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
-
 import rules.Rule;
 
+import javax.swing.colorchooser.AbstractColorChooserPanel;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -211,7 +211,15 @@ public class ColorSelector extends JFrame {
 		        // Paletta colori complessa
 		        			
 				
-				final JColorChooser chooser = new JColorChooser();
+			final JColorChooser chooser = new JColorChooser();
+		    	//disabilitazione pannelli non utilizzati
+			for ( AbstractColorChooserPanel el : chooser.getChooserPanels()) {
+				if ((!el.getDisplayName().equals("RGB"))&&(!el.getDisplayName().equals("Colori campione"))){
+					chooser.removeChooserPanel(el);
+				}
+			}
+			    
+			    
 			    ActionListener okListener = new ActionListener() {
 			      public void actionPerformed(ActionEvent evt) {  
 			    	// Aggiungi colore scelto
