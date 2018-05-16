@@ -199,7 +199,15 @@ public class ColorSelector extends JFrame {
 		        // Paletta colori complessa
 		        			
 				
-				final JColorChooser chooser = new JColorChooser();
+			final JColorChooser chooser = new JColorChooser();
+		    	//disabilitazione pannelli non utilizzati
+			for ( AbstractColorChooserPanel el : chooser.getChooserPanels()) {
+				if ((!el.getDisplayName().equals("RGB"))&&(!el.getDisplayName().equals("Colori campione"))){
+					chooser.removeChooserPanel(el);
+				}
+			}
+			    
+			    
 			    ActionListener okListener = new ActionListener() {
 			      public void actionPerformed(ActionEvent evt) {  
 			    	// Aggiungi colore scelto
