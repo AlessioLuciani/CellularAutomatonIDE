@@ -2,12 +2,14 @@ package main_frame.states;
 
 import javax.swing.JPanel;
 
+import util.JLabelJListRender;
 import util.StaticUtil;
 import util.colors.ColorSelector;
 
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
-
-import java.awt.List;
+import javax.swing.JLabel;
+import javax.swing.JList;
 
 import java.awt.GridBagLayout;
 import java.awt.Color;
@@ -21,8 +23,10 @@ public class StateChoser extends JPanel{
 	
 	private static final long serialVersionUID = 1L;
 
-	// Contenitore di tutte le regole di transizione gia' create
-	List list;
+	private static final int LABEL_WIDTH = 50, LABEL_HEIGHT = 30;
+	
+	// Contenitore di tutti gli stati
+	JList<JLabel> labelList;
 
 	//lista degli stati
 	ArrayList<Color> listColor;
@@ -31,6 +35,7 @@ public class StateChoser extends JPanel{
 		
 		//lista degli stati
 		listColor = new ArrayList<Color>();
+		
 		
 		// Creazione Layout
 		GridBagLayout gridBagLayout = new GridBagLayout();
@@ -41,8 +46,10 @@ public class StateChoser extends JPanel{
 		setLayout(gridBagLayout);
 		
 		// Contenitore di tutti gli stati gia' scelti
-		list= new List();
-		list.setMultipleMode(true);
+		labelList = new JList<>();
+		DefaultListModel<JLabel> listModel = new DefaultListModel<>();
+		labelList.setModel(listModel);
+		labelList.setCellRenderer(new JLabelJListRender());
 		
 		// Pulsante che richiama la procedura che inserisce gli stati
 		JButton btnNew = new JButton("   New   ");
@@ -60,7 +67,7 @@ public class StateChoser extends JPanel{
 		gbc_list.gridx = 0;
 		gbc_list.gridy = 0;
 		gbc_list.gridheight = 4;
-		add(list, gbc_list);
+		add(labelList, gbc_list);
 		
 		// Aggiunta pulsante New
 		GridBagConstraints gbc_btnNew = new GridBagConstraints();
@@ -87,7 +94,14 @@ public class StateChoser extends JPanel{
 				@Override
 				public void colorChosen(Color c) {
 					if(!listColor.contains(c)) {
-						list.add(StaticUtil.colorToRgbString(c));
+						JLabel elem = new JLabel(StaticUtil.colorToRgbString(c));
+						elem.setBackground(c);
+						elem.setForeground(StaticUtil.farthestColor(c, Color.WHITE, Color.BLACK));
+						elem.setOpaque(true);
+						elem.setSize(LABEL_WIDTH, LABEL_HEIGHT);		
+						
+						DefaultListModel<JLabel> model = (DefaultListModel<JLabel>)labelList.getModel();
+						model.addElement(elem);
 						listColor.add(c);
 					}
 				}
@@ -102,17 +116,15 @@ public class StateChoser extends JPanel{
 	ActionListener actionbtnRemove = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			int [] inds = list.getSelectedIndexes();
+			int [] inds = labelList.getSelectedIndices();
 			for(int i=inds.length-1; i>=0; i--) {
-				list.remove(inds[i]);
+				DefaultListModel<JLabel> model = (DefaultListModel<JLabel>)labelList.getModel();
+				model.remove(inds[i]);
 				listColor.remove(inds[i]);
 			}
 			
 			// Dopo l'eliminaizione, seleziona tutte le righe restanti. In questo modo si deselezionano
-			for (int i = 0; i < list.getItemCount(); i++) {
-				list.deselect(i);
-			}
-			
+			labelList.getSelectionModel().clearSelection();
 		}
 	};
 	

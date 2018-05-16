@@ -35,7 +35,6 @@ public class CustomColorPicker extends JFrame {
 		GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
         GraphicsDevice defaultScreen = ge.getDefaultScreenDevice();
 		Rectangle rect = defaultScreen.getDefaultConfiguration().getBounds();
-		setLocation((int) rect.getMaxX()/2, (int) rect.getMaxY()/2);
 		
 		setLayout(new BorderLayout());
 		
@@ -65,6 +64,7 @@ public class CustomColorPicker extends JFrame {
 		getContentPane().add(ButtonPanel,BorderLayout.SOUTH);
 
 		setSize(new Dimension(Math.max(MidPanel.getWidth(),ButtonPanel.getWidth())+10,MidPanel.getHeight()+ButtonPanel.getHeight()+32));
+		setLocation((int) rect.getMaxX()/2 - this.getWidth()/2, (int) rect.getMaxY()/2 - this.getHeight()/2);
 	}	
 	
 	private void setChoosedColor(){this.selectedColor = palette.getSelectedColor();}

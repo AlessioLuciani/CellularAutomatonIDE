@@ -1,10 +1,6 @@
 package util.colors;
 
-
 import java.awt.Color;
-import java.awt.GraphicsDevice;
-import java.awt.GraphicsEnvironment;
-import java.awt.Rectangle;
 import java.util.List;
 
 import javax.swing.JFrame;

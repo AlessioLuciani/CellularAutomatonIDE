@@ -21,14 +21,29 @@ public class test_JList extends JFrame {
     public test_JList() {
     	
     	jlbl.setBackground(Color.RED);
-    	jlbl.setSize(20, 30);
+    	jlbl.setOpaque(true);
+    	jlbl.setSize(200, 30);
+ 
     	
         //create the model and add elements
         DefaultListModel<JLabel> listModel = new DefaultListModel<>();
         listModel.addElement(jlbl);
- 
+        
+        JLabel j2 = new JLabel("OK");
+        j2.setBackground(Color.blue);
+        listModel.addElement(j2);
+
         //create the list
-        countryList = new JList<>(listModel);
+        countryList = new JList<>();
+        countryList.setModel(listModel);
+        countryList.setCellRenderer(new TestRender());
+        DefaultListModel<JLabel> tmp = (DefaultListModel<JLabel>) countryList.getModel();
+        tmp.addElement(j2);
+        //countryList.setFixedCellWidth(200);
+        //DefaultListModel<JLabel> listModel2 = new DefaultListModel<>();
+        //listModel2.addElement(j2);
+        //countryList.add(jlbl);
+        //countryList.add(j2);
         add(countryList);
          
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
