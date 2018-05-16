@@ -43,7 +43,33 @@ public class HexCell extends Cell {
 
 	@Override
 	public void render(Graphics g, Color borderColor) {
+		int row = (myId-1) / hgraph.getWidth();
+		int col = (myId-1) % hgraph.getWidth();
+		int x[] = new int[6];
+		int y[] = new int[6];
+		if(row%2 == 0) {
+			x[0] = col * hgraph.getSize() + hgraph.getSize() / 2;	
+		} else {
+			x[0] = col * hgraph.getSize() + hgraph.getSize();
+		}
 		
+		y[0] = row * (hgraph.getSize() - hgraph.getSize()/4);
+		x[1] = x[0] - hgraph.getSize()/2;
+		y[1] = y[0] + hgraph.getSize()/4;
+		x[2] = x[1];
+		y[2] = y[1] + hgraph.getSize()/2;
+		x[3] = x[0];
+		y[3] = y[0] + hgraph.getSize();
+		x[4] = x[2] + hgraph.getSize();
+		y[4] = y[2];
+		x[5] = x[1] + hgraph.getSize();
+		y[5] = y[1];
+		
+		g.setColor(this.getState());
+		g.fillPolygon(x, y, 6);
+		if(borderColor != null) {
+			g.setColor(borderColor);
+			g.drawPolygon(x, y, 6);
+		}
 	}
-
 }

@@ -18,7 +18,6 @@ import rules.Rule;
 import util.ConflictFinder;
 
 /**panel per messaggi d'errore
- * VA FATTO MEGLIO!!!
  * */
 public class ErrorsPanel extends JPanel {
 
@@ -39,8 +38,9 @@ public class ErrorsPanel extends JPanel {
 		this.add(messageList);
 	}
 	
-	/**aggiorna messaggi d'errore, in base agli stati, configurazione della griglia, lista di regole e grafo*/
-	public void update(ArrayList<Color> stateColors, GridConfiguration gconf, ArrayList<Rule> rules, Graph graph, boolean showDialog) {
+	/**aggiorna messaggi d'errore, in base agli stati, configurazione della griglia, lista di regole e grafo
+	 * restituisce true se non ci sono stati errori, false altrimenti*/
+	public boolean update(ArrayList<Color> stateColors, GridConfiguration gconf, ArrayList<Rule> rules, Graph graph, boolean showDialog) {
 		ConflictFinder cfinder = new ConflictFinder(stateColors, gconf, rules, graph);
 		HashSet<String> strs = cfinder.getConflicts();
 		messageList.removeAll();
@@ -48,5 +48,6 @@ public class ErrorsPanel extends JPanel {
 			messageList.add(s);
 		if(strs.size() > 0 && showDialog)
 			JOptionPane.showMessageDialog(new JFrame(), message, "Error!", JOptionPane.ERROR_MESSAGE);
+		return strs.size() == 0;
 	}
 }
