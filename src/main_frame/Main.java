@@ -1,5 +1,6 @@
 package main_frame;
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Toolkit;
@@ -9,8 +10,10 @@ import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 
 import grid.GridConfCreator;
+import grid.square.MatrixGraph;
 import main_frame.rules_creator.RuleChoser;
 import main_frame.states.StateChoser;
+import main_frame.errors_panel.ErrorsPanel;
 import main_frame.menu_bar.MenuBar;
 
 import java.awt.GridBagLayout;
@@ -43,14 +46,10 @@ public class Main {
 		// Istanza che permette di accedere a info come screenSize etc
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
-		frame.setBounds(100, 100, (int)(screenSize.getWidth()*0.8), (int)(screenSize.getHeight()*0.8));
+		frame.setBounds(100, 100, (int)(screenSize.getWidth()*0.65), (int)(screenSize.getHeight()*0.70));
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		JPanel pannello = new JPanel();
 		frame.getContentPane().add(pannello);
-		
-		// MenuBar
-		JMenuBar menuBar = new MenuBar();
-		frame.getContentPane().add(menuBar, BorderLayout.NORTH);
 		
 		// Creazione layout
 		GridBagLayout gridBagLayout = new GridBagLayout();
@@ -59,6 +58,17 @@ public class Main {
 		gridBagLayout.columnWeights = new double[]{0.01, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1};
 		gridBagLayout.rowWeights = new double[]{0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1};
 		pannello.setLayout(gridBagLayout);
+		
+		//Pannello visualizzazione errori
+		ErrorsPanel errorPanel = new ErrorsPanel();
+		// Aggiunta pannello configurazione griglia
+		GridBagConstraints gbc_errorPanel = new GridBagConstraints();
+		gbc_errorPanel.fill = GridBagConstraints.BOTH;
+		gbc_errorPanel.gridx = 17;
+		gbc_errorPanel.gridy = 22;
+		gbc_errorPanel.gridheight = 6;
+		gbc_errorPanel.gridwidth = 8;
+		pannello.add(errorPanel, gbc_errorPanel);
 		
 		//Pannello configurazione griglia
 		GridConfCreator gridPanel = new GridConfCreator();
@@ -90,10 +100,14 @@ public class Main {
 		gbc_rulePanel.gridx = 1;
 		gbc_rulePanel.gridy = 23;
 		gbc_rulePanel.gridheight = 5;
-		gbc_rulePanel.gridwidth = 24;
+		gbc_rulePanel.gridwidth = 20;
 		pannello.add(rulePanel, gbc_rulePanel);
 		
+		MatrixGraph graph = new MatrixGraph(10, 10, 10);
 		
+		// MenuBar
+		JMenuBar menuBar = new MenuBar(statePanel, gridPanel, rulePanel, graph, errorPanel);
+		frame.getContentPane().add(menuBar, BorderLayout.NORTH);
 	}
 
 }

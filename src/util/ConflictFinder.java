@@ -31,6 +31,8 @@ public class ConflictFinder {
 		this.gconf = gconf;
 		this.rules = rules;
 		this.graph = graph;
+		
+		System.out.println(this.stateColors.isEmpty()+"   "+this.gconf.getLen()+"  ");
 	}
 	
 	/**ci sono conflitti?*/
