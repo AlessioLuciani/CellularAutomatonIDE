@@ -191,6 +191,7 @@ public class GridInitializerPanel extends JPanel {
 		// Pulsante colore scelto
 		
 		btnChosenColor.setSize(40,40);
+	
 		chosenColor = btnChosenColor.getColor();
 		sideBar.add(btnChosenColor);
 	}
