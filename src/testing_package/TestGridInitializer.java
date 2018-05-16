@@ -11,8 +11,10 @@ import grid.CellForm;
 import grid.Graph;
 import grid.GridConfiguration;
 import grid.square.MatrixGraph;
+import grid.triangle.TriangularGraph;
 import jdk.nashorn.api.tree.ForInLoopTree;
 import main_frame.grid_initializer.GridInitializerPanel;
+import util.colors.CustomColorPicker;
 
 
 public class TestGridInitializer {
@@ -22,9 +24,9 @@ public class TestGridInitializer {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(600, 500);
 		
-		final int w = 100, h = 100, s = 10;
-		GridConfiguration gconf = new GridConfiguration(CellForm.SQUARE, s, w, h);
-		Graph g = new MatrixGraph(gconf.getNumCellsX(), gconf.getNumCellsY(), gconf.getLen());
+		final int w = 150, h = 100, s = 10;
+		GridConfiguration gconf = new GridConfiguration(CellForm.TRIANGLE, s, w, h);
+		Graph g = new TriangularGraph(gconf.getNumCellsX(), gconf.getNumCellsY(), gconf.getLen());
 		
 		for(int i=1; i<=g.getNumNodes(); i++) {
 			g.getCell(i).setState(Color.YELLOW);
@@ -40,5 +42,6 @@ public class TestGridInitializer {
 		
 		frame.add(gridInitializerPanel);
 		frame.setVisible(true);
+		
 	}
 }
