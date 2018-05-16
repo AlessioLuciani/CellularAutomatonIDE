@@ -98,13 +98,13 @@ public class GridRenderPanel extends JPanel {
 		tmpX = evt.getX();
 		tmpY = evt.getY();
 		
-		int c = getCellAtCoordinate(evt.getX(), evt.getY());
+		/*int c = getCellAtCoordinate(evt.getX(), evt.getY());
 		if(c != -1) {
 			graph.getCell(c).setState(Color.RED);
 			ArrayList<Integer> al = new ArrayList<>();
 			al.add(c);
 			GridRenderPanel.this.synchWithGraph(al);
-		}
+		}*/
 	}
 	
 	protected void mouseDraggedCallback(MouseEvent evt) {
