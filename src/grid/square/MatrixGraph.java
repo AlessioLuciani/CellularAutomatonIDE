@@ -28,6 +28,10 @@ public class MatrixGraph extends Graph {
 		return id+1;
 	}
 	
+	public void setSize(int size) {
+		this.size = size;
+	}
+	
 	/**dimensione singola cella*/
 	public int getSize() {
 		return size;
@@ -41,5 +45,20 @@ public class MatrixGraph extends Graph {
 	/**altezza matrice*/
 	public int getHeight() {
 		return h;
+	}
+	
+	@Override
+	public void setToGraph(Graph g) {
+		super.setToGraph(g);
+		if(g instanceof MatrixGraph) {
+			w = ((MatrixGraph) g).getWidth();
+			h = ((MatrixGraph) g).getHeight();
+			size = ((MatrixGraph) g).getSize();
+		}
+	}
+	
+	@Override
+	public String toString() {
+		return "matrix "+w+" "+h+" "+size+"\n";
 	}
 }

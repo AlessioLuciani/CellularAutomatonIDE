@@ -2,6 +2,9 @@ package util;
 
 import java.awt.Color;
 
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
 /**mettiamo qui metodi statici che possono essere utili un po' ovunque*/
 public class StaticUtil {
 	/**restituisce una stringa ordinata per il colore rgb*/
@@ -43,5 +46,9 @@ public class StaticUtil {
 	/**restituisce distanza tra due colori*/
 	public static double colorDist(Color c, Color c2) {
 		return Math.sqrt( Math.pow(c.getRed() - c2.getRed(), 2) + Math.pow(c.getGreen() - c2.getGreen(), 2) + Math.pow(c.getBlue() - c2.getBlue(), 2));
+	}
+	
+	public static void errorDialog(String message) {
+		JOptionPane.showMessageDialog(new JFrame(), message, "Error!", JOptionPane.ERROR_MESSAGE);
 	}
 }

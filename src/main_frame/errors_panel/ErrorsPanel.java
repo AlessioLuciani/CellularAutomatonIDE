@@ -7,8 +7,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 
 import javax.swing.BorderFactory;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
@@ -17,6 +15,7 @@ import grid.Graph;
 import grid.GridConfiguration;
 import rules.Rule;
 import util.ConflictFinder;
+import util.StaticUtil;
 
 /**panel per messaggi d'errore
  * */
@@ -50,7 +49,7 @@ public class ErrorsPanel extends JPanel {
 		for(String s : strs)
 			messageList.add(s);
 		if(strs.size() > 0 && showDialog)
-			JOptionPane.showMessageDialog(new JFrame(), message, "Error!", JOptionPane.ERROR_MESSAGE);
+			StaticUtil.errorDialog(message);
 		return strs.size() == 0;
 	}
 }

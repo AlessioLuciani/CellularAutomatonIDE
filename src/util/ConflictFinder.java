@@ -31,13 +31,39 @@ public class ConflictFinder {
 		this.gconf = gconf;
 		this.rules = rules;
 		this.graph = graph;
-		
-		System.out.println(this.stateColors.isEmpty()+"   "+this.gconf.getLen()+"  ");
 	}
 	
 	/**ci sono conflitti?*/
 	public boolean containsConflicts() {
 		return getConflicts().size() != 0;
+	}
+	
+	/**controlla se ci sono conflitti col grafo e la configurazione*/
+	public boolean graphConfConflicts() {
+		return getGraphConfConflicts() != null;
+	}
+	
+	/**controlla se ci sono conflitti col grafo e la configurazione*/
+	public String getGraphConfConflicts() {
+		if(graph.getNumNodes() == 0) //nessun nodo nella configurazione iniziale
+			return INITCONF_EMPTY;
+		else { //c'e' almeno una cella
+			//controlla coerenza forma->tipo grafo
+			if(!(graph.getCell(1) instanceof SquareCell) && gconf.getForm() == CellForm.SQUARE)
+				return INITCONF_GRIDCONF_CNF;
+			else
+				if(!(graph.getCell(1) instanceof TriangularCell) && gconf.getForm() == CellForm.TRIANGLE)
+					return INITCONF_GRIDCONF_CNF;
+				else
+					if(!(graph.getCell(1) instanceof HexCell) && gconf.getForm() == CellForm.HEXAGON)
+						return INITCONF_GRIDCONF_CNF;
+					else {
+						MatrixGraph mtx = (MatrixGraph)graph;
+						if(mtx.getWidth() != gconf.getNumCellsX() || mtx.getHeight() != gconf.getNumCellsY() || mtx.getSize() != gconf.getLen())
+							return INITCONF_GRIDCONF_CNF;
+					}
+		}
+		return null;
 	}
 	
 	/**restituisce set con la descrizione dei conflitti trovati (se il set e' vuoto non ci sono conflitti)*/
@@ -66,24 +92,9 @@ public class ConflictFinder {
 				break;
 			}
 		
-		if(graph.getNumNodes() == 0) //nessun nodo nella configurazione iniziale
-			errors.add(INITCONF_EMPTY);
-		else { //c'e' almeno una cella
-			//controlla coerenza forma->tipo grafo
-			if(!(graph.getCell(1) instanceof SquareCell) && gconf.getForm() == CellForm.SQUARE)
-				errors.add(INITCONF_GRIDCONF_CNF);
-			else
-				if(!(graph.getCell(1) instanceof TriangularCell) && gconf.getForm() == CellForm.TRIANGLE)
-					errors.add(INITCONF_GRIDCONF_CNF);
-				else
-					if(!(graph.getCell(1) instanceof HexCell) && gconf.getForm() == CellForm.HEXAGON)
-						errors.add(INITCONF_GRIDCONF_CNF);
-					else {
-						MatrixGraph mtx = (MatrixGraph)graph;
-						if(mtx.getWidth() != gconf.getNumCellsX() || mtx.getHeight() != gconf.getNumCellsY() || mtx.getSize() != gconf.getLen())
-							errors.add(INITCONF_GRIDCONF_CNF);
-					}
-		}
+		String gcnf = getGraphConfConflicts(); //conflitti grafo configurazione
+		if(gcnf != null)
+			errors.add(gcnf);
 		return errors;
 	}
 }

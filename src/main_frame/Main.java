@@ -9,6 +9,7 @@ import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 
+import grid.Graph;
 import grid.GridConfCreator;
 import grid.square.MatrixGraph;
 import main_frame.rules_creator.RuleChoser;
@@ -22,6 +23,8 @@ import java.awt.GridBagConstraints;
 public class Main {
 
 	private JFrame frame;
+	
+	private Graph graph;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -35,11 +38,11 @@ public class Main {
 			}
 		});
 	}
-
+	
 	public Main() {
 		initialize();
 	}
-
+	
 	private void initialize() {
 		frame = new JFrame();
 		
@@ -103,7 +106,7 @@ public class Main {
 		gbc_rulePanel.gridwidth = 16;
 		pannello.add(rulePanel, gbc_rulePanel);
 		
-		MatrixGraph graph = new MatrixGraph(10, 10, 10);
+		graph = new MatrixGraph();
 		
 		// MenuBar
 		JMenuBar menuBar = new MenuBar(statePanel, gridPanel, rulePanel, graph, errorPanel);

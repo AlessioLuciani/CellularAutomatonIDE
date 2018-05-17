@@ -9,18 +9,21 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
+import grid.Graph;
 import grid.GridConfCreator;
-import grid.square.MatrixGraph;
 import main_frame.errors_panel.ErrorsPanel;
-import main_frame.menu_bar.run_configuration.RunConfiguration;
+import main_frame.menu_bar.run_configuration.RunConfigurationFrame;
 import main_frame.rules_creator.RuleChoser;
 import main_frame.states.StateChoser;
+import util.StaticUtil;
 
 // import RunConfiguration;
 
 public class MenuBar extends JMenuBar {
 	
 	private static final long serialVersionUID = 1L;
+	
+	private static final String NO_STATE_INSERTED_MESSAGE_ERROR = "Inserisci almeno uno stato!";
 
 	// Istanza che permette di accedere a info come screenSize etc
 	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -29,10 +32,10 @@ public class MenuBar extends JMenuBar {
 	StateChoser state;
 	GridConfCreator grid;
 	RuleChoser rules;
-	MatrixGraph graph;
+	Graph graph;
 	ErrorsPanel errorPanel;
 	
-	public MenuBar(StateChoser state, GridConfCreator grid, RuleChoser rules,  MatrixGraph graph, ErrorsPanel err) {
+	public MenuBar(StateChoser state, GridConfCreator grid, RuleChoser rules, Graph graph, ErrorsPanel err) {
 		
 		//Inizializzo Informazioni per testing di Errori
 		this.state = state;
@@ -76,9 +79,13 @@ public class MenuBar extends JMenuBar {
 	ActionListener setConfiguration = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			JFrame runConf = new RunConfiguration();
-			runConf.setBounds( (int)(screenSize.getWidth()/4),  (int)(screenSize.getHeight()/4), (int)(screenSize.getWidth()*0.35), (int)(screenSize.getHeight()*0.45));
-			runConf.setVisible(true);
+			if(state.getStates().size() > 0) {
+				JFrame runConf = new RunConfigurationFrame(graph, grid.getGridConfiguration(), state.getStates().get(0));
+				runConf.setBounds( (int)(screenSize.getWidth()/4),  (int)(screenSize.getHeight()/4), (int)(screenSize.getWidth()*0.35), (int)(screenSize.getHeight()*0.45));
+				runConf.setVisible(true);
+			}
+			else
+				StaticUtil.errorDialog(NO_STATE_INSERTED_MESSAGE_ERROR);
 		}
 	};
 	
