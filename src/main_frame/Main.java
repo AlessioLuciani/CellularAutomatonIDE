@@ -100,7 +100,7 @@ public class Main {
 		gbc_rulePanel.gridx = 1;
 		gbc_rulePanel.gridy = 23;
 		gbc_rulePanel.gridheight = 5;
-		gbc_rulePanel.gridwidth = 20;
+		gbc_rulePanel.gridwidth = 16;
 		pannello.add(rulePanel, gbc_rulePanel);
 		
 		MatrixGraph graph = new MatrixGraph(10, 10, 10);
