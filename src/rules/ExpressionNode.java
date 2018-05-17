@@ -21,6 +21,16 @@ public abstract class ExpressionNode {
     	return ret;
     }
     
+    /**restituisce l'espressione in stringa: ma puo' usare tag html*/
+    public String toHtmlString() {
+    	return "<html>"+toHtmlStringRec()+"</html>";
+    }
+    
+    /**utility ad html string*/
+    protected String toHtmlStringRec() {
+    	return toString();
+    }
+    
     /**mette nell'hashset tutti i colori presenti nell'espressione*/
     public void getColors(HashSet<Color> colors) {
     	if(children != null)

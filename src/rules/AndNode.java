@@ -20,4 +20,9 @@ public class AndNode extends ExpressionNode {
     public String toString() {
     	return "(" + children[0].toString()+" AND "+children[1].toString()+")";
     }
+    
+    @Override
+    protected String toHtmlStringRec() {
+    	return "(" + children[0].toHtmlStringRec()+" AND "+children[1].toHtmlStringRec()+")";
+    }
 }

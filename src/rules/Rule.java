@@ -28,4 +28,9 @@ public class Rule {
     	String colorStr = StaticUtil.colorToRgbString(newColor);
     	return "SE "+root.toString()+" ALLORA nuovo colore = "+colorStr;
     }
+    
+    public String toHtmlString() {
+    	String color = StaticUtil.getHtmlColorSpan(newColor);
+    	return "<html>SE "+root.toHtmlStringRec()+" ALLORA nuovo colore = "+color+"</html>";
+    }
 }

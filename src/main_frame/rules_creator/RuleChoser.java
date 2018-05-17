@@ -2,11 +2,16 @@ package main_frame.rules_creator;
 
 
 import rules.Rule;
+import util.JLabelJListRender;
+import util.StaticUtil;
 
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
-import java.awt.List;
 import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -19,6 +24,8 @@ public class RuleChoser extends JPanel{
 	
 		private static final long serialVersionUID = 1L;
 		
+		private static final String COLOR_LIST_EMPTY_ERROR = "Inserisci almeno uno stato!";
+		
 		//lista di stati 
 		ArrayList<Color> listColor;
 
@@ -26,7 +33,7 @@ public class RuleChoser extends JPanel{
 		ArrayList<Rule> forest;
 		
 		// Contenitore di tutte le regole di transizione gia' create
-		List list;
+		JList<JLabel> ruleList;
 			
 		public RuleChoser(ArrayList<Color> listcolor){
 			
@@ -45,8 +52,10 @@ public class RuleChoser extends JPanel{
 			setLayout(gridBagLayout);
 			
 			// Contenitore di tutte le regole di transizione gia' create
-			list= new List();
-			list.setMultipleMode(true);
+			ruleList = new JList<JLabel>();
+			DefaultListModel<JLabel> listModel = new DefaultListModel<>();
+			ruleList.setModel(listModel);
+			ruleList.setCellRenderer(new JLabelJListRender());
 			
 			// Pulsante che richiama la procedura che crea le regole di transizione
 			JButton btnNew = new JButton("   New   ");
@@ -64,7 +73,8 @@ public class RuleChoser extends JPanel{
 			gbc_list.gridx = 0;
 			gbc_list.gridy = 0;
 			gbc_list.gridheight = 4;
-			add(list, gbc_list);
+			JScrollPane sp = new JScrollPane(ruleList);
+			add(sp, gbc_list);
 			
 			// Aggiunta pulsante New
 			GridBagConstraints gbc_btnNew = new GridBagConstraints();
@@ -93,12 +103,16 @@ public class RuleChoser extends JPanel{
 					@Override
 					public void ruleCreated(Rule r) {
 						forest.add(r);
-						list.add(r.toString());
+						
+						DefaultListModel<JLabel> model = (DefaultListModel<JLabel>)ruleList.getModel();
+						model.addElement(new JLabel(r.toHtmlString()));
 					}
 				};
 				ruleCreator.setBounds(100, 100, 400, 300);
 				ruleCreator.setVisible(true);
 			}
+			else
+				StaticUtil.errorDialog(COLOR_LIST_EMPTY_ERROR);
 		}
 	};
 		
@@ -106,15 +120,14 @@ public class RuleChoser extends JPanel{
 	ActionListener actionbtnRemove = new ActionListener() {	
 		@Override
 		public void actionPerformed(ActionEvent arg0) {	
-			int [] inds = list.getSelectedIndexes();
+			int [] inds = ruleList.getSelectedIndices();
+			DefaultListModel<JLabel> model = (DefaultListModel<JLabel>)ruleList.getModel();
 			for(int i=inds.length-1; i>=0; i--) {
-				list.remove(inds[i]);
+				model.remove(inds[i]);
 				forest.remove(inds[i]);
 			}
 			// Dopo l'eliminaizione, seleziona tutte le righe restanti. In questo modo si deselezionano
-			for (int i = 0; i < list.getItemCount(); i++) {
-				list.deselect(i);
-			}
+			ruleList.clearSelection();
 		}
 	};
 	

@@ -7,6 +7,12 @@ import javax.swing.JOptionPane;
 
 /**mettiamo qui metodi statici che possono essere utili un po' ovunque*/
 public class StaticUtil {
+	
+	/**stringa esadecimale del colore*/
+	public static String hexColor(Color c) {
+		return String.format("#%02x%02x%02x", c.getRed(), c.getGreen(), c.getBlue());  
+	}
+	
 	/**restituisce una stringa ordinata per il colore rgb*/
 	public static String colorToRgbString(Color c) {
 		String colorStr = "(r:"+c.getRed()+", g:"+c.getGreen()+"; b:"+c.getBlue()+")";
@@ -41,6 +47,15 @@ public class StaticUtil {
 			}
 		}
 		return colors[answ];
+	}
+	
+	/**restituisce uno span html che descrive il colore passato*/
+	public static String getHtmlColorSpan(Color c) {
+		String hex = hexColor(c);
+		String text = colorToRgbString(c);
+		String hex2 = hexColor(farthestColor(c, Color.BLACK, Color.WHITE));
+		String htm = "<span style=\"background: "+hex+"; color:"+hex2+";\">"+text+"</span>";
+		return htm;
 	}
 	
 	/**restituisce distanza tra due colori*/

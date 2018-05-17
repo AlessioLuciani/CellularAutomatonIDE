@@ -41,6 +41,12 @@ public class BaseExpressionNode2 extends ExpressionNode {
     }
     
     @Override
+    protected String toHtmlStringRec() {
+    	String html = StaticUtil.getHtmlColorSpan(colr);
+    	return "Il " + indChild + "° vicino è di colore " + html;
+    }
+    
+    @Override
     public void getColors(HashSet<Color> colors) {
     	super.getColors(colors);
     	colors.add(colr);

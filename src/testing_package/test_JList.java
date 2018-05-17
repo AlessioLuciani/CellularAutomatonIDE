@@ -6,6 +6,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.SwingUtilities;
+
+import util.StaticUtil;
  
 public class test_JList extends JFrame {
 	
@@ -28,9 +30,9 @@ public class test_JList extends JFrame {
         //create the model and add elements
         DefaultListModel<JLabel> listModel = new DefaultListModel<>();
         listModel.addElement(jlbl);
-        
-        JLabel j2 = new JLabel("OK");
-        j2.setBackground(Color.blue);
+        String color = StaticUtil.hexColor(Color.green);
+        JLabel j2 = new JLabel("<html> ciao <span style=\"background: "+color+";\">bhooo</span> ciao </html>");
+        //j2.setBackground(Color.blue);
         listModel.addElement(j2);
 
         //create the list

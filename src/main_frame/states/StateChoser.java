@@ -23,8 +23,6 @@ import java.util.ArrayList;
 public class StateChoser extends JPanel{
 	
 	private static final long serialVersionUID = 1L;
-
-	private static final int LABEL_WIDTH = 50, LABEL_HEIGHT = 30;
 	
 	// Contenitore di tutti gli stati
 	JList<JLabel> labelList;
@@ -100,7 +98,6 @@ public class StateChoser extends JPanel{
 						elem.setBackground(c);
 						elem.setForeground(StaticUtil.farthestColor(c, Color.WHITE, Color.BLACK));
 						elem.setOpaque(true);
-						elem.setSize(LABEL_WIDTH, LABEL_HEIGHT);		
 						
 						DefaultListModel<JLabel> model = (DefaultListModel<JLabel>)labelList.getModel();
 						model.addElement(elem);

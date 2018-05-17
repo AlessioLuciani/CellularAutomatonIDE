@@ -17,8 +17,8 @@ public class BaseExpressionNode1 extends ExpressionNode {
 
     /**parametri: a <= #num vicini <= b t.c. colore = c*/
     public BaseExpressionNode1(int a, int b, Color c) {
-        num1 = Math.max(a, b);
-        num2 = Math.min(a, b);
+        num1 = Math.min(a, b);
+        num2 = Math.max(a, b);
         colr = c;
     }
 
@@ -43,6 +43,12 @@ public class BaseExpressionNode1 extends ExpressionNode {
     public String toString() {
     	String colorStr = StaticUtil.colorToRgbString(colr);
     	return "Il numero dei vicini di colore " + colorStr + " è compreso tra " + num1 +  " e " + num2;
+    }
+    
+    @Override
+    protected String toHtmlStringRec() {
+    	String html = StaticUtil.getHtmlColorSpan(colr);
+    	return "Il numero dei vicini di colore " + html + " è compreso tra " + num1 +  " e " + num2;
     }
     
     @Override

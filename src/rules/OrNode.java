@@ -20,4 +20,9 @@ public class OrNode extends ExpressionNode {
     public String toString() {
     	return "(" + children[0].toString()+" OR "+children[1].toString()+")";
     }
+    
+    @Override
+    protected String toHtmlStringRec() {
+    	return "(" + children[0].toHtmlStringRec()+" OR "+children[1].toHtmlStringRec()+")";
+    }
 }

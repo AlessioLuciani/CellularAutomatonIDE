@@ -3,21 +3,25 @@ package main_frame.rules_creator;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 import rules.AndNode;
 import rules.ExpressionNode;
 import rules.NotNode;
 import rules.OrNode;
 import rules.Rule;
+import util.JLabelJListRender;
 
 /** Form che consente di aggiungere nuove espressioni */
 public class CreateExpressionWindow extends JFrame {
@@ -32,7 +36,7 @@ public class CreateExpressionWindow extends JFrame {
 	private JButton btnNOT;
 	private JButton btnTHEN;
 	private JButton btn_add;
-	private List exp_list;
+	private JList<JLabel> exp_list;
 	private EditExpressionPanel edit_panel = null;	//pannello a comparsa per inserire parametri
 	private JPanel BottomGroupPanel ;
 	private boolean flag_then;
@@ -48,8 +52,11 @@ public class CreateExpressionWindow extends JFrame {
 		getContentPane().setLayout(new BorderLayout());
 		
 		//Inizializzazione Attributi
-		exp_list = new List();
-		exp_list.setMultipleMode(true);
+		exp_list = new JList<JLabel>();
+		DefaultListModel<JLabel> listModel = new DefaultListModel<>();
+		exp_list.setModel(listModel);
+		exp_list.setCellRenderer(new JLabelJListRender());
+		
 		ButtonPanel = new JPanel();
 		ButtonPanel.setLayout(new BoxLayout(ButtonPanel, BoxLayout.X_AXIS));
 		this.availableColors = availableColors;
@@ -138,7 +145,10 @@ public class CreateExpressionWindow extends JFrame {
 					else {
 						ExpressionNode e = edit_panel.getExpr();
 						tree.add(e);
-						exp_list.add(e.toString());
+						
+						JLabel label = new JLabel(e.toHtmlString());
+						DefaultListModel<JLabel> model = (DefaultListModel<JLabel>)exp_list.getModel();
+						model.addElement(label);
 					}
 				}
 				check_then();
@@ -157,7 +167,8 @@ public class CreateExpressionWindow extends JFrame {
 		ButtonPanel.add(btnTHEN, "cell 0 0,alignx center,aligny top");
 		ButtonPanel.add(btn_add, "cell 0 0,alignx center,aligny top");
 		
-		add(exp_list,BorderLayout.CENTER);
+		JScrollPane scrollPane = new JScrollPane(exp_list);
+		add(scrollPane,BorderLayout.CENTER);
 		BottomGroupPanel.add(edit_panel);
 		BottomGroupPanel.add(ButtonPanel);
 		add(BottomGroupPanel,BorderLayout.SOUTH);
@@ -179,14 +190,17 @@ public class CreateExpressionWindow extends JFrame {
 	
 	//concatena tutte le righe selezionate secondo l'operatore "operand"
 	private void concatenate(String operand) {
-		int [] inds = exp_list.getSelectedIndexes();
+		DefaultListModel<JLabel> model = (DefaultListModel<JLabel>)exp_list.getModel();
+		int [] inds = exp_list.getSelectedIndices();
 	
 		if(inds.length == 1) { //1 operando: controlla se è una not
 			if(operand.equals("NOT")) {
 				ExpressionNode tmp = new NotNode(tree.get(inds[0]));
 				tree.set(inds[0], tmp);
-				exp_list.remove(inds[0]);
-				exp_list.add(tmp.toString(), 0);
+				model.remove(inds[0]);
+				
+				JLabel label = new JLabel(tmp.toHtmlString());
+				model.add(0, label);
 			}
 		}
 		
@@ -207,10 +221,13 @@ public class CreateExpressionWindow extends JFrame {
 			}
 			
 			for(int i=inds.length-1; i>=0; i--) { //dalla fine all'inizio per non creare problemi alle liste
-				exp_list.remove(inds[i]);
+				model.remove(inds[i]);
 				tree.remove(inds[i]);
 			}
-			exp_list.add(act.toString());
+			
+			JLabel label = new JLabel(act.toHtmlString());
+			model.addElement(label);
+			
 			tree.add(act);
 		}
 	}
@@ -219,6 +236,9 @@ public class CreateExpressionWindow extends JFrame {
 		return new Rule(tree.get(0), thenColor);
 	}
 	
-	private void check_then() {btnTHEN.setEnabled(exp_list.getItemCount()==1);}
+	private void check_then() {
+		DefaultListModel<JLabel> model = (DefaultListModel<JLabel>)exp_list.getModel();
+		btnTHEN.setEnabled(model.size()==1);
+	}
 	
 }
