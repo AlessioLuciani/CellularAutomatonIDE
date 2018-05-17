@@ -204,7 +204,7 @@ public class CreateExpressionWindow extends JFrame {
 			}
 		}
 		
-		if(inds.length > 1) { //piu' di un operando: controlla se sono tante or/and
+		if(inds.length > 1 && (operand.equals("AND") || operand.equals("OR"))) { //piu' di un operando: controlla se sono tante or/and
 			ExpressionNode act;
 			if(operand.equals("AND"))
 				act = new AndNode(tree.get(inds[0]), tree.get(inds[1]));

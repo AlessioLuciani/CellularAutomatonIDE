@@ -68,11 +68,14 @@ public class GridConfCreator extends JPanel {
 	}
 	
 	public GridConfCreator() {
-		this(1, 10, 1, 1000, 1, 1000); //valori di default (da aggiustare)
+		this(3, 32, 10, 1000, 10, 1000); //valori di default (da aggiustare)
 	}
 	
 	/**restituisce grid configuration creata con la gui*/
 	public GridConfiguration getGridConfiguration() {
+		if(lenField.getText().equals("")) lenField.setText((minLen+maxLen)/2 + "");
+		if(xField.getText().equals("")) xField.setText((minX+maxX)/2 + "");
+		if(yField.getText().equals("")) yField.setText((minY+maxY)/2 + "");
 		int len = Math.min(maxLen, Math.max(Integer.parseInt(lenField.getText()), minLen));
 		int lenx = Math.min(maxX, Math.max(Integer.parseInt(xField.getText()), minX));
 		int leny = Math.min(maxY, Math.max(Integer.parseInt(yField.getText()), minY));
