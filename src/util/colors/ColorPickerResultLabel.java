@@ -29,13 +29,15 @@ public class ColorPickerResultLabel extends JLabel{
 			setBackground(availableColors.get(0));
 	}
 	
-	MouseAdapter onColorClicked = new MouseAdapter() {
+	MouseAdapter onColorClicked = new MouseAdapter() {		
 		@Override
-		public void mouseClicked(MouseEvent e) {
-			super.mouseClicked(e);
-			JFrame colorPicker = new CustomColorPicker(availableColors);
-			colorPicker.addWindowListener(onCloseWindow);
-			colorPicker.setVisible(true);
+		public void mouseReleased(MouseEvent e) {
+			super.mouseReleased(e);
+			if(ColorPickerResultLabel.this.contains(e.getPoint())) {
+				JFrame colorPicker = new CustomColorPicker(availableColors);
+				colorPicker.addWindowListener(onCloseWindow);
+				colorPicker.setVisible(true);
+			}
 		}
 	};
 	

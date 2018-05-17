@@ -1,13 +1,9 @@
 package util.colors;
 
-
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import javax.swing.JLabel;
-
 
 public class CircolarColorLabel extends JLabel {
 	
@@ -33,7 +29,6 @@ public class CircolarColorLabel extends JLabel {
 		setMinimumSize(new Dimension(dim, dim));
 		setBounds(0, 0, this.dim, this.dim);
 		setVisible(true);
-		
 	}
 	
 	public CircolarColorLabel(Color color,int x, int y,int dim) {
@@ -44,18 +39,6 @@ public class CircolarColorLabel extends JLabel {
 		setMaximumSize(new Dimension(dim, dim));
 		setMinimumSize(new Dimension(dim,dim));
 		setBounds(x, y, this.dim, this.dim);
-		this.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				CircolarColorLabel label = (CircolarColorLabel)arg0.getSource();
-				
-				isClicked = !isClicked;
-				label.repaint();
-				System.out.println("Clicked "+isClicked);
-				
-			}
-		});
-		
 	}
 	
 	public void switchClick() {
@@ -64,8 +47,6 @@ public class CircolarColorLabel extends JLabel {
 	}
 	
 	public void setClick(boolean value) {this.isClicked = value;}
-	
-	
 	
 	public CircolarColorLabel Check() {
 		Graphics g = getGraphics();
@@ -100,11 +81,6 @@ public class CircolarColorLabel extends JLabel {
 			
 		}
 		
-		
-		g.fillOval(0, 0, g.getClipBounds().width-3, g.getClipBounds().height-3);
-		
+		g.fillOval(0, 0, g.getClipBounds().width-3, g.getClipBounds().height-3);	
 	}
-
-	
-
 }
