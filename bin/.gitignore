@@ -1,6 +1,9 @@
 /grid/
 /main_frame/
-/util/
 /rules/
 /testing_package/
+<<<<<<< HEAD
 /.DS_Store
+=======
+/util/
+>>>>>>> branch 'master' of https://github.com/AlessioLuciani/CellularAutomatonIDE

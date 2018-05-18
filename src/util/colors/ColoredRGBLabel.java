@@ -14,6 +14,7 @@ public class ColoredRGBLabel extends JLabel{
 	 */
 	private static final long serialVersionUID = 1L;
 	private Color color;
+	private boolean isSelected;
 	
 	public ColoredRGBLabel(Color color) {
 		this.color = color;
@@ -21,6 +22,7 @@ public class ColoredRGBLabel extends JLabel{
 		setOpaque(true);
 	}
 	
+	public void setSelected(boolean value) {isSelected=value;}
 	public Color getColor() {return color;}
 	
 	@Override
@@ -29,15 +31,21 @@ public class ColoredRGBLabel extends JLabel{
 		int x = (int)g.getClipBounds().getWidth();
 		int y = (int)g.getClipBounds().getHeight();
 		
-		g.setColor(color);
-		g.fillRect(0, 0, y, y);
-		//g.fillRect(0, 0, Label2.this.getHeight(), Label2.this.getHeight());g.setColor(Color.BLACK);
-		//g.setColor(Color.BLACK);
+		//controllo selezione altrimenti gradiente
+		if (isSelected) {g.setColor(Color.LIGHT_GRAY);}
+		else {
+			int diff = 0;
+			while((y-diff)>0) {
+				g.setColor(new Color(color.getRed(), color.getGreen(), color.getBlue(), 30));
+				g.fillRect(0, 0, y-diff, y-diff);
+				diff+=2;
+		}
+		
+		//print della scritta rgb
+		g.setColor(color);}
 		Font f = new Font(Font.SANS_SERIF,Font.CENTER_BASELINE,y/2);
 		g.setFont(f);
-		//int centeredY = (int)(fm.getAscent()+fm.getDescent())/2;
 		g.drawString(StaticUtil.colorToRgbString(color), y+5,y-(y/4));
-		//g.drawLine(0, y/2, x, y/2);
 		g.drawRect(0, 0, x-1, y-1);
 	}
 
