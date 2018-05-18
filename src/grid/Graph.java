@@ -48,7 +48,7 @@ public class Graph {
     	return nodes;
     }
     
-    /**in sostanza copia g in this*/
+    /**in sostanza setta this a g (non ne fa una vera copia)*/
     public void setToGraph(Graph g) {
     	this.nodes = g.getNodes();
     }

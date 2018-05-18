@@ -8,6 +8,9 @@ public abstract class Cell {
     protected Color state;
     protected int myId; //identificativo della cella
     
+    /**campo usato nel simulatore: indica se la cella e' stata aggiornata nell'ultimo step o no*/
+    protected boolean updated;
+    
     public Cell() {}
     
     public Cell(int myId) {
@@ -25,7 +28,7 @@ public abstract class Cell {
     	state = c;
     }
 
-    /**restituisce indice k-esimo vicino della cella (NB: vicino numero 0 e' il nodo stesso, gli altri sono indicizzati da 1 a N)*/
+    /**restituisce indice k-esimo vicino della cella (NB: vicino numero 0 e' il nodo stesso, gli altri sono indicizzati da 1 a N) NB: restituisce -1 se quel vicino non esiste*/
     public abstract int getKthNeighbor(int k);
 
     /**restituisce numero dei vicini del nodo*/

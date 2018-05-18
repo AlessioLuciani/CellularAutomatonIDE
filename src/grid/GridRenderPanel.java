@@ -14,7 +14,6 @@ import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
@@ -61,10 +60,14 @@ public class GridRenderPanel extends JPanel {
 		graph.drawGraph(buffer.getGraphics(), borderColor);
 		this.invalidate();
 		this.repaint();
+		if(GridRenderPanel.this.getParent() != null) {
+			GridRenderPanel.this.getParent().invalidate();
+			GridRenderPanel.this.getParent().repaint();
+		}	
 	}
 	
 	/**ridisegna solo alcune celle del grafo sul buffer, e poi lo ristampa*/
-	public void synchWithGraph(ArrayList<Integer> inds) {
+	public void synchWithGraph(Iterable<Integer> inds) {
 		for(int ind : inds)
 			graph.getCell(ind).render(buffer.getGraphics(), borderColor);
 		this.invalidate();
@@ -84,7 +87,6 @@ public class GridRenderPanel extends JPanel {
 		transf.translate(deltaX, deltaY); 
 		((Graphics2D)g).transform(transf);
 		g.drawImage(buffer, 0, 0, buffer.getWidth(null), buffer.getHeight(null), 0, 0, buffer.getWidth(null), buffer.getHeight(null), null);
-		//g.drawImage(buffer, 0, 0, this.getWidth(), this.getHeight(), 0, 0, this.getWidth(), this.getHeight(), null);
 	}
 	
 	/**restituisce indice cella a delle determinate coordinate (prese sul panel, con i listener del mouse); -1 se non esiste*/
@@ -102,12 +104,11 @@ public class GridRenderPanel extends JPanel {
 		tmpX = evt.getX();
 		tmpY = evt.getY();
 		
-		/*int c = getCellAtCoordinate(evt.getX(), evt.getY());
-		if(c != -1) {
-			graph.getCell(c).setState(Color.RED);
-			ArrayList<Integer> al = new ArrayList<>();
-			al.add(c);
-			GridRenderPanel.this.synchWithGraph(al);
+		/*int c = getCellAtCoordinate(tmpX, tmpY);
+		if(c != -1 && graph.getCell(c).getState().equals(Color.YELLOW)) {
+			graph.getCell(c).setState(Color.BLUE);
+			System.out.println(c);
+			this.synchWithGraph();
 		}*/
 	}
 	

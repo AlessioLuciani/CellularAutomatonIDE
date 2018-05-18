@@ -12,7 +12,7 @@ public abstract class ExpressionNode {
     /**valuta l'espressione associata all'albero (restituisce il valore di verita').
      * per una certa cella su un certo grafo (cioe' griglia)
      * */
-    protected abstract boolean evaluate(Graph graph, int cell);
+    public abstract boolean evaluate(Graph graph, int cell);
     
     /**restituisce tutti i colori presenti nell'espressione*/
     public HashSet<Color> getColors() {

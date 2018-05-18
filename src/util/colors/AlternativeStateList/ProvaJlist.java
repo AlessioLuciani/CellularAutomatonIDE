@@ -49,7 +49,6 @@ public class ProvaJlist {
 		model.addElement( lbl2);
 		model.addElement( lbl3);
 		
-		
 		JScrollPane sp = new JScrollPane(labelList);
 		frame.add(sp);
 		frame.setVisible(true);

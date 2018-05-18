@@ -25,7 +25,7 @@ public class BaseExpressionNode2 extends ExpressionNode {
     }
 
     @Override
-    protected boolean evaluate(Graph graph, int cell) {
+    public boolean evaluate(Graph graph, int cell) {
         if(graph.getCell(cell) == null) return false; //fai check sugli indici
         if(indChild < 0 || indChild > graph.getCell(cell).getNumNeighbors()) return false; //non ha abbastanza vicini
 
