@@ -15,13 +15,13 @@ public class HexGraph extends MatrixGraph {
 	@Override
 	public int getCellAtCoordinate(int x, int y) {
 		int row = y / (size / 4); //dividi orizzontalmente l'esagono in 4 parti (2 triangoli, 2 rettangoli)
-		if(row%3 > 0) {
+		if(row%3 > 0) { //sezioni centrali
 			int r = row / 3;
 			if((r%2 == 0 && x > size * w) || (r%2 == 1 && x < size/2))
 				return -1;
 			int col = (x - (r%2 == 0 ? 0 : size/2)) / size;
 			return r * this.getWidth() + col + 1;
-		} else {
+		} else { //sezioni triangolari
 			int r = row / 3;
 			int c = x / (size/2);
 			

@@ -18,9 +18,9 @@ public class TriangularGraph extends MatrixGraph {
 	@Override
 	public int getCellAtCoordinate(int x, int y) {
 		int row = y/this.getSize();
-		int col = x/(this.getSize()/2);
+		int col = x/(this.getSize()/2); //spezziamo ogni triangolo in 2 triangoli rettangoli
 		int psum = row * this.getWidth() + col;
-
+		
 		if( (row%2 == 0 && col%2 == 1) || (row%2 == 1 && col%2 == 0) ) { //diagonale da alto-sx a basso-dx
 			int x1 = col * this.getSize() / 2; //mi riduco a un rettangolino
 			int y1 = row * this.getSize();
