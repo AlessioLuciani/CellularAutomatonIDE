@@ -71,6 +71,18 @@ public class GridConfCreator extends JPanel {
 		this(3, 32, 10, 1000, 10, 1000); //valori di default (da aggiustare)
 	}
 	
+	/**inizializza questo componenete grafico da una oggetto grid configuration*/
+	public void initFromGridConf(GridConfiguration gconf) {
+		this.lenField.setText(gconf.getLen()+""); //semplicemente prendi i valori per il form da gconf
+		this.xField.setText(gconf.getNumCellsX()+"");
+		this.yField.setText(gconf.getNumCellsY()+"");
+		for(int i=0; i<forms.length; i++)
+			if(forms[i].equals(gconf.getForm())) {
+				shapePicker.setSelectedIndex(i);
+				break;
+			}
+	}
+	
 	/**restituisce grid configuration creata con la gui*/
 	public GridConfiguration getGridConfiguration() {
 		if(lenField.getText().equals("")) lenField.setText((minLen+maxLen)/2 + "");

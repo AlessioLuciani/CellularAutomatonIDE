@@ -35,7 +35,6 @@ public class StateChoser extends JPanel{
 		//lista degli stati
 		listColor = new ArrayList<Color>();
 		
-		
 		// Creazione Layout
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 0, 0};	//nColumns
@@ -94,13 +93,8 @@ public class StateChoser extends JPanel{
 				@Override
 				public void colorChosen(Color c) {
 					if(!listColor.contains(c)) {
-						JLabel elem = new JLabel(StaticUtil.colorToRgbString(c));
-						elem.setBackground(c);
-						elem.setForeground(StaticUtil.farthestColor(c, Color.WHITE, Color.BLACK));
-						elem.setOpaque(true);
-						
 						DefaultListModel<JLabel> model = (DefaultListModel<JLabel>)labelList.getModel();
-						model.addElement(elem);
+						model.addElement(makeLabel(c));	
 						listColor.add(c);
 					}
 				}
@@ -126,6 +120,26 @@ public class StateChoser extends JPanel{
 			labelList.getSelectionModel().clearSelection();
 		}
 	};
+	
+	//aggiunge colore alla jlist
+	private JLabel makeLabel(Color c) {
+		JLabel elem = new JLabel(StaticUtil.colorToRgbString(c));
+		elem.setBackground(c);
+		elem.setForeground(StaticUtil.farthestColor(c, Color.WHITE, Color.BLACK));
+		elem.setOpaque(true);
+		return elem;
+	}
+	
+	/**inizializza il componente partendo da una lista di colori*/
+	public void initFromStatesList(ArrayList<Color> colors) {
+		this.listColor.clear();
+		this.listColor.addAll(colors); //copia lista
+		
+		DefaultListModel<JLabel> model = (DefaultListModel<JLabel>)labelList.getModel();
+		model.removeAllElements(); //rimuovi tutti stati
+		for(Color c : colors) //aggiungi colori a jlist
+			model.addElement(makeLabel(c));
+	}
 	
 	// Semplice funzione che restituisce l'insieme degli stati rappresentati ognuno da un colore
 	public ArrayList<Color> getStates(){

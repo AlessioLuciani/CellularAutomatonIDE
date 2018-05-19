@@ -46,7 +46,9 @@ public class GridConfiguration {
 	/**lato per contenere singola cella*/
 	public int getLen() {
 		switch(form) {
-			case HEXAGON: return len + len%4; //deve essere divisibile per 4 altrimenti si accumulano troppi errori nei calcoli
+			case HEXAGON: 
+				int add = len%4 == 0 ? 0 : 4 - (len%4); //deve essere divisibile per 4 altrimenti si accumulano troppi errori nei calcoli
+				return len + add; 
 			case TRIANGLE: return len + len%2; //divisibile per 2 per stesso motivo esagono
 			default: return len;
 		}

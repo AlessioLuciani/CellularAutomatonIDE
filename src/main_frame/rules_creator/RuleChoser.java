@@ -131,6 +131,17 @@ public class RuleChoser extends JPanel{
 		}
 	};
 	
+	/**inizializza il componente prendendo una lista di regole*/
+	public void initFromRules(ArrayList<Rule> rules) {
+		this.forest.clear(); //sesetta la foresta di regole
+		this.forest.addAll(rules);
+
+		DefaultListModel<JLabel> model = (DefaultListModel<JLabel>)ruleList.getModel();
+		model.removeAllElements(); //rimuovi tutto dalla jlist
+		for(Rule r : rules) //ricrea jlist
+			model.addElement(new JLabel(r.toHtmlString()));
+	}
+	
 	// Semplice funzione che restituisce l'insieme delle regole create sotto forma di albero
 	public ArrayList<Rule> getRuleTrees() {
 		return this.forest;

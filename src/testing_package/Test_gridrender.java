@@ -21,6 +21,8 @@ import rules.Rule;
 import simulator.Updater;
 
 public class Test_gridrender {
+	static int t = 100;
+	static Timer timer = new Timer();
 	public static void main(String [] args) {
 		JFrame frame = new JFrame();
 		final int w = 100, h = 100, s = 20;
@@ -64,7 +66,7 @@ public class Test_gridrender {
 		
 		int cosorandom[] = {919, 1016, 1215, 1218, 1119, 1120, 1021, 921, 820, 720, 719, 817, 917};
 		
-		for(int i : test)
+		for(int i : cannone)
 			g.getCell(i).setState(Color.BLUE);
 		
 		Updater exe = new Updater(g, rules);
@@ -74,7 +76,7 @@ public class Test_gridrender {
 
 		frame.setBounds(0, 0, 800, 800);
 		
-		Timer timer = new Timer();
+		
 		timer.scheduleAtFixedRate(new TimerTask() {
 			  @Override
 			  public void run() {
@@ -83,9 +85,9 @@ public class Test_gridrender {
 				  frame.repaint();
 			  }
 		}, 100, 100);
-		timer.cancel();
+		//timer.cancel();
 		
-		JButton b7 = new JButton("next step");
+		JButton b7 = new JButton("faster");
 		b7.addActionListener(new ActionListener() {
 			@Override
 		    public void actionPerformed(ActionEvent e) {
@@ -97,9 +99,21 @@ public class Test_gridrender {
 					li.add(ind);
 					g.getCell(ind).setState(Color.BLUE);
 				}*/
-				panel.synchWithGraph(exe.execStep()); 
+				/*panel.synchWithGraph(exe.execStep()); 
 				frame.invalidate();
-				frame.repaint();
+				frame.repaint();*/
+				timer.cancel();
+				timer = new Timer();
+				timer.purge();
+				t -= 10;
+				timer.scheduleAtFixedRate(new TimerTask() {
+					  @Override
+					  public void run() {
+						  panel.synchWithGraph(exe.execStep());
+						  frame.invalidate();
+						  frame.repaint();
+					  }
+				}, t, t);
 		    }
 		});
 	

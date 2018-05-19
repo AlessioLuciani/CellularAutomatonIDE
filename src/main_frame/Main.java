@@ -24,8 +24,12 @@ public class Main {
 
 	private JFrame frame;
 	
+	//componenti principali
 	private Graph graph;
-
+	private GridConfCreator gridPanel;
+	private StateChoser statePanel;
+	private RuleChoser rulePanel;
+	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -74,7 +78,7 @@ public class Main {
 		pannello.add(errorPanel, gbc_errorPanel);
 		
 		//Pannello configurazione griglia
-		GridConfCreator gridPanel = new GridConfCreator();
+		gridPanel = new GridConfCreator();
 		// Aggiunta pannello configurazione griglia
 		GridBagConstraints gbc_gridPanel = new GridBagConstraints();
 		gbc_gridPanel.fill = GridBagConstraints.BOTH;
@@ -85,7 +89,7 @@ public class Main {
 		pannello.add(gridPanel, gbc_gridPanel);
 		
 		// Pannello gestione stati
-		StateChoser statePanel = new StateChoser();
+		statePanel = new StateChoser();
 		// Aggiunta pannello gestione stati
 		GridBagConstraints gbc_statePanel = new GridBagConstraints();
 		gbc_statePanel.fill = GridBagConstraints.BOTH;
@@ -96,7 +100,7 @@ public class Main {
 		pannello.add(statePanel, gbc_statePanel);
 		
 		// Pannello gestione regole di transizione
-		RuleChoser rulePanel = new RuleChoser(statePanel.getStates());
+		rulePanel = new RuleChoser(statePanel.getStates());
 		// Aggiunta pannello gestione regole
 		GridBagConstraints gbc_rulePanel = new GridBagConstraints();
 		gbc_rulePanel.fill = GridBagConstraints.BOTH;
