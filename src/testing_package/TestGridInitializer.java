@@ -28,8 +28,8 @@ public class TestGridInitializer {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(600, 500);
 		
-		final int w = 100, h = 100, s = 21;
-		GridConfiguration gconf = new GridConfiguration(CellForm.HEXAGON, s, w, h);
+		final int w = 100, h = 100, s = 15;
+		GridConfiguration gconf = new GridConfiguration(CellForm.TRIANGLE, s, w, h);
 		Graph g = Graph.buildGraph(gconf, Color.YELLOW);
 	
 		ArrayList<Color> colors = new ArrayList<>();

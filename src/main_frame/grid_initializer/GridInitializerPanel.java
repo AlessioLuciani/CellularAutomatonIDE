@@ -13,6 +13,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Random;
 
 import javax.swing.ImageIcon;
@@ -190,7 +191,7 @@ public class GridInitializerPanel extends JPanel {
 		chosenColor = btnChosenColor.getColor();
 		sideBar.add(btnChosenColor);
 		
-		// Pulsante colore casuale
+		// Pulsante colori casuali
 		
 		btnColorRandom.setSize(40, 40);
 		btnColorRandom.setFocusable(false);
@@ -198,8 +199,21 @@ public class GridInitializerPanel extends JPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				chosenColor = colors.get(new Random().nextInt(colors.size()));
-				btnChosenColor.setBackground(chosenColor);
+				//chosenColor = colors.get(new Random().nextInt(colors.size()));
+				//btnChosenColor.setBackground(chosenColor);
+				Random random = new Random();
+				int numCells = random.nextInt(graph.getNumNodes() - 1) + 1;
+				HashSet<Integer> randomCells = new HashSet<>();
+				for (int i = 0; i < numCells; i++) {
+					randomCells.add(random.nextInt(graph.getNumNodes() - 1) + 1);
+				}
+				for (int cellIndex: randomCells) {
+					Color randomColor = colors.get(random.nextInt(colors.size()));
+					Cell cell = graph.getCell(cellIndex);
+					if (!randomColor.equals(cell.getState())) 
+						cell.setState(randomColor);
+				}
+				grid.synchWithGraph(randomCells);
 			}
 		});
 		sideBar.add(btnColorRandom);
