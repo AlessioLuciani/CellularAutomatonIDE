@@ -3,6 +3,7 @@ package main_frame.grid_initializer;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Point;
@@ -12,12 +13,12 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.Random;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
-
 
 
 import grid.*;
@@ -35,6 +36,7 @@ public class GridInitializerPanel extends JPanel {
 	private int currentCursor;
 	private JButton btnHand, btnColor, btnColorAll;
 	private ColorPickerResultLabel btnChosenColor;
+	private JButton btnColorRandom;
 	private boolean isGridDraggable = true;
 	private boolean areCellsColorable = false;
 	private boolean areAllCellsColorable = false;
@@ -116,6 +118,7 @@ public class GridInitializerPanel extends JPanel {
 				GridInitializerPanel.this.chosenColor = getColor();
 			}
 		};
+		btnColorRandom = new JButton("Random");
 
 		// Mouse listener
 		setMouseListener(sideBar, 0);
@@ -123,6 +126,7 @@ public class GridInitializerPanel extends JPanel {
 		setMouseListener(btnColor, 0);
 		setMouseListener(btnColorAll, 0);
 		setMouseListener(btnChosenColor, 0);
+		setMouseListener(btnColorRandom, 0);
 		setMouseListener(grid, -1);
 		
 		// Pulsante mano
@@ -182,10 +186,23 @@ public class GridInitializerPanel extends JPanel {
 		
 		// Pulsante colore scelto
 		
-		btnChosenColor.setSize(40,40);
-	
+		btnChosenColor.setSize(40, 40);
 		chosenColor = btnChosenColor.getColor();
 		sideBar.add(btnChosenColor);
+		
+		// Pulsante colore casuale
+		
+		btnColorRandom.setSize(40, 40);
+		btnColorRandom.setFocusable(false);
+		btnColorRandom.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				chosenColor = colors.get(new Random().nextInt(colors.size()));
+				btnChosenColor.setBackground(chosenColor);
+			}
+		});
+		sideBar.add(btnColorRandom);
 	}
 	
 	/**
@@ -198,22 +215,33 @@ public class GridInitializerPanel extends JPanel {
 			
 			public void mouseEntered(MouseEvent evt) {
 				if (cursorInt == 0)
-		        changeCursor(Cursor.DEFAULT_CURSOR);
+					changeCursor(Cursor.DEFAULT_CURSOR);
 		    }
 
 		    public void mouseExited(MouseEvent evt) {
 		    	if (cursorInt == 0)
-		        changeCursor(currentCursor);
+		    		changeCursor(currentCursor);
 		    }
 		    
 		    public void mousePressed(MouseEvent evt) {
-		    	if (cursorInt == -1) 
-		    	changeCursor(-2);
-		    	else changeCursor(currentCursor);
+		    	switch (cursorInt) {
+		    	case 0:
+		    		changeCursor(Cursor.DEFAULT_CURSOR);
+		    		break;
+		    	case -1:
+		    		changeCursor(-2);
+		    		break;
+		    	default:
+		    		changeCursor(currentCursor);
+		    		break;
+		    	}
 		    }
 		    
 		    public void mouseReleased(MouseEvent evt) {
-		    	changeCursor(currentCursor);
+		    	if (cursorInt == 0)
+		    		changeCursor(Cursor.DEFAULT_CURSOR);
+		    	else 
+		    		changeCursor(currentCursor);
 		    }
 		
 		});
