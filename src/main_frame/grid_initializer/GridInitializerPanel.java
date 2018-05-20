@@ -50,6 +50,8 @@ public class GridInitializerPanel extends JPanel {
 		
 		// Pannello generale
 		
+		
+		
 		GridRenderPanel grid = new GridRenderPanel(graph, gridConfiguration, Color.BLACK) {
 
 			private static final long serialVersionUID = 1L;
@@ -198,8 +200,6 @@ public class GridInitializerPanel extends JPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//chosenColor = colors.get(new Random().nextInt(colors.size()));
-				//btnChosenColor.setBackground(chosenColor);
 				Random random = new Random();
 				int numCells = random.nextInt(graph.getNumNodes() - 1) + 1;
 				HashSet<Integer> randomCells = new HashSet<>();
@@ -309,6 +309,13 @@ public class GridInitializerPanel extends JPanel {
 			setCursor(new Cursor(cursor));
 			break;
 		}
+		
 	}
 
+	/**
+	 * Chiude eventuali pannelli rimasti aperti.
+	 */
+	public void onPanelClosed() {
+		btnChosenColor.closeWindow();
+	}
 }
