@@ -18,6 +18,7 @@ public class ColorPickerResultLabel extends JLabel{
 	 */
 	private static final long serialVersionUID = 1L;
 	private List<Color> availableColors;
+	JFrame colorPicker;
 	public ColorPickerResultLabel(List<Color> availableColors) {
 		this.availableColors = availableColors;
 		
@@ -34,7 +35,7 @@ public class ColorPickerResultLabel extends JLabel{
 		public void mouseReleased(MouseEvent e) {
 			super.mouseReleased(e);
 			if(ColorPickerResultLabel.this.contains(e.getPoint())) {
-				JFrame colorPicker = new CustomColorPicker(availableColors);
+				colorPicker = new CustomColorPicker(availableColors);
 				colorPicker.addWindowListener(onCloseWindow);
 				colorPicker.setVisible(true);
 			}
@@ -51,6 +52,10 @@ public class ColorPickerResultLabel extends JLabel{
 	};
 	
 	protected void onWindowClosed() {}
+	
+	public void closeWindow() {
+		colorPicker.dispose();
+	}
 	
 	private void setColor(Color color){
 		if (color==null) return;

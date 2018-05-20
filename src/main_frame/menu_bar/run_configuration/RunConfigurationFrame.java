@@ -5,9 +5,14 @@ import javax.swing.JFrame;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
+import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
@@ -16,6 +21,7 @@ import javax.swing.JRadioButton;
 import grid.Graph;
 import grid.GridConfiguration;
 import grid.square.MatrixGraph;
+import main_frame.grid_initializer.GridInitializerPanel;
 import util.ConflictFinder;
 
 /**frame che permette di definire i parametri di run*/
@@ -25,18 +31,23 @@ public class RunConfigurationFrame extends JFrame {
 	
 	JRadioButton rdbtnSincrono;
 	JRadioButton rdbtnAsincrono;
+	GridInitializerPanel gridInitializerPanel;
 	
 	Graph graph;
 	
-	public RunConfigurationFrame(Graph graph, GridConfiguration gridConf, Color defaultGraphColor) {
+	public RunConfigurationFrame(Graph graph, GridConfiguration gridConf, Color defaultGraphColor, ArrayList<Color> colors) {
 		setAutoRequestFocus(false);
 		setVisible(true);
 		
 		this.graph = graph;
 		repairGraph(gridConf, defaultGraphColor);
 		
-		JPanel pannello = new JPanel();
-		getContentPane().add(pannello);		
+		setLayout(new BorderLayout());
+		
+		gridInitializerPanel = new GridInitializerPanel(graph, gridConf, colors);
+		add(gridInitializerPanel);
+		JPanel pannelloDestra = new JPanel();
+		add(pannelloDestra, BorderLayout.EAST);		
 		
 		// Creazione Layout
 		GridBagLayout gridBagLayout = new GridBagLayout();
@@ -44,7 +55,7 @@ public class RunConfigurationFrame extends JFrame {
 		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0};
 		gridBagLayout.columnWeights = new double[]{0.01, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1};
 		gridBagLayout.rowWeights = new double[]{0.01, 0.01, 0.1, 0.1, 0.0, 0.1, 0.1, 0.1};
-		pannello.setLayout(gridBagLayout);
+		pannelloDestra.setLayout(gridBagLayout);
 		
 		rdbtnSincrono = new JRadioButton("Sincorno");
 		rdbtnSincrono.addActionListener(onClickSincrono);
@@ -56,13 +67,23 @@ public class RunConfigurationFrame extends JFrame {
 		gbc_rdbtnAsincrono.insets = new Insets(0, 0, 5, 5);
 		gbc_rdbtnAsincrono.gridx = 1;
 		gbc_rdbtnAsincrono.gridy = 3;
-		pannello.add(rdbtnAsincrono, gbc_rdbtnAsincrono);
+		pannelloDestra.add(rdbtnAsincrono, gbc_rdbtnAsincrono);
 		GridBagConstraints gbc_rdbtnSincrono = new GridBagConstraints();
 		gbc_rdbtnSincrono.anchor = GridBagConstraints.WEST;
 		gbc_rdbtnSincrono.insets = new Insets(0, 0, 5, 5);
 		gbc_rdbtnSincrono.gridx = 1;
 		gbc_rdbtnSincrono.gridy = 5;
-		pannello.add(rdbtnSincrono, gbc_rdbtnSincrono);
+		pannelloDestra.add(rdbtnSincrono, gbc_rdbtnSincrono);
+		
+		// Chiude tutti i pannelli
+		addWindowListener(new WindowAdapter() {
+			
+			@Override
+			public void windowClosing(WindowEvent e) {
+				gridInitializerPanel.onPanelClosed();
+				super.windowClosing(e);
+			}
+		});
 	}
 	
 	// Gestione RadioButton Sincrono/Asincrono

@@ -1,9 +1,11 @@
 package main_frame.menu_bar;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -81,7 +83,7 @@ public class MenuBar extends JMenuBar {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			if(state.getStates().size() > 0) {
-				JFrame runConf = new RunConfigurationFrame(graph, grid.getGridConfiguration(), state.getStates().get(0));
+				JFrame runConf = new RunConfigurationFrame(graph, grid.getGridConfiguration(), state.getStates().get(0), state.getStates());
 				runConf.setBounds( (int)(screenSize.getWidth()/4),  (int)(screenSize.getHeight()/4), (int)(screenSize.getWidth()*0.35), (int)(screenSize.getHeight()*0.45));
 				runConf.setVisible(true);
 			}
@@ -115,7 +117,7 @@ public class MenuBar extends JMenuBar {
 			BaseExpressionNode1 e2 = new BaseExpressionNode1(0, 1, Color.BLUE); //0 <= numero vivi <= 1
 			AndNode e3 = new AndNode(e1, e2);
 			rrs.add(new Rule(e3, Color.YELLOW));
-			//qualsiasi cella viva con più di 3 vicini vivi muore
+			//qualsiasi cella viva con piï¿½ di 3 vicini vivi muore
 			BaseExpressionNode1 e4 = new BaseExpressionNode1(4, 1000, Color.BLUE); //piu' di 3 vicini vivi
 			AndNode e5 = new AndNode(e1, e4);
 			rrs.add(new Rule(e5, Color.YELLOW));
