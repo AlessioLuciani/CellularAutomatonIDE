@@ -40,6 +40,7 @@ public class GridRenderPanel extends JPanel {
 	public GridRenderPanel(Graph g, GridConfiguration gconf, Color borderColor) {
 		graph = g;
 		this.borderColor = borderColor;
+		buffer = null;
 		buffer = new BufferedImage(gconf.getBufferImageWidth(), gconf.getBufferImageHeight(), BufferedImage.TYPE_INT_RGB);
 		this.setBounds(0, 0, gconf.getBufferImageWidth(), gconf.getBufferImageHeight());
 		
@@ -169,5 +170,10 @@ public class GridRenderPanel extends JPanel {
 				mouseWheelMovedCallback(evt);
 			}
 		};
+	}
+	
+	/**chiamala quando vuoi rimuovere il panel*/
+	public void onClosing() {
+		buffer = null; //permetti al garbage collector di deallocare l'immagine
 	}
 }

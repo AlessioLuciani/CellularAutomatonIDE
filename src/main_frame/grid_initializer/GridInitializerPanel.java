@@ -34,14 +34,16 @@ public class GridInitializerPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 	
 	private int currentCursor;
-	private JButton btnHand, btnColor, btnColorAll;
-	private ColorPickerResultLabel btnChosenColor;
-	private JButton btnColorRandom;
+	protected JButton btnHand, btnColor, btnColorAll;
+	protected ColorPickerResultLabel btnChosenColor;
+	protected JButton btnColorRandom;
 	private boolean isGridDraggable = true;
 	private boolean areCellsColorable = false;
 	private boolean areAllCellsColorable = false;
 	private Color chosenColor;
 
+	protected GridRenderPanel grid;
+	
 	/**
 	 * Carica il pannello con la griglia e i pulsanti necessari.
 	 */
@@ -50,9 +52,7 @@ public class GridInitializerPanel extends JPanel {
 		
 		// Pannello generale
 		
-		
-		
-		GridRenderPanel grid = new GridRenderPanel(graph, gridConfiguration, Color.BLACK) {
+		grid = new GridRenderPanel(graph, gridConfiguration, Color.BLACK) {
 
 			private static final long serialVersionUID = 1L;
 
@@ -316,6 +316,7 @@ public class GridInitializerPanel extends JPanel {
 	 * Chiude eventuali pannelli rimasti aperti.
 	 */
 	public void onPanelClosed() {
+		grid.onClosing();
 		btnChosenColor.closeWindow();
 	}
 }
