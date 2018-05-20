@@ -18,6 +18,14 @@ public class ColoredRGBLabel extends JLabel{
 	
 	public ColoredRGBLabel(Color color) {
 		this.color = color;
+		setName(StaticUtil.colorToRgbString(color));
+		setVisible(true);
+		setOpaque(true);
+	}
+	
+	public ColoredRGBLabel(Color color, String name) {
+		this.color = color;
+		setName(name);
 		setVisible(true);
 		setOpaque(true);
 	}
@@ -27,9 +35,11 @@ public class ColoredRGBLabel extends JLabel{
 	
 	@Override
 	protected void paintComponent(Graphics g) {
+		//per l'heigth se non vogliamo farla scalare dobbiamo usare quella della Label this.getHeigth
+		//altrimentri usiamo quella della Graphics g.getClipBounds().getHeight();
 		super.paintComponent(g);
 		int x = (int)g.getClipBounds().getWidth();
-		int y = (int)g.getClipBounds().getHeight();
+		int y = (int)getHeight();
 		
 		//controllo selezione altrimenti gradiente
 		if (isSelected) {g.setColor(Color.LIGHT_GRAY);}

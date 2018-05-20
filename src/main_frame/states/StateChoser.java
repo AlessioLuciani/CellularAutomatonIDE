@@ -6,6 +6,7 @@ import javax.swing.JScrollPane;
 import util.JLabelJListRender;
 import util.StaticUtil;
 import util.colors.ColorSelector;
+import util.colors.ColoredRGBLabel;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -47,7 +48,8 @@ public class StateChoser extends JPanel{
 		labelList = new JList<>();
 		DefaultListModel<JLabel> listModel = new DefaultListModel<>();
 		labelList.setModel(listModel);
-		labelList.setCellRenderer(new JLabelJListRender());
+		labelList.setCellRenderer(new util.colors.AlternativeStateList.JLabelJListRender());
+		labelList.setFixedCellHeight(30);
 		
 		// Pulsante che richiama la procedura che inserisce gli stati
 		JButton btnNew = new JButton("   New   ");
@@ -122,13 +124,7 @@ public class StateChoser extends JPanel{
 	};
 	
 	//aggiunge colore alla jlist
-	private JLabel makeLabel(Color c) {
-		JLabel elem = new JLabel(StaticUtil.colorToRgbString(c));
-		elem.setBackground(c);
-		elem.setForeground(StaticUtil.farthestColor(c, Color.WHITE, Color.BLACK));
-		elem.setOpaque(true);
-		return elem;
-	}
+	private JLabel makeLabel(Color c) {return new ColoredRGBLabel(c,StaticUtil.colorToRgbString(c));}
 	
 	/**inizializza il componente partendo da una lista di colori*/
 	public void initFromStatesList(ArrayList<Color> colors) {
