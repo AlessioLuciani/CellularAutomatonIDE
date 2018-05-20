@@ -54,7 +54,7 @@ public class ColorPickerResultLabel extends JLabel{
 	protected void onWindowClosed() {}
 	
 	public void closeWindow() {
-		colorPicker.dispose();
+		if (colorPicker != null) colorPicker.dispose();
 	}
 	
 	private void setColor(Color color){
