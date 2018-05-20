@@ -24,4 +24,9 @@ public class NotNode extends ExpressionNode {
     protected String toHtmlStringRec() {
     	return "(NOT " + children[0].toHtmlStringRec()+")";
     }
+    
+    @Override
+    public ExpressionNode copy() {
+    	return new NotNode(children[0].copy());
+    }
 }

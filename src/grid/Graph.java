@@ -49,6 +49,30 @@ public class Graph {
     	return nodes;
     }
     
+    /**fa una copia del grafo*/
+    public Graph copy() {
+    	Graph g = null;
+    	int w = 0, h = 0, s = 0;
+    	if(this instanceof MatrixGraph) { //trova larghezza altezza e lato
+    		w = ((MatrixGraph)this).getWidth();
+    		h = ((MatrixGraph)this).getHeight();
+    		s = ((MatrixGraph)this).getSize();
+    	}
+    	
+    	if(this instanceof TriangularGraph) //crea il grafo giusto
+    		g = new TriangularGraph(w, h, s);
+    	else
+    		if(this instanceof HexGraph)
+    			g = new HexGraph(w, h, s);
+    		else
+    			if(this instanceof MatrixGraph)
+    				g = new MatrixGraph(w, h, s);
+    	
+    	for(int i=1; i<=this.getNumNodes(); i++) //rimetti apposto gli stati
+    		g.getCell(i).setState(this.getCell(i).getState());
+    	return g;
+    }
+    
     /**costruisce grafo in base alla configurazione della griglia (e con stato di default)*/
     public static Graph buildGraph(GridConfiguration gconf, Color defaultState) {
     	Graph graph = null;

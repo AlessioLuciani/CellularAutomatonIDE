@@ -25,4 +25,9 @@ public class OrNode extends ExpressionNode {
     protected String toHtmlStringRec() {
     	return "(" + children[0].toHtmlStringRec()+" OR "+children[1].toHtmlStringRec()+")";
     }
+    
+    @Override
+    public ExpressionNode copy() {
+    	return new OrNode(children[0].copy(), children[1].copy());
+    }
 }

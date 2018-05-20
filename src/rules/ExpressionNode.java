@@ -37,4 +37,9 @@ public abstract class ExpressionNode {
     		for(ExpressionNode en : children)
     			en.getColors(colors);
     }
+    
+    /**fa copia dell'albero*/
+    public ExpressionNode copy() {
+    	return null;
+    }
 }

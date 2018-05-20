@@ -33,4 +33,11 @@ public class Rule {
     	String color = StaticUtil.getHtmlColorSpan(newColor);
     	return "<html>SE "+root.toHtmlStringRec()+" ALLORA nuovo colore = "+color+"</html>";
     }
+    
+    /**restituisce copia della regola*/
+    public Rule copy() {
+    	ExpressionNode n = root.copy();
+    	Color c = newColor;
+    	return new Rule(n, c);
+    }
 }

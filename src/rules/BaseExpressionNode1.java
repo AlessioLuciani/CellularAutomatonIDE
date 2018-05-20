@@ -56,4 +56,9 @@ public class BaseExpressionNode1 extends ExpressionNode {
     	super.getColors(colors);
     	colors.add(colr);
     }
+    
+    @Override
+    public ExpressionNode copy() {
+    	return new BaseExpressionNode1(num1, num2, colr);
+    }
 }
