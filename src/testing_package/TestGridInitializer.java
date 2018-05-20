@@ -28,8 +28,8 @@ public class TestGridInitializer {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(600, 500);
 		
-		final int w = 100, h = 100, s = 15;
-		GridConfiguration gconf = new GridConfiguration(CellForm.TRIANGLE, s, w, h);
+		final int w = 500, h = 500, s = 20;
+		GridConfiguration gconf = new GridConfiguration(CellForm.SQUARE, s, w, h);
 		Graph g = Graph.buildGraph(gconf, Color.YELLOW);
 	
 		ArrayList<Color> colors = new ArrayList<>();
@@ -37,9 +37,7 @@ public class TestGridInitializer {
 			colors.add(new Color(new Random().nextInt(255),new Random().nextInt(255),new Random().nextInt(255)));
 		}
 		
-		
 		GridInitializerPanel gridInitializerPanel = new GridInitializerPanel(g, gconf, colors);
-		
 
 		GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
         GraphicsDevice defaultScreen = ge.getDefaultScreenDevice();
