@@ -9,9 +9,7 @@ import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 
-import grid.Graph;
 import grid.GridConfCreator;
-import grid.square.MatrixGraph;
 import main_frame.rules_creator.RuleChoser;
 import main_frame.states.StateChoser;
 import main_frame.errors_panel.ErrorsPanel;
@@ -25,7 +23,6 @@ public class Main {
 	private JFrame frame;
 	
 	//componenti principali
-	private Graph graph;
 	private GridConfCreator gridPanel;
 	private StateChoser statePanel;
 	private RuleChoser rulePanel;
@@ -110,10 +107,8 @@ public class Main {
 		gbc_rulePanel.gridwidth = 16;
 		pannello.add(rulePanel, gbc_rulePanel);
 		
-		graph = new MatrixGraph();
-		
 		// MenuBar
-		JMenuBar menuBar = new MenuBar(statePanel, gridPanel, rulePanel, graph, errorPanel);
+		JMenuBar menuBar = new MenuBar(statePanel, gridPanel, rulePanel, errorPanel);
 		frame.getContentPane().add(menuBar, BorderLayout.NORTH);
 	}
 

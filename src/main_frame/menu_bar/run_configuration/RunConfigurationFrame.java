@@ -7,7 +7,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
 import java.util.ArrayList;
 
 import javax.swing.JPanel;
@@ -20,9 +19,7 @@ import javax.swing.JRadioButton;
 
 import grid.Graph;
 import grid.GridConfiguration;
-import grid.square.MatrixGraph;
 import main_frame.grid_initializer.GridInitializerPanel;
-import util.ConflictFinder;
 
 /**frame che permette di definire i parametri di run*/
 public class RunConfigurationFrame extends JFrame {
@@ -33,21 +30,17 @@ public class RunConfigurationFrame extends JFrame {
 	JRadioButton rdbtnAsincrono;
 	GridInitializerPanel gridInitializerPanel;
 	
-	Graph graph;
-	
-	public RunConfigurationFrame(Graph graph, GridConfiguration gridConf, Color defaultGraphColor, ArrayList<Color> colors) {
+	public RunConfigurationFrame(Graph graph, GridConfiguration gridConf, ArrayList<Color> colors) {
 		setAutoRequestFocus(false);
 		setVisible(true);
-		
-		this.graph = graph;
-		repairGraph(gridConf, defaultGraphColor);
-		
+
 		setLayout(new BorderLayout());
 		
 		gridInitializerPanel = new GridInitializerPanel(graph, gridConf, colors);
 		add(gridInitializerPanel);
+		
 		JPanel pannelloDestra = new JPanel();
-		add(pannelloDestra, BorderLayout.EAST);		
+		add(pannelloDestra, BorderLayout.SOUTH);		
 		
 		// Creazione Layout
 		GridBagLayout gridBagLayout = new GridBagLayout();
@@ -59,9 +52,10 @@ public class RunConfigurationFrame extends JFrame {
 		
 		rdbtnSincrono = new JRadioButton("Sincorno");
 		rdbtnSincrono.addActionListener(onClickSincrono);
-		
 		rdbtnAsincrono = new JRadioButton("Asincrono");
 		rdbtnAsincrono.addActionListener(onClickAsincrono);
+		rdbtnSincrono.setSelected(true); //inizialmente sincrono
+		
 		GridBagConstraints gbc_rdbtnAsincrono = new GridBagConstraints();
 		gbc_rdbtnAsincrono.anchor = GridBagConstraints.WEST;
 		gbc_rdbtnAsincrono.insets = new Insets(0, 0, 5, 5);
@@ -96,15 +90,4 @@ public class RunConfigurationFrame extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent arg0) { if (rdbtnAsincrono.isSelected()) {rdbtnAsincrono.setSelected(false);} }
 	};
-
-	/**ripara il grafo da eventuali incongruenze*/
-	private void repairGraph(GridConfiguration gconf, Color defaultState) {
-		ConflictFinder cf = new ConflictFinder(null, gconf, null, graph);
-		if(cf.graphConfConflicts()) { //conflitto...
-			if(graph instanceof MatrixGraph) //proviamo a sistemare la dimensione delle celle... e' il massimo che possiamo aggiustare
-				((MatrixGraph)graph).setSize(gconf.getLen());
-			if(cf.graphConfConflicts()) //ci sono ancora conflitti, allora dobbiamo per forza ricreare il grafo da zero
-				graph.setToGraph(Graph.buildGraph(gconf, defaultState));
-		}
-	}
 }

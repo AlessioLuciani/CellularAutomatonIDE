@@ -8,9 +8,6 @@ public abstract class Cell {
     protected Color state;
     protected int myId; //identificativo della cella
     
-    /**campo usato nel simulatore: indica se la cella e' stata aggiornata nell'ultimo step o no*/
-    protected boolean updated;
-    
     public Cell() {}
     
     public Cell(int myId) {

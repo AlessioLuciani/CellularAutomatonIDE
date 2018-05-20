@@ -10,6 +10,7 @@ import grid.triangle.TriangularGraph;
 
 /**grafo rappresentare una griglia*/
 public class Graph {
+
     /**lista dei nodi del grafo*/
     protected ArrayList<Cell> nodes;
 
@@ -46,11 +47,6 @@ public class Graph {
     
     public ArrayList<Cell> getNodes() {
     	return nodes;
-    }
-    
-    /**in sostanza setta this a g (non ne fa una vera copia)*/
-    public void setToGraph(Graph g) {
-    	this.nodes = g.getNodes();
     }
     
     /**costruisce grafo in base alla configurazione della griglia (e con stato di default)*/

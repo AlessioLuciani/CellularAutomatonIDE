@@ -9,7 +9,6 @@ import grid.Graph;
 import grid.GridConfiguration;
 import grid.hexagon.HexCell;
 import grid.square.MatrixGraph;
-import grid.square.SquareCell;
 import grid.triangle.TriangularCell;
 import rules.Rule;
 
@@ -49,13 +48,13 @@ public class ConflictFinder {
 			return INITCONF_EMPTY;
 		else { //c'e' almeno una cella
 			//controlla coerenza forma->tipo grafo
-			if(!(graph.getCell(1) instanceof SquareCell) && gconf.getForm() == CellForm.SQUARE)
+			if(!(graph.getCell(1) instanceof HexCell) && gconf.getForm() == CellForm.HEXAGON)
 				return INITCONF_GRIDCONF_CNF;
 			else
 				if(!(graph.getCell(1) instanceof TriangularCell) && gconf.getForm() == CellForm.TRIANGLE)
 					return INITCONF_GRIDCONF_CNF;
-				else
-					if(!(graph.getCell(1) instanceof HexCell) && gconf.getForm() == CellForm.HEXAGON)
+				else //NB: ricorda che le hexcell e triangularcell sono sottoclassi di squarecell
+					if((graph.getCell(1) instanceof HexCell || graph.getCell(1) instanceof TriangularCell) && gconf.getForm() == CellForm.SQUARE)
 						return INITCONF_GRIDCONF_CNF;
 					else {
 						MatrixGraph mtx = (MatrixGraph)graph;

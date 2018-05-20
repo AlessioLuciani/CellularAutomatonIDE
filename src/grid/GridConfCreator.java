@@ -68,7 +68,8 @@ public class GridConfCreator extends JPanel {
 	}
 	
 	public GridConfCreator() {
-		this(3, 32, 10, 1000, 10, 1000); //valori di default (da aggiustare)
+		//this(3, 32, 10, 1000, 10, 1000); //valori di default
+		this(3, 32, 2, 1000, 2, 1000); //valori di default
 	}
 	
 	/**inizializza questo componenete grafico da una oggetto grid configuration*/

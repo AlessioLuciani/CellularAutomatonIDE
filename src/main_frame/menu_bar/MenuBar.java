@@ -5,7 +5,6 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -14,10 +13,13 @@ import javax.swing.JMenuItem;
 
 import grid.Graph;
 import grid.GridConfCreator;
+import grid.GridConfiguration;
+import grid.square.MatrixGraph;
 import main_frame.errors_panel.ErrorsPanel;
 import main_frame.menu_bar.run_configuration.RunConfigurationFrame;
 import main_frame.rules_creator.RuleChoser;
 import main_frame.states.StateChoser;
+import util.ConflictFinder;
 import util.StaticUtil;
 
 // import RunConfiguration;
@@ -31,20 +33,21 @@ public class MenuBar extends JMenuBar {
 	// Istanza che permette di accedere a info come screenSize etc
 	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
+	Graph graph; //grafo memorizzato qui: ci serve per run e run configurations
+	
 	// Informazioni per test Errori
 	StateChoser state;
 	GridConfCreator grid;
 	RuleChoser rules;
-	Graph graph;
 	ErrorsPanel errorPanel;
 	
-	public MenuBar(StateChoser state, GridConfCreator grid, RuleChoser rules, Graph graph, ErrorsPanel err) {
+	public MenuBar(StateChoser state, GridConfCreator grid, RuleChoser rules, ErrorsPanel err) {
 		
 		//Inizializzo Informazioni per testing di Errori
 		this.state = state;
 		this.grid = grid;
 		this.rules = rules;
-		this.graph = graph;
+		this.graph = new MatrixGraph();
 		this.errorPanel = err;
 		
 		// File
@@ -83,7 +86,9 @@ public class MenuBar extends JMenuBar {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			if(state.getStates().size() > 0) {
-				JFrame runConf = new RunConfigurationFrame(graph, grid.getGridConfiguration(), state.getStates().get(0), state.getStates());
+				repairGraph(grid.getGridConfiguration(), state.getStates().get(0)); //ripara grafo prima di passarlo
+				
+				JFrame runConf = new RunConfigurationFrame(graph, grid.getGridConfiguration(), state.getStates());
 				runConf.setBounds( (int)(screenSize.getWidth()/4),  (int)(screenSize.getHeight()/4), (int)(screenSize.getWidth()*0.35), (int)(screenSize.getHeight()*0.45));
 				runConf.setVisible(true);
 			}
@@ -96,7 +101,9 @@ public class MenuBar extends JMenuBar {
 	ActionListener runConfiguration = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			errorPanel.update(state.getStates(), grid.getGridConfiguration(), rules.getRuleTrees(), graph, true);
+			if(errorPanel.update(state.getStates(), grid.getGridConfiguration(), rules.getRuleTrees(), graph, true)) {
+				System.out.println("RUN!");
+			}
 		}
 	};
 	
@@ -142,5 +149,17 @@ public class MenuBar extends JMenuBar {
 			System.out.println("exportConfiguration");
 		}
 	};
+	
+	/**ripara il grafo da eventuali incongruenze*/
+	private void repairGraph(GridConfiguration gconf, Color defaultState) {
+		ConflictFinder cf = new ConflictFinder(null, gconf, null, graph);
+		if(cf.graphConfConflicts()) { //conflitto...
+			if(graph instanceof MatrixGraph) //proviamo a sistemare la dimensione delle celle... e' il massimo che possiamo aggiustare
+				((MatrixGraph)graph).setSize(gconf.getLen());
+			if(cf.graphConfConflicts()) { //ci sono ancora conflitti, allora dobbiamo per forza ricreare il grafo da zero
+				graph = Graph.buildGraph(gconf, defaultState);
+			}
+		}
+	}
 
 }

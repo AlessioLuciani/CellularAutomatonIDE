@@ -1,5 +1,6 @@
 package grid.square;
 
+import grid.Cell;
 import grid.Graph;
 
 /**grafo rappresentato a matrice*/
@@ -46,19 +47,13 @@ public class MatrixGraph extends Graph {
 	public int getHeight() {
 		return h;
 	}
-	
-	@Override
-	public void setToGraph(Graph g) {
-		super.setToGraph(g);
-		if(g instanceof MatrixGraph) {
-			w = ((MatrixGraph) g).getWidth();
-			h = ((MatrixGraph) g).getHeight();
-			size = ((MatrixGraph) g).getSize();
-		}
-	}
-	
+
 	@Override
 	public String toString() {
-		return "matrix "+w+" "+h+" "+size+"\n";
+		String s = "matrix "+w+" "+h+" "+size+"\n";
+		for(Cell c : nodes) {
+			s += c.toString();
+		}
+		return s;
 	}
 }

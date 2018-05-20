@@ -1,5 +1,6 @@
 package testing_package;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
@@ -8,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 
 import grid.CellForm;
@@ -28,7 +30,7 @@ public class TestGridInitializer {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(600, 500);
 		
-		final int w = 100, h = 100, s = 15;
+		final int w = 105, h = 105, s = 15;
 		GridConfiguration gconf = new GridConfiguration(CellForm.HEXAGON, s, w, h);
 		Graph g = Graph.buildGraph(gconf, Color.YELLOW);
 	
@@ -39,14 +41,15 @@ public class TestGridInitializer {
 		
 		GridInitializerPanel gridInitializerPanel = new GridInitializerPanel(g, gconf, colors);
 
-		GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+		/*GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
         GraphicsDevice defaultScreen = ge.getDefaultScreenDevice();
 		Rectangle rect = defaultScreen.getDefaultConfiguration().getBounds();
-		frame.setLocation((int) rect.getMaxX()/2, (int) rect.getMaxY()/2);
+		frame.setLocation((int) rect.getMaxX()/2, (int) rect.getMaxY()/2);*/
 		
 		
+		frame.setLayout(new BorderLayout());
 		frame.add(gridInitializerPanel);
+		frame.add(new JButton("CIAO"), BorderLayout.SOUTH);
 		frame.setVisible(true);
-		
 	}
 }
