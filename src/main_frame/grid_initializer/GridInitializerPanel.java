@@ -2,6 +2,7 @@ package main_frame.grid_initializer;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.GridLayout;
 import java.awt.Image;
@@ -41,6 +42,7 @@ public class GridInitializerPanel extends JPanel {
 	private boolean areCellsColorable = false;
 	private boolean areAllCellsColorable = false;
 	private Color chosenColor;
+	protected JPanel sideBar;
 
 	protected GridRenderPanel grid;
 	
@@ -102,7 +104,7 @@ public class GridInitializerPanel extends JPanel {
 		
 		
 		// Barra laterale
-		JPanel sideBar = new JPanel();
+		sideBar = new JPanel();
 		GridLayout gridLayout = new GridLayout(7, 1);
 		sideBar.setLayout(gridLayout);
 		add(sideBar, BorderLayout.WEST);
@@ -223,7 +225,7 @@ public class GridInitializerPanel extends JPanel {
 	 * @param object
 	 * @param evt
 	 */
-	private void setMouseListener(JComponent jComp, int cursorInt) {
+	protected void setMouseListener(JComponent jComp, int cursorInt) {
 		jComp.addMouseListener(new MouseAdapter() {
 			
 			public void mouseEntered(MouseEvent evt) {

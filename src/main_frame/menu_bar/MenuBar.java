@@ -26,6 +26,7 @@ import main_frame.menu_bar.run_configuration.RunConfigurationFrame;
 import main_frame.rules_creator.RuleChoser;
 import main_frame.states.StateChoser;
 import util.ConfigContainer;
+import run_frame.runFrame;
 import util.ConflictFinder;
 import util.StaticUtil;
 
@@ -115,6 +116,10 @@ public class MenuBar extends JMenuBar {
 		public void actionPerformed(ActionEvent arg0) {
 			if(errorPanel.update(state.getStates(), grid.getGridConfiguration(), rules.getRuleTrees(), graph, true)) {
 				System.out.println("RUN!");
+				JFrame run = new JFrame();
+				run.add(new runFrame(graph, grid.getGridConfiguration(), state.getStates(), rules.getRuleTrees()));
+				run.setBounds( (int)(screenSize.getWidth()/4),  (int)(screenSize.getHeight()/4), (int)(screenSize.getWidth()*0.35), (int)(screenSize.getHeight()*0.45));
+				run.setVisible(true);
 			}
 		}
 	};

@@ -66,7 +66,7 @@ public class Test_gridrender {
 		
 		int cosorandom[] = {919, 1016, 1215, 1218, 1119, 1120, 1021, 921, 820, 720, 719, 817, 917};
 		
-		for(int i : cannone)
+		for(int i : test)
 			g.getCell(i).setState(Color.BLUE);
 		
 		Updater exe = new Updater(g, rules);
