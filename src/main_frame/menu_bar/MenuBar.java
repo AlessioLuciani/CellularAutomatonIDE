@@ -5,11 +5,17 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+
+import com.google.gson.Gson;
 
 import grid.Graph;
 import grid.GridConfCreator;
@@ -19,6 +25,7 @@ import main_frame.errors_panel.ErrorsPanel;
 import main_frame.menu_bar.run_configuration.RunConfigurationFrame;
 import main_frame.rules_creator.RuleChoser;
 import main_frame.states.StateChoser;
+import util.ConfigContainer;
 import util.ConflictFinder;
 import util.StaticUtil;
 
@@ -60,8 +67,14 @@ public class MenuBar extends JMenuBar {
 			JMenuItem exportRule = new JMenuItem();
 			exportRule.addActionListener(exportConfiguration);
 			exportRule.setText("Export...");
+			// Voce Import Image che
+			JMenuItem importImage = new JMenuItem();
+			importImage.addActionListener(importImg);
+			importImage.setText("Import Image...");
 		menuFile.add(importRule);
 		menuFile.add(exportRule);
+		menuFile.add(importImage);
+
 		
 		// Run
 		JMenu menuRun = new JMenu("Run");
@@ -75,7 +88,6 @@ public class MenuBar extends JMenuBar {
 			runConfiguration.setText("Run Configuration...");
 		menuRun.add(run);
 		menuRun.add(runConfiguration);
-		
 		
 		add(menuFile);
 		add(menuRun);
@@ -113,32 +125,12 @@ public class MenuBar extends JMenuBar {
 		public void actionPerformed(ActionEvent arg0) {
 			System.out.println("importConfiguration");
 			
-			/*//piccolo test per verificare reset dei componenti grafici
-			ArrayList<Color> states = new ArrayList<Color>();
-			states.add(Color.BLUE);
-			states.add(Color.YELLOW);
+			// Frame che permette di scegliere la destinazione e di dare un nome al file
+			JFileChooser importPath = new JFileChooser();
+			importPath.showOpenDialog(new JFrame());
 			
-			ArrayList<Rule> rrs = new ArrayList<Rule>();
-			//qualsiasi cella viva con meno di 2 vicini vivi muore
-			BaseExpressionNode2 e1 = new BaseExpressionNode2(0, Color.BLUE); //cella deve essere viva
-			BaseExpressionNode1 e2 = new BaseExpressionNode1(0, 1, Color.BLUE); //0 <= numero vivi <= 1
-			AndNode e3 = new AndNode(e1, e2);
-			rrs.add(new Rule(e3, Color.YELLOW));
-			//qualsiasi cella viva con pi� di 3 vicini vivi muore
-			BaseExpressionNode1 e4 = new BaseExpressionNode1(4, 1000, Color.BLUE); //piu' di 3 vicini vivi
-			AndNode e5 = new AndNode(e1, e4);
-			rrs.add(new Rule(e5, Color.YELLOW));
-			//qualsiasi cella morta con esattamente 3 celle vive adiacenti diventa viva
-			BaseExpressionNode2 e6 = new BaseExpressionNode2(0, Color.YELLOW); //cella morta
-			BaseExpressionNode1 e7 = new BaseExpressionNode1(3, 3, Color.BLUE); //3 vivi
-			AndNode e8 = new AndNode(e6, e7);
-			rrs.add(new Rule(e8, Color.BLUE));
 			
-			GridConfiguration gconf = new GridConfiguration(CellForm.HEXAGON, 21, 100, 100);
 			
-			state.initFromStatesList(states);
-			rules.initFromRules(rrs);
-			grid.initFromGridConf(gconf);*/
 		}
 	};
 		
@@ -146,7 +138,42 @@ public class MenuBar extends JMenuBar {
 	ActionListener exportConfiguration = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			System.out.println("exportConfiguration");
+			
+			// Frame che permette di scegliere la destinazione e di dare un nome al file
+			JFileChooser exportPath = new JFileChooser();
+			exportPath.showSaveDialog(new JFrame());
+			
+			// Genero la path dove salvare il file
+			String path = exportPath.getSelectedFile() + ".txt";
+			if (path != "null.agm") {
+				try { 
+					// Creo il file su cui salvare il tutto
+					File exportFile = new File(path); 
+					exportFile.createNewFile();
+					
+					// Inizializzo il contenitore di tutte le informazioni da salvare
+					ConfigContainer confContainer = new ConfigContainer(graph, state, grid, rules);
+					
+					// Inizializzo l'istanza JSON e converto l'oggetto
+					Gson gson = new Gson();
+					String dati = gson.toJson(confContainer);
+					
+					// salvo l'oggetto su file e chiudo il flusso
+					FileWriter fw = new FileWriter(exportFile);
+					fw.write(dati);
+					fw.flush();
+					fw.close();
+				}
+				catch (IOException e) {}
+			}
+		}
+	};
+	
+	// Metodo richiamato dal click di import Image che importa una qualsiasi immagine selezionata dall'utente
+	ActionListener importImg = new ActionListener() {
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			System.out.println("importImage");
 		}
 	};
 	
