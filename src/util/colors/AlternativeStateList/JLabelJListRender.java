@@ -26,7 +26,4 @@ public class JLabelJListRender extends JLabel implements ListCellRenderer<JLabel
 		return lbl;
 	}
 	
-	
-	
-	
 }
