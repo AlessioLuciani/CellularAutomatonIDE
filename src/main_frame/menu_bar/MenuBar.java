@@ -14,7 +14,6 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
-import grid.CellForm;
 import grid.Graph;
 import grid.GridConfCreator;
 import grid.GridConfiguration;
@@ -23,9 +22,6 @@ import main_frame.errors_panel.ErrorsPanel;
 import main_frame.menu_bar.run_configuration.RunConfigurationFrame;
 import main_frame.rules_creator.RuleChoser;
 import main_frame.states.StateChoser;
-import rules.AndNode;
-import rules.BaseExpressionNode1;
-import rules.BaseExpressionNode2;
 import rules.Rule;
 import simulator.RunPanel;
 import util.ConflictFinder;
@@ -137,7 +133,7 @@ public class MenuBar extends JMenuBar {
 		public void actionPerformed(ActionEvent arg0) {
 			System.out.println("importConfiguration");
 			
-			//piccolo test per verificare reset dei componenti grafici
+			/*//piccolo test per verificare reset dei componenti grafici
 			ArrayList<Color> states = new ArrayList<Color>();
 			states.add(Color.BLUE);
 			states.add(Color.YELLOW);
@@ -162,7 +158,7 @@ public class MenuBar extends JMenuBar {
 			
 			state.initFromStatesList(states);
 			rules.initFromRules(rrs);
-			grid.initFromGridConf(gconf);
+			grid.initFromGridConf(gconf);*/
 		}
 	};
 		
