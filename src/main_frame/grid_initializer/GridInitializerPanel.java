@@ -41,6 +41,7 @@ public class GridInitializerPanel extends JPanel {
 	private boolean areCellsColorable = false;
 	private boolean areAllCellsColorable = false;
 	private Color chosenColor;
+	protected JPanel sideBar;
 
 	protected GridRenderPanel grid;
 	
@@ -102,7 +103,7 @@ public class GridInitializerPanel extends JPanel {
 		
 		
 		// Barra laterale
-		JPanel sideBar = new JPanel();
+		sideBar = new JPanel();
 		GridLayout gridLayout = new GridLayout(7, 1);
 		sideBar.setLayout(gridLayout);
 		add(sideBar, BorderLayout.WEST);

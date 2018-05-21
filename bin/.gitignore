@@ -1,6 +1,4 @@
-/grid/
-/main_frame/
-/rules/
-/simulator/
 /testing_package/
-/util/
+/.gitignore
+/run_frame/
+/main_frame/
