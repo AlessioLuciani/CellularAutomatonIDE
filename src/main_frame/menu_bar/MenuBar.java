@@ -105,7 +105,7 @@ public class MenuBar extends JMenuBar {
 			if(errorPanel.update(state.getStates(), grid.getGridConfiguration(), rules.getRuleTrees(), graph, true)) {
 				System.out.println("RUN!");
 				JFrame run = new JFrame();
-				run.add(new runFrame(graph, grid.getGridConfiguration(), state.getStates()));
+				run.add(new runFrame(graph, grid.getGridConfiguration(), state.getStates(), rules.getRuleTrees()));
 				run.setBounds( (int)(screenSize.getWidth()/4),  (int)(screenSize.getHeight()/4), (int)(screenSize.getWidth()*0.35), (int)(screenSize.getHeight()*0.45));
 				run.setVisible(true);
 			}
