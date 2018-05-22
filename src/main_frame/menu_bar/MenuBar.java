@@ -73,6 +73,9 @@ public class MenuBar extends JMenuBar {
 		this.graph = new MatrixGraph();
 		this.errorPanel = err;
 		
+		// Image
+		image = null;
+		
 		// File
 		JMenu menuFile = new JMenu("File");
 			// Voce Import che permette di caricare una configurazione completa 
@@ -216,7 +219,6 @@ public class MenuBar extends JMenuBar {
 
 			if (returnValue == JFileChooser.APPROVE_OPTION) {
 				File selectedImage = imageFinder.getSelectedFile();
-				image = null;
 				
 				try {
 					image = ImageIO.read(selectedImage);
@@ -227,11 +229,25 @@ public class MenuBar extends JMenuBar {
 				
 				ImageHandler iH = new ImageHandler();
 				
+				image = iH.resize(image, 200, 200);
+				
 				image = iH.reduceColors(image);
 				state.addStates(new ArrayList<>(iH.getFewColors()));
 				
 				
+				//ArrayList<Integer> cells = new ArrayList<>();
+				
+				for (int y = 0; y <  image.getHeight(); y++) {
+					for (int x = 0; x < image.getWidth(); x++) {
+				
+						graph.getCell(y*501+x+1).setState(new Color(image.getRGB(x, y)));
+						//cells.add(y*300+x+1);
+						
+					}
+				}
+				
 			}
+				
 		}
 	};
 	
