@@ -1,4 +1,11 @@
 /testing_package/
+<<<<<<< HEAD
 /.gitignore
 /main_frame/
 /run_frame/
+=======
+/simulator/
+/main_frame/
+/util/
+>>>>>>> 35d3fff156d064bd39de139b99c7484cc64c25b7
+/grid/

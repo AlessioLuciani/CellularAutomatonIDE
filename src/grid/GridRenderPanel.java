@@ -143,8 +143,10 @@ public class GridRenderPanel extends JPanel {
 			zoomFactor /= BASE_ZOOM * (double)unit;
 		GridRenderPanel.this.invalidate();
 		GridRenderPanel.this.repaint();
-		GridRenderPanel.this.getParent().invalidate();
-		GridRenderPanel.this.getParent().repaint();	
+		if(GridRenderPanel.this.getParent() != null) {
+			GridRenderPanel.this.getParent().invalidate();
+			GridRenderPanel.this.getParent().repaint();	
+		}
 	}
 	
 	/**inizializza mouse listeners*/

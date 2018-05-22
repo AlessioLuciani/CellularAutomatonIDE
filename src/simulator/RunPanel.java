@@ -1,72 +1,75 @@
-package run_frame;
+package simulator;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.util.ArrayList;
-import java.util.TimerTask;
 
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.Timer;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import grid.Graph;
 import grid.GridConfiguration;
-import grid.GridRenderPanel;
 import main_frame.grid_initializer.GridInitializerPanel;
 import rules.Rule;
-import simulator.Updater;
 
-public class runFrame extends GridInitializerPanel {
-	/**
-	 * 
-	 */
+public class RunPanel extends GridInitializerPanel {
+
 	private static final long serialVersionUID = 1L;
+
 	protected JSlider speedSlider;
-	private static final int minSpeed = 1;
-	private static final int maxSpeed = 100;
+	private static final int minDelay = 1;
+	private static final int maxDelay = 100;
+	
 	private Timer timer;
-	private Timer t;
 	private Updater updater;
 	
-	public runFrame(Graph graph, GridConfiguration gridConfiguration, ArrayList<Color> colors, ArrayList<Rule> rules) {
+	public RunPanel(Graph graph, GridConfiguration gridConfiguration, ArrayList<Color> colors, ArrayList<Rule> rules) {
 		super(graph, gridConfiguration, colors);
-		sideBar.remove(btnColorAll);
+		sideBar.remove(btnColorAll); //rimuoviamo bottoni che qui non servono
+		sideBar.remove(btnColorRandom);
 		
 		RunCommandPanel CommandPanel = new RunCommandPanel(sideBar.getWidth());
 		sideBar.add(CommandPanel);
 		
-		speedSlider = new JSlider(JSlider.HORIZONTAL, minSpeed, maxSpeed, (minSpeed+maxSpeed)/2);
+		speedSlider = new JSlider(JSlider.HORIZONTAL, minDelay, maxDelay, (minDelay+maxDelay)/2);
 		speedSlider.setPreferredSize(new Dimension(sideBar.getWidth(), speedSlider.getHeight()));
+		speedSlider.addChangeListener(new SpeedChangeListener());
 		sideBar.add(speedSlider);
 		
 		setMouseListener(CommandPanel, 0);
 		setMouseListener(speedSlider, 0);
 		
 		updater = new Updater(graph, rules);
-		
-		//timer = new Timer();		
-		t = new Timer(100, CommandPanel.timerEnded);
-		
+
+		timer = new Timer((minDelay+maxDelay)/2, CommandPanel.timerEnded); //ritardo iniziale: metà del possibile
+	}
+	
+	/**da chiamare quando si vuole interrompere run*/
+	public void onClosing() {
+		if(timer.isRunning()) //se chiudi mentre sta eseguendo lo stoppo
+			timer.stop();
+	}
+	
+	//listener chiamato quando si sposta lo speed slider
+	protected class SpeedChangeListener implements ChangeListener {
+		@Override
+		public void stateChanged(ChangeEvent evt) {
+			int newDelay = RunPanel.maxDelay - ((JSlider)evt.getSource()).getValue() + RunPanel.minDelay;
+			RunPanel.this.timer.setDelay(newDelay);
+		}
 	}
 	
 	protected class RunCommandPanel extends JPanel{
-
-		/**
-		 * 
-		 */
+		
 		private static final long serialVersionUID = 1L;
+		
 		private JButton btnStepForward;
 		private JButton btnStepBack;
 		private JButton btnStart;
@@ -78,9 +81,8 @@ public class runFrame extends GridInitializerPanel {
 			
 			btnStepForward = new JButton(">>");
 			btnStepForward.addActionListener(onStepForward);
-			
-						
-			btnStepBack = new JButton("<<");
+						 
+			btnStepBack = new JButton("<<"); //da rimuovere!
 			btnStepBack.addActionListener(onStepBack);
 			
 			btnStart = new JButton("run");
@@ -95,20 +97,16 @@ public class runFrame extends GridInitializerPanel {
 			add(btnStart);
 			add(btnStop);
 			
-			runFrame.this.setMouseListener(btnStepForward, 0);
-			runFrame.this.setMouseListener(btnStepBack, 0);
-			runFrame.this.setMouseListener(btnStart, 0);
-			runFrame.this.setMouseListener(btnStop, 0);
-			
-			
-			
+			RunPanel.this.setMouseListener(btnStepForward, 0);
+			RunPanel.this.setMouseListener(btnStepBack, 0);
+			RunPanel.this.setMouseListener(btnStart, 0);
+			RunPanel.this.setMouseListener(btnStop, 0);
 		}
 		
 		ActionListener onStepForward = new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("STEP FORWARD");
 				updateStep();
 			}
 		};
@@ -123,12 +121,10 @@ public class runFrame extends GridInitializerPanel {
 			};
 			
 		ActionListener onStop = new ActionListener() {
-			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("STOP");
-				//runFrame.this.timer.cancel();
-				runFrame.this.t.stop();
+				if(RunPanel.this.timer.isRunning())
+					RunPanel.this.timer.stop();
 			}
 		};
 		
@@ -136,39 +132,24 @@ public class runFrame extends GridInitializerPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("PLAY");
-				/*runFrame.this.timer.scheduleAtFixedRate(new TimerTask() {
-					  @Override
-					  public void run() {
-						  updateStep();
-					  }
-				}, 100, 100);*/
-				
-				runFrame.this.t.start();
-				
+				if(!RunPanel.this.timer.isRunning())
+					RunPanel.this.timer.start();
 			}
 		};
 		
 		ActionListener timerEnded = new ActionListener() {
-			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				updateStep();
-				
 			}
 		};
 		
 		private void updateStep() {
-			System.out.println("aggiorno");
-			runFrame.this.grid.synchWithGraph(updater.execStep());
-			runFrame.this.invalidate();
-			runFrame.this.repaint();
+			RunPanel.this.grid.synchWithGraph(updater.execStep());
+			RunPanel.this.invalidate();
+			RunPanel.this.repaint();
 		}
 		
 	}
-
-	
-	
-	
 
 }

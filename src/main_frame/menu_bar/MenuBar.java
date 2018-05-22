@@ -8,6 +8,9 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.util.ArrayList;
 
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -17,6 +20,7 @@ import javax.swing.JMenuItem;
 
 import com.google.gson.Gson;
 
+import grid.CellForm;
 import grid.Graph;
 import grid.GridConfCreator;
 import grid.GridConfiguration;
@@ -26,7 +30,8 @@ import main_frame.menu_bar.run_configuration.RunConfigurationFrame;
 import main_frame.rules_creator.RuleChoser;
 import main_frame.states.StateChoser;
 import util.ConfigContainer;
-import run_frame.runFrame;
+import rules.Rule;
+import simulator.RunPanel;
 import util.ConflictFinder;
 import util.StaticUtil;
 
@@ -114,12 +119,23 @@ public class MenuBar extends JMenuBar {
 	ActionListener runConfiguration = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			if(errorPanel.update(state.getStates(), grid.getGridConfiguration(), rules.getRuleTrees(), graph, true)) {
-				System.out.println("RUN!");
+			if(errorPanel.update(state.getStates(), grid.getGridConfiguration(), rules.getRuleTrees(), graph, true)) { //non ci sono errori, possiamo fare run
 				JFrame run = new JFrame();
-				run.add(new runFrame(graph, grid.getGridConfiguration(), state.getStates(), rules.getRuleTrees()));
+				//passiamo delle copie al run panel... cosi se le modifichiamo nell'editor questo non si ripercuote sulla simulazione
+				ArrayList<Rule> copyRules = new ArrayList<Rule>();
+				for(Rule r : rules.getRuleTrees()) 
+					copyRules.add(r.copy());
+				
+				RunPanel runPanel = new RunPanel(graph.copy(), grid.getGridConfiguration(), new ArrayList<Color>(state.getStates()), copyRules); //crea run panel e setta parametri
+				run.add(runPanel);
 				run.setBounds( (int)(screenSize.getWidth()/4),  (int)(screenSize.getHeight()/4), (int)(screenSize.getWidth()*0.35), (int)(screenSize.getHeight()*0.45));
+				run.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 				run.setVisible(true);
+				run.addWindowListener(new WindowAdapter(){
+	                public void windowClosing(WindowEvent e){
+	                   runPanel.onClosing();
+	                }
+	            });
 			}
 		}
 	};
@@ -133,9 +149,7 @@ public class MenuBar extends JMenuBar {
 			// Frame che permette di scegliere la destinazione e di dare un nome al file
 			JFileChooser importPath = new JFileChooser();
 			importPath.showOpenDialog(new JFrame());
-			
-			
-			
+			GridConfiguration gconf = new GridConfiguration(CellForm.SQUARE, 21, 100, 100);			
 		}
 	};
 		
