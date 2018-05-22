@@ -2,6 +2,7 @@ package main_frame.menu_bar;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,15 +11,19 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
+import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import com.google.gson.Gson;
+
 
 import grid.CellForm;
 import grid.Graph;
@@ -33,7 +38,9 @@ import util.ConfigContainer;
 import rules.Rule;
 import simulator.RunPanel;
 import util.ConflictFinder;
+import util.ImageHandler;
 import util.StaticUtil;
+import util.ImageHandler;
 
 // import RunConfiguration;
 
@@ -47,6 +54,9 @@ public class MenuBar extends JMenuBar {
 	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
 	Graph graph; //grafo memorizzato qui: ci serve per run e run configurations
+	
+	// Immagine che viene importata
+	BufferedImage image;
 	
 	// Informazioni per test Errori
 	StateChoser state;
@@ -193,6 +203,35 @@ public class MenuBar extends JMenuBar {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			System.out.println("importImage");
+			
+			// Selettore di immagini
+			JFileChooser imageFinder = new JFileChooser();
+			imageFinder.setFileSelectionMode(JFileChooser.FILES_ONLY);
+			imageFinder.setDialogTitle("Select an image");
+			imageFinder.setAcceptAllFileFilterUsed(false);
+			FileNameExtensionFilter filter = new FileNameExtensionFilter("Immagine: png, jpg, jpeg", "png", "jpg", "jpeg");
+			imageFinder.addChoosableFileFilter(filter);
+			
+			int returnValue = imageFinder.showOpenDialog(null);
+
+			if (returnValue == JFileChooser.APPROVE_OPTION) {
+				File selectedImage = imageFinder.getSelectedFile();
+				image = null;
+				
+				try {
+					image = ImageIO.read(selectedImage);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				ImageHandler iH = new ImageHandler();
+				
+				image = iH.reduceColors(image);
+				state.addStates(new ArrayList<>(iH.getFewColors()));
+				
+				
+			}
 		}
 	};
 	

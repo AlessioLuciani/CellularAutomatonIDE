@@ -141,4 +141,18 @@ public class StateChoser extends JPanel{
 	public ArrayList<Color> getStates(){
 		return this.listColor;
 	}
+	
+	/**
+	 * Aggiunge una lista di colori agli stati.
+	 * @param colors
+	 */
+	public void addStates(ArrayList<Color> colors) {
+		for (Color color : colors) {
+			if(!listColor.contains(color)) {
+				DefaultListModel<JLabel> model = (DefaultListModel<JLabel>)labelList.getModel();
+				model.addElement(makeLabel(color));	
+				listColor.add(color);
+			}
+		}
+	}
 }
