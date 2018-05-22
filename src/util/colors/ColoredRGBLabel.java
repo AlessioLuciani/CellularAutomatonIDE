@@ -42,20 +42,23 @@ public class ColoredRGBLabel extends JLabel{
 		int y = (int)getHeight();
 		
 		//controllo selezione altrimenti gradiente
-		if (isSelected) {g.setColor(Color.LIGHT_GRAY);}
-		else {
+		
+		{
 			int diff = 0;
 			while((y-diff)>0) {
 				g.setColor(new Color(color.getRed(), color.getGreen(), color.getBlue(), 30));
 				g.fillRect(0, 0, y-diff, y-diff);
 				diff+=2;
+			}
 		}
-		
+		if (isSelected) {g.setColor(Color.LIGHT_GRAY);}
+		else{g.setColor(Color.BLACK);}
 		//print della scritta rgb
-		g.setColor(color);}
 		Font f = new Font(Font.SANS_SERIF,Font.CENTER_BASELINE,y/2);
 		g.setFont(f);
 		g.drawString(StaticUtil.colorToRgbString(color), y+5,y-(y/4));
+		
+		g.setColor(color);
 		g.drawRect(0, 0, x-1, y-1);
 	}
 
