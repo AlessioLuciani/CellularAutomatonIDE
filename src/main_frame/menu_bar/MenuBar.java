@@ -245,37 +245,36 @@ public class MenuBar extends JMenuBar {
 			int returnValue = imageFinder.showOpenDialog(null);
 
 			if (returnValue == JFileChooser.APPROVE_OPTION) {
-				File selectedImage = imageFinder.getSelectedFile();
-				
+					
 				try {
+					
+					File selectedImage = imageFinder.getSelectedFile();
 					image = ImageIO.read(selectedImage);
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
 				
-				ImageHandler iH = new ImageHandler();
-				
-				// Rapporto d'aspetto immagine (Es. 16/9)
-				double aspectRatio = (double) image.getWidth() / (double) image.getHeight();
-				
-				image = ImageHandler.resize(image, 300, (int) (300 / aspectRatio));
-				
-				image = iH.reduceColors(image);
-				state.addStates(new ArrayList<>(iH.getFewColors()));
-				
-				// Creazione nuovo grafo
-				GridConfiguration gridConfiguration = new GridConfiguration(CellForm.SQUARE, 10, image.getWidth(), image.getHeight());
-				grid.initFromGridConf(gridConfiguration);
-				graph = Graph.buildGraph(gridConfiguration, Color.BLACK);
-				
-				// Scrittura immagine nel grafo
-				for (int y = 0; y <  image.getHeight(); y++) {
-					for (int x = 0; x < image.getWidth(); x++) {
-						graph.getCell(y*gridConfiguration.getNumCellsX()+x+1).setState(new Color(image.getRGB(x, y)));
+					ImageHandler iH = new ImageHandler();
+					
+					// Rapporto d'aspetto immagine (Es. 16/9)
+					double aspectRatio = (double) image.getWidth() / (double) image.getHeight();
+					
+					image = ImageHandler.resize(image, 300, (int) (300 / aspectRatio));
+					
+					image = iH.reduceColors(image);
+					state.addStates(new ArrayList<>(iH.getFewColors()));
+					
+					// Creazione nuovo grafo
+					GridConfiguration gridConfiguration = new GridConfiguration(CellForm.SQUARE, 10, image.getWidth(), image.getHeight());
+					grid.initFromGridConf(gridConfiguration);
+					graph = Graph.buildGraph(gridConfiguration, Color.BLACK);
+					
+					// Scrittura immagine nel grafo
+					for (int y = 0; y <  image.getHeight(); y++) {
+						for (int x = 0; x < image.getWidth(); x++) {
+							graph.getCell(y*gridConfiguration.getNumCellsX()+x+1).setState(new Color(image.getRGB(x, y)));
+						}
 					}
+				} catch (IOException e) {
+					StaticUtil.errorDialog("Errore durante il caricamente dell'immagine");
 				}
-				
 				
 			}
 				
