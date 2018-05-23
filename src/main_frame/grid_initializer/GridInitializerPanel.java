@@ -80,6 +80,7 @@ public class GridInitializerPanel extends JPanel {
 						ArrayList<Integer> al = new ArrayList<>();
 						al.add(c);
 						this.synchWithGraph(al);
+						GridInitializerPanel.this.onCellColored(graph, c);
 					}
 				}
 				
@@ -218,6 +219,11 @@ public class GridInitializerPanel extends JPanel {
 			}
 		});
 		sideBar.add(btnColorRandom);
+	}
+	
+	/**callback richiamata quando si colora una cella del grafo (col pennello)*/
+	protected void onCellColored(Graph graph, int cell) {
+		
 	}
 	
 	/**

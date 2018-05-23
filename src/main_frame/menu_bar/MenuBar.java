@@ -35,6 +35,9 @@ import main_frame.menu_bar.run_configuration.RunConfigurationFrame;
 import main_frame.rules_creator.RuleChoser;
 import main_frame.states.StateChoser;
 import util.ConfigContainer;
+import rules.AndNode;
+import rules.BaseExpressionNode1;
+import rules.BaseExpressionNode2;
 import rules.Rule;
 import simulator.RunPanel;
 import util.ConflictFinder;
@@ -159,10 +162,35 @@ public class MenuBar extends JMenuBar {
 		public void actionPerformed(ActionEvent arg0) {
 			System.out.println("importConfiguration");
 			
+			
 			// Frame che permette di scegliere la destinazione e di dare un nome al file
 			JFileChooser importPath = new JFileChooser();
 			importPath.showOpenDialog(new JFrame());
-			GridConfiguration gconf = new GridConfiguration(CellForm.SQUARE, 21, 100, 100);			
+			GridConfiguration gconf = new GridConfiguration(CellForm.SQUARE, 21, 100, 100);	
+			
+			//blu = vivo, giallo = morto
+			ArrayList<Rule> rs = new ArrayList<>();
+			//qualsiasi cella viva con meno di 2 vicini vivi muore
+			BaseExpressionNode2 e1 = new BaseExpressionNode2(0, Color.BLUE); //cella deve essere viva
+			BaseExpressionNode1 e2 = new BaseExpressionNode1(0, 1, Color.BLUE); //0 <= numero vivi <= 1
+			AndNode e3 = new AndNode(e1, e2);
+			rs.add(new Rule(e3, Color.YELLOW));
+			
+			//qualsiasi cella viva con più di 3 vicini vivi muore
+			BaseExpressionNode1 e4 = new BaseExpressionNode1(4, 1000, Color.BLUE); //piu' di 3 vicini vivi
+			AndNode e5 = new AndNode(e1, e4);
+			rs.add(new Rule(e5, Color.YELLOW));
+			
+			//qualsiasi cella morta con esattamente 3 celle vive adiacenti diventa viva
+			BaseExpressionNode2 e6 = new BaseExpressionNode2(0, Color.YELLOW); //cella morta
+			BaseExpressionNode1 e7 = new BaseExpressionNode1(3, 3, Color.BLUE); //3 vivi
+			AndNode e8 = new AndNode(e6, e7);
+			rs.add(new Rule(e8, Color.BLUE));
+			rules.initFromRules(rs);
+			ArrayList<Color> c = new ArrayList<>();
+			c.add(Color.BLUE);
+			c.add(Color.YELLOW);
+			state.initFromStatesList(c);
 		}
 	};
 		

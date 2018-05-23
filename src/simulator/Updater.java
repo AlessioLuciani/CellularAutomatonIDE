@@ -59,4 +59,8 @@ public class Updater {
 		return tmpMapUpd.keySet();
 	}
 	
+	public void addCellToUpdate(int cell) {
+		toUpdate.add(cell);
+	}
+	
 }
