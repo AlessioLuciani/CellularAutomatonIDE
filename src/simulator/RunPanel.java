@@ -51,6 +51,12 @@ public class RunPanel extends GridInitializerPanel {
 		timer = new Timer((minDelay+maxDelay)/2, CommandPanel.timerEnded); //ritardo iniziale: metà del possibile
 	}
 	
+	@Override
+	public void onCellColored(Graph graph, int cell) {
+		if(!timer.isRunning())
+			updater.addCellToUpdate(cell);
+	}
+	
 	/**da chiamare quando si vuole interrompere run*/
 	public void onClosing() {
 		if(timer.isRunning()) //se chiudi mentre sta eseguendo lo stoppo
