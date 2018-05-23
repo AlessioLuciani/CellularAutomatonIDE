@@ -24,7 +24,8 @@ public class Updater {
 	
 	/**serve griglia della simulazione (gia' inizializzata) e regole*/
 	public Updater(Graph graph, ArrayList<Rule> rules) {
-		this.graph = graph;		this.rules = rules;
+		this.graph = graph;		
+		this.rules = rules;
 		toUpdate = new HashSet<Integer>();
 		for(int i=1; i<=this.graph.getNumNodes(); i++)
 			toUpdate.add(i);

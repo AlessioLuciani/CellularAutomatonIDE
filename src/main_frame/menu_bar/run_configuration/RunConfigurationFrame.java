@@ -20,6 +20,7 @@ import javax.swing.JRadioButton;
 import grid.Graph;
 import grid.GridConfiguration;
 import main_frame.grid_initializer.GridInitializerPanel;
+import rules.Rule;
 
 /**frame che permette di definire i parametri di run*/
 public class RunConfigurationFrame extends JFrame {
@@ -30,13 +31,13 @@ public class RunConfigurationFrame extends JFrame {
 	JRadioButton rdbtnAsincrono;
 	GridInitializerPanel gridInitializerPanel;
 	
-	public RunConfigurationFrame(Graph graph, GridConfiguration gridConf, ArrayList<Color> colors) {
+	public RunConfigurationFrame(Graph graph, GridConfiguration gridConf, ArrayList<Color> colors, ArrayList<Rule> rules) {
 		setAutoRequestFocus(false);
 		setVisible(true);
 
 		setLayout(new BorderLayout());
 		
-		gridInitializerPanel = new GridInitializerPanel(graph, gridConf, colors);
+		gridInitializerPanel = new GridInitializerPanel(graph, gridConf, colors, rules);
 		add(gridInitializerPanel);
 		
 		JPanel pannelloDestra = new JPanel();

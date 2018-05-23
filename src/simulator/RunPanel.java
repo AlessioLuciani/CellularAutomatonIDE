@@ -31,9 +31,10 @@ public class RunPanel extends GridInitializerPanel {
 	private Updater updater;
 	
 	public RunPanel(Graph graph, GridConfiguration gridConfiguration, ArrayList<Color> colors, ArrayList<Rule> rules) {
-		super(graph, gridConfiguration, colors);
+		super(graph, gridConfiguration, colors, rules);
 		sideBar.remove(btnColorAll); //rimuoviamo bottoni che qui non servono
 		sideBar.remove(btnColorRandom);
+		sideBar.remove(btnFindConfiguration);
 		
 		RunCommandPanel CommandPanel = new RunCommandPanel(sideBar.getWidth());
 		sideBar.add(CommandPanel);

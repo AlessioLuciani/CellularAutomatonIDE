@@ -2,7 +2,6 @@ package main_frame.grid_initializer;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.GridLayout;
 import java.awt.Image;
@@ -21,8 +20,9 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 
-
+import genetics.interesting_conf.Optimizer;
 import grid.*;
+import rules.Rule;
 import util.colors.ColorPickerResultLabel;
 
 /**
@@ -44,12 +44,14 @@ public class GridInitializerPanel extends JPanel {
 	private Color chosenColor;
 	protected JPanel sideBar;
 
+	protected JButton btnFindConfiguration;
+	
 	protected GridRenderPanel grid;
 	
 	/**
 	 * Carica il pannello con la griglia e i pulsanti necessari.
 	 */
-	public GridInitializerPanel(Graph graph, GridConfiguration gridConfiguration, ArrayList<Color> colors) {
+	public GridInitializerPanel(Graph graph, GridConfiguration gridConfiguration, ArrayList<Color> colors, ArrayList<Rule> rules) {
 		
 		
 		// Pannello generale
@@ -124,6 +126,7 @@ public class GridInitializerPanel extends JPanel {
 			}
 		};
 		btnColorRandom = new JButton("Random");
+		btnFindConfiguration = new JButton("Cerca...");
 
 		// Mouse listener
 		setMouseListener(sideBar, 0);
@@ -219,6 +222,21 @@ public class GridInitializerPanel extends JPanel {
 			}
 		});
 		sideBar.add(btnColorRandom);
+		
+		//bottone per trovare una configurazione interessante usando algoritmo genetico
+		btnFindConfiguration.setSize(40, 40);
+		btnFindConfiguration.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent evt) {
+				
+				int k = 1000; //parametro che dovremo prendere in input
+				int maxIter = 1000;
+				Optimizer optimizer = new Optimizer();
+				optimizer.findSolution(colors, rules, graph, k, maxIter); //qui dovremo passare delle copie e poi ripristinarle
+				grid.synchWithGraph();
+			}
+		});
+		sideBar.add(btnFindConfiguration);
 	}
 	
 	/**callback richiamata quando si colora una cella del grafo (col pennello)*/

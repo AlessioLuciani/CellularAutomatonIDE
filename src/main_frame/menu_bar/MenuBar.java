@@ -2,7 +2,6 @@ package main_frame.menu_bar;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -122,7 +121,7 @@ public class MenuBar extends JMenuBar {
 			if(state.getStates().size() > 0) {
 				repairGraph(grid.getGridConfiguration(), state.getStates().get(0)); //ripara grafo prima di passarlo
 				
-				JFrame runConf = new RunConfigurationFrame(graph, grid.getGridConfiguration(), state.getStates());
+				JFrame runConf = new RunConfigurationFrame(graph, grid.getGridConfiguration(), state.getStates(), rules.getRuleTrees());
 				runConf.setBounds( (int)(screenSize.getWidth()/4),  (int)(screenSize.getHeight()/4), (int)(screenSize.getWidth()*0.35), (int)(screenSize.getHeight()*0.45));
 				runConf.setVisible(true);
 			}
@@ -260,7 +259,7 @@ public class MenuBar extends JMenuBar {
 				// Rapporto d'aspetto immagine (Es. 16/9)
 				double aspectRatio = (double) image.getWidth() / (double) image.getHeight();
 				
-				image = iH.resize(image, 300, (int) (300 / aspectRatio));
+				image = ImageHandler.resize(image, 300, (int) (300 / aspectRatio));
 				
 				image = iH.reduceColors(image);
 				state.addStates(new ArrayList<>(iH.getFewColors()));

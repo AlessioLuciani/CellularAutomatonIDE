@@ -39,7 +39,7 @@ public class TestGridInitializer {
 			colors.add(new Color(new Random().nextInt(255),new Random().nextInt(255),new Random().nextInt(255)));
 		}
 		
-		GridInitializerPanel gridInitializerPanel = new GridInitializerPanel(g, gconf, colors);
+		GridInitializerPanel gridInitializerPanel = new GridInitializerPanel(g, gconf, colors, null);
 
 		/*GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
         GraphicsDevice defaultScreen = ge.getDefaultScreenDevice();
