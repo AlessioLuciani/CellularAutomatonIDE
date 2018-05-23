@@ -18,6 +18,7 @@ import grid.Graph;
 import grid.GridConfiguration;
 import main_frame.grid_initializer.GridInitializerPanel;
 import rules.Rule;
+import simulator.chart_panel.ChartPanel;
 
 public class RunPanel extends GridInitializerPanel {
 
@@ -77,7 +78,7 @@ public class RunPanel extends GridInitializerPanel {
 		private static final long serialVersionUID = 1L;
 		
 		private JButton btnStepForward;
-		private JButton btnStepBack;
+		private JButton btnStatistics;
 		private JButton btnStart;
 		private JButton btnStop;
 		
@@ -88,8 +89,8 @@ public class RunPanel extends GridInitializerPanel {
 			btnStepForward = new JButton(">>");
 			btnStepForward.addActionListener(onStepForward);
 						 
-			btnStepBack = new JButton("<<"); //da rimuovere!
-			btnStepBack.addActionListener(onStepBack);
+			btnStatistics = new JButton("stat"); 
+			btnStatistics.addActionListener(onStatistics);
 			
 			btnStart = new JButton("run");
 			btnStart.addActionListener(onStart);
@@ -98,13 +99,13 @@ public class RunPanel extends GridInitializerPanel {
 			btnStop.addActionListener(onStop);			
 			
 			
-			add(btnStepBack);
+			add(btnStatistics);
 			add(btnStepForward);
 			add(btnStart);
 			add(btnStop);
 			
 			RunPanel.this.setMouseListener(btnStepForward, 0);
-			RunPanel.this.setMouseListener(btnStepBack, 0);
+			RunPanel.this.setMouseListener(btnStatistics, 0);
 			RunPanel.this.setMouseListener(btnStart, 0);
 			RunPanel.this.setMouseListener(btnStop, 0);
 		}
@@ -117,12 +118,11 @@ public class RunPanel extends GridInitializerPanel {
 			}
 		};
 		
-		ActionListener onStepBack = new ActionListener() {
+		ActionListener onStatistics = new ActionListener() {
 					
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					System.out.println("STEP BACK");
-					//updateStep();
+					new ChartPanel(null).setVisible(true);
 				}
 			};
 			
