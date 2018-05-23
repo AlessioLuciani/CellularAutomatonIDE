@@ -229,22 +229,24 @@ public class MenuBar extends JMenuBar {
 				
 				ImageHandler iH = new ImageHandler();
 				
-				image = iH.resize(image, 200, 200);
+				double aspectRatio = (double) image.getWidth() / (double) image.getHeight();
+				
+				image = iH.resize(image, 300, (int) (300 / aspectRatio));
 				
 				image = iH.reduceColors(image);
 				state.addStates(new ArrayList<>(iH.getFewColors()));
 				
-				
-				//ArrayList<Integer> cells = new ArrayList<>();
+				GridConfiguration gridConfiguration = new GridConfiguration(CellForm.SQUARE, 10, image.getWidth(), image.getHeight());
+				grid.initFromGridConf(gridConfiguration);
+				graph = Graph.buildGraph(gridConfiguration, Color.BLACK);
 				
 				for (int y = 0; y <  image.getHeight(); y++) {
 					for (int x = 0; x < image.getWidth(); x++) {
-				
-						graph.getCell(y*501+x+1).setState(new Color(image.getRGB(x, y)));
-						//cells.add(y*300+x+1);
+						graph.getCell(y*gridConfiguration.getNumCellsX()+x+1).setState(new Color(image.getRGB(x, y)));
 						
 					}
 				}
+				
 				
 			}
 				
