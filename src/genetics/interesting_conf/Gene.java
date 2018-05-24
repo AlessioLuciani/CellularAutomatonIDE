@@ -11,8 +11,8 @@ import grid.Graph;
 /**un gene descrive una soluzione (subottimale) al problema*/
 public class Gene {
 	
-	public static final double CHANGE_OUTC_PROB = 0.1; //con quale probabilità cambiare lo sfondo (con 1-cop si cambiano le celle)
-	public static final int CELLS_TO_MUTATE = 3; //numero celle da mutare al massimo
+	public static final double CHANGE_OUTC_PROB = 0.06; //con quale probabilità cambiare lo sfondo (con 1-cop si cambiano le celle)
+	public static final int CELLS_TO_MUTATE = 2; //numero celle da mutare al massimo
 	
 	HashMap<Integer, Color> cells; //chiave: indice di una cella, colore: stato della cella
 	Color outsideColor; //colore dello sfondo (cioè di tutte le celle che non sono nella map)
@@ -32,7 +32,7 @@ public class Gene {
 		
 		Random rand = new Random();
 		
-		int ctm = CELLS_TO_MUTATE;
+		int ctm = new Random().nextInt(CELLS_TO_MUTATE) + 1;
 		
 		if(Math.random() < CHANGE_OUTC_PROB) { //con una certa probabilità mutiamo il colore d'outside
 			int r = rand.nextInt(states.size()); //prendi colore random
@@ -44,12 +44,16 @@ public class Gene {
 		}
 		
 		for(int i=0; i<ctm; i++) {//mutiamo ctm celle interne
-			int key = indCells.get(rand.nextInt(indCells.size())); //prendi chiave a caso
+			int ind = rand.nextInt(indCells.size()-i);
+			int key = indCells.get(ind);  //prendi chiave a caso
 			int indc = rand.nextInt(states.size()); //colore a caso
 			if(cells.get(key).equals(states.get(indc))) //se e' uguale a quello gia' presente, cambialo
 				indc = (indc+1)%states.size();
 			
 			ng.cells.replace(key, states.get(indc)); //sostituisci valore per questa cella
+			
+			indCells.set(ind, indCells.get(indCells.size()-i-1)); //metti indice scelto in fondo cosi non la estraiamo di nuovo
+			indCells.set(indCells.size()-i-1, key);
 		}
 	
 		return ng;
@@ -73,6 +77,19 @@ public class Gene {
 		for(int ind : cells)
 			gene.cells.put(ind, colors.get(rand.nextInt(colors.size())));
 		
+		return gene;
+	}
+	
+	/**restituisce gene dal grafo*/
+	public static Gene fromGraph(Graph g, ArrayList<Integer> cells) {
+		Gene gene = new Gene();
+		for(int c : cells)
+			gene.cells.put(c, g.getCell(c).getState());
+		for(int i=1; i<=g.getNumNodes(); i++)
+			if(!gene.cells.containsKey(i)) {
+				gene.outsideColor = g.getCell(i).getState();
+				break;
+			}
 		return gene;
 	}
 }

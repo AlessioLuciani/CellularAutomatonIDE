@@ -230,7 +230,7 @@ public class GridInitializerPanel extends JPanel {
 			public void actionPerformed(ActionEvent evt) {
 				
 				int k = 1000; //parametro che dovremo prendere in input
-				int maxIter = 1000;
+				int maxIter = 1500;
 				Optimizer optimizer = new Optimizer();
 				optimizer.findSolution(colors, rules, graph, k, maxIter); //qui dovremo passare delle copie e poi ripristinarle
 				grid.synchWithGraph();
