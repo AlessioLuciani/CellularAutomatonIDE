@@ -39,7 +39,6 @@ public class CellControllerThread extends Thread {
 
 	private void updateAllCells() {
 		this.updater.setCellsToUpdate(ControlledCells);
-		this.grid.
 		this.updater.execStep();
 	}
 	
