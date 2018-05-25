@@ -1,3 +1,9 @@
 /testing_package/
-/Async/
+/.DS_Store
+/.gitignore
+/genetics/
+/grid/
+/main_frame/
+/rules/
 /simulator/
+/util/
