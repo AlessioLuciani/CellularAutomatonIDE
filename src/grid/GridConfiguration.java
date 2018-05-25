@@ -17,9 +17,9 @@ public class GridConfiguration {
 	/**quanto deve essere larga un'immagine per contenete tutta la griglia?*/
 	public int getBufferImageWidth() {
 		switch(form) {
-			case TRIANGLE: return len + (int)((double)len/2.0 * (getNumCellsX() - 1));
-			case HEXAGON: return len * getNumCellsX() + len/2 - 1;
-			default: return len * getNumCellsX();
+			case TRIANGLE: return getLen() + (int)((double)getLen()/2.0 * (getNumCellsX() - 1));
+			case HEXAGON: return getLen() * getNumCellsX() + getLen()/2 - 1;
+			default: return getLen() * getNumCellsX();
 		}
 	}
 	
@@ -38,8 +38,8 @@ public class GridConfiguration {
 	/**quanto deve essere alta un'immagine per contenere tutta la griglia?*/
 	public int getBufferImageHeight() {
 		switch(form) {
-			case HEXAGON: return (int)(3*(double)len/4.0 * (double)numCellsY + (double)len/4.0); 
-			default: return len * numCellsY;
+			case HEXAGON: return (int)(3*(double)getLen()/4.0 * (double)numCellsY + (double)getLen()/4.0); 
+			default: return getLen() * numCellsY;
 		}
 	}
 	

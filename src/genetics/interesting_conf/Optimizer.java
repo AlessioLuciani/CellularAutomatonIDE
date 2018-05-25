@@ -30,7 +30,7 @@ public class Optimizer {
 		for(int i=startx; i<startx+SIZE_X; i++)
 			for(int j=starty; j<starty+SIZE_Y; j++) 
 				cells.add(j * w + i + 1);
-		
+
 		SimulatorFitness fitFunc = new SimulatorFitness(graph, rules, k, cycLen); //fitness function
 		
 		Gene actualGene = Gene.fromGraph(graph, cells);  //prendiamo quello che c'è già sul grafo per iniziare

@@ -118,14 +118,13 @@ public class GridRenderPanel extends JPanel {
 		double dy = (evt.getY() - tmpY)/zoomFactor;
 		tmpX = evt.getX();
 		tmpY = evt.getY();
-		
 		//calcolati il valore minimo che possono raggiungere i delta (sono sempre negativi)
 		double mindx = Math.min(-((double)buffer.getWidth(null) - (double)GridRenderPanel.this.getWidth()/zoomFactor), 0);
 		double mindy = Math.min(-((double)buffer.getHeight(null) - (double)GridRenderPanel.this.getHeight()/zoomFactor), 0);
 		
 		deltaX = Math.max(Math.min(0, deltaX + dx), Math.min(mindx, deltaX)); //aggiorna spostamenti globali
 		deltaY = Math.max(Math.min(0, deltaY + dy), Math.min(mindy, deltaY));
-
+		
 		GridRenderPanel.this.invalidate();
 		GridRenderPanel.this.repaint();
 		if(GridRenderPanel.this.getParent() != null) {

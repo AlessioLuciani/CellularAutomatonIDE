@@ -164,10 +164,12 @@ public class RunPanel extends GridInitializerPanel {
 		
 		private boolean updateStep() {
 			Set<Integer> s = updater.execStep(); //esegui step 
+		
 			if(s.size() == 0) {//se non vengono fatti aggiornamenti non fare nulla
 				onStop.actionPerformed(null); //"simula" la pressione del tasto onStop
 				return false;
 			}
+			
 			RunPanel.this.grid.synchWithGraph(s); //altrimenti risincronizza grafo e stampa
 			RunPanel.this.invalidate();
 			RunPanel.this.repaint();

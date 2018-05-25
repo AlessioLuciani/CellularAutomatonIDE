@@ -1,5 +1,5 @@
-/genetics/
+/testing_package/
 /main_frame/
-/rules/
 /simulator/
-/util/
+/genetics/
+/grid/

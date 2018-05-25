@@ -10,10 +10,14 @@ import java.util.TimerTask;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
+
 import grid.CellForm;
 import grid.Graph;
 import grid.GridConfiguration;
 import grid.GridRenderPanel;
+import grid.square.MatrixGraph;
+import main_frame.menu_bar.run_configuration.RunConfigurationFrame;
 import rules.AndNode;
 import rules.BaseExpressionNode1;
 import rules.BaseExpressionNode2;
@@ -25,13 +29,13 @@ public class Test_gridrender {
 	static Timer timer = new Timer();
 	public static void main(String [] args) {
 		JFrame frame = new JFrame();
-		final int w = 100, h = 100, s = 20;
+		final int w = 10, h = 10, s = 17;
 		
-		GridConfiguration gconf = new GridConfiguration(CellForm.SQUARE, s, w, h);
+		GridConfiguration gconf = new GridConfiguration(CellForm.HEXAGON, s, w, h);
 		
 		Graph g = Graph.buildGraph(gconf, Color.YELLOW); 
 		ArrayList<Rule> rules = new ArrayList<Rule>();
-		
+		System.out.println(((MatrixGraph)g).getSize()+" "+gconf.getBufferImageHeight()+" "+gconf.getBufferImageWidth());
 		//blu = vivo, giallo = morto
 		
 		//qualsiasi cella viva con meno di 2 vicini vivi muore
@@ -66,8 +70,8 @@ public class Test_gridrender {
 		
 		int cosorandom[] = {919, 1016, 1215, 1218, 1119, 1120, 1021, 921, 820, 720, 719, 817, 917};
 		
-		for(int i : test)
-			g.getCell(i).setState(Color.BLUE);
+		//for(int i : test)
+			//g.getCell(i).setState(Color.BLUE);
 		
 		Updater exe = new Updater(g, rules);
 		
@@ -116,9 +120,24 @@ public class Test_gridrender {
 				}, t, t);
 		    }
 		});
-	
-		frame.add(b7, BorderLayout.SOUTH);
-		frame.add(panel);
-		frame.setVisible(true);
+		
+		/*JPanel pnl = new JPanel();
+		pnl.setLayout(new BorderLayout());
+		JPanel p2 = new JPanel();
+		p2.setLayout(new BorderLayout());
+		p2.add(panel);
+		pnl.add(b7, BorderLayout.WEST);
+		pnl.add(p2);*/
+		panelT pnl = new panelT(g, gconf);
+		frame.add(pnl);
+		//frame.setVisible(true);
+		
+		//new frameT(g, gconf);
+		ArrayList<Color> colors = new ArrayList<Color>();
+		colors.add(Color.blue);
+		RunConfigurationFrame rf = new RunConfigurationFrame(g, gconf, colors, rules);
+		rf.setBounds(0, 0, 400, 400);
 	}
 }
+
+

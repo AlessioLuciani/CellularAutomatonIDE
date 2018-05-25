@@ -102,6 +102,7 @@ public class GridInitializerPanel extends JPanel {
 		BorderLayout layout = new BorderLayout();
 		setLayout(layout);
 		add(grid);
+		
 		changeCursor(-1);
 		currentCursor = -1;
 		
