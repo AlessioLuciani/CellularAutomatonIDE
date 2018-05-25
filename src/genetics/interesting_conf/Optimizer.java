@@ -19,7 +19,7 @@ public class Optimizer {
 	public static final int INIT_ITER = 20; //numero di generazioni random iniziali
 	
 	/**modifica gli stati del grafo passato come parametro in modo che contenga la soluzione trovata*/
-	public void findSolution(ArrayList<Color> states, ArrayList<Rule> rules, Graph graph, int k, int maxIter) {
+	public void findSolution(ArrayList<Color> states, ArrayList<Rule> rules, Graph graph, int k, int maxIter, int cycLen) {
 		Random rand = new Random();
 		int w = ((MatrixGraph)graph).getWidth();
 		int h = ((MatrixGraph)graph).getHeight();
@@ -31,7 +31,7 @@ public class Optimizer {
 			for(int j=starty; j<starty+SIZE_Y; j++) 
 				cells.add(j * w + i + 1);
 		
-		SimulatorFitness fitFunc = new SimulatorFitness(graph, rules, k); //fitness function
+		SimulatorFitness fitFunc = new SimulatorFitness(graph, rules, k, cycLen); //fitness function
 		
 		Gene actualGene = Gene.fromGraph(graph, cells);  //prendiamo quello che c'è già sul grafo per iniziare
 		int actualFitness = fitFunc.evaluate(actualGene);

@@ -231,8 +231,9 @@ public class GridInitializerPanel extends JPanel {
 				
 				int k = 1000; //parametro che dovremo prendere in input
 				int maxIter = 1500;
+				int cycLen = 3;
 				Optimizer optimizer = new Optimizer();
-				optimizer.findSolution(colors, rules, graph, k, maxIter); //qui dovremo passare delle copie e poi ripristinarle
+				optimizer.findSolution(colors, rules, graph, k, maxIter, cycLen); //qui dovremo passare delle copie e poi ripristinarle
 				grid.synchWithGraph();
 			}
 		});

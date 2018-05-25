@@ -1,6 +1,10 @@
 package genetics.interesting_conf;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Set;
 
 import grid.Graph;
 import rules.Rule;
@@ -12,12 +16,24 @@ public class SimulatorFitness implements FitnessFunc {
 	Graph graph;
 	ArrayList<Rule> rules;
 	
+	int cyclesLen;
 	int maxIter;
 	
-	public SimulatorFitness(Graph graph, ArrayList<Rule> rules, int maxIter) {
+	public SimulatorFitness(Graph graph, ArrayList<Rule> rules, int maxIter, int cl) {
 		this.graph = graph;
 		this.rules = rules;
 		this.maxIter = maxIter;
+		cyclesLen = cl;
+	}
+	
+	/**controlla se il nuovo stato forma un ciclo con la storia*/
+	private boolean checkCycles(Queue<Set<Integer>> history, Set<Integer> newSet) {
+		for(Set<Integer> st : history)
+			if(st.size() == newSet.size()) {
+				if(newSet.containsAll(st))
+					return true;
+			}
+		return false;
 	}
 	
 	@Override
@@ -27,9 +43,25 @@ public class SimulatorFitness implements FitnessFunc {
 		
 		//da aggiungere: si possono fare ottimizzazioni per terminare prima l'esecuzione dell'evaluate (per esempio vedere se troviamo cicli)
 		
+		Queue<Set<Integer>> history = new LinkedList<Set<Integer>>();
+		
 		int tot = 1;
-		while(tot < maxIter && upd.execStep().size() > 0) //aggiorna finche' non convergi a una situazione stabile (oppure arrivi al valore cercato)
+		while(tot < maxIter) { //simula...
+			Set<Integer> cells = new HashSet<>(upd.execStep());
+			if(cells.size() == 0) //si è stabilizzato
+				break;
+			if(this.cyclesLen > 0 && checkCycles(history, cells)) //trovato ciclo "piccolo" (al piu' lungo cyclesLen)
+				break;
+			
+			if(this.cyclesLen > 0) {
+				//qui dobbiamo andare avanti...
+				history.add(cells); //aggiungi nuovo set alla storia
+				if(history.size() > this.cyclesLen) //se la storia e' piena, levane uno
+					history.poll();
+			}
+			
 			tot++;
+		}
 		
 		return tot;
 	}

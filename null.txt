@@ -1,0 +1,1 @@
+{"graph":{"w":0,"h":0,"size":0,"nodes":[]},"state":[],"grid":{"form":"HEXAGON","len":17,"numCellsX":101,"numCellsY":101},"rules":[]}
