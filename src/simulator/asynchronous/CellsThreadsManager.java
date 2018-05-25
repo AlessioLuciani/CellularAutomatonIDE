@@ -24,7 +24,7 @@ public class CellsThreadsManager {
 	/**
 	 * Celle del grafo.
 	 */
-	private ArrayList<Cell> cells;
+	private ArrayList<Integer> cells;
 	
 	/**
 	 * Numero N di celle destinate ad ogni thread. L'ultimo thread riceverà un numero >= N di celle.
@@ -44,7 +44,9 @@ public class CellsThreadsManager {
 	public CellsThreadsManager(int numThreads, Graph graph) {
 		this.numThreads = numThreads;
 		this.numCells = graph.getNumNodes();
-		this.cells = graph.getNodes();
+		for (int i = 1; i <= numCells; i++) {
+			this.cells.add(i);
+		}
 		this.cellsPerThread = numCells / numThreads;
 		this.remainingCells = numCells % numThreads;
 	}
@@ -53,9 +55,9 @@ public class CellsThreadsManager {
 	 * Restituisce le celle destinate al thread chiamante.
 	 * @return
 	 */
-	public ArrayList<Cell> getCells() {
+	public ArrayList<Integer> getCells() {
 		int ran;
-		ArrayList<Cell> randomCells = new ArrayList<>();  //  Celle che vengono affidate al thread
+		ArrayList<Integer> randomCells = new ArrayList<>();  //  Celle che vengono affidate al thread
 		if (cells.size() > cellsPerThread + remainingCells) {  // Avviene su tutti i thread tranne l'ultimo
 			for (int i = 0; i < cellsPerThread; i++) {
 				ran = new Random().nextInt(cells.size());
@@ -64,7 +66,7 @@ public class CellsThreadsManager {
 			}
 		}
 		else {  // Avviene sull'ultimo thread
-			for (Cell cell: cells) {
+			for (int cell: cells) {
 				randomCells.add(cell);
 			}
 			cells = new ArrayList<>();

@@ -64,4 +64,6 @@ public class Updater {
 		toUpdate.add(cell);
 	}
 	
+	public void setCellsToUpdate(HashSet<Integer> cells) {this.toUpdate = cells;}
+	
 }
