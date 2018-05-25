@@ -6,6 +6,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Set;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -78,10 +79,10 @@ public class RunPanel extends GridInitializerPanel {
 		
 		private static final long serialVersionUID = 1L;
 		
-		private JButton btnStepForward;
-		private JButton btnStatistics;
-		private JButton btnStart;
-		private JButton btnStop;
+		protected JButton btnStepForward;
+		protected JButton btnStatistics;
+		protected JButton btnStart;
+		protected JButton btnStop;
 		
 		
 		public RunCommandPanel(int width) {
@@ -98,7 +99,7 @@ public class RunPanel extends GridInitializerPanel {
 			
 			btnStop = new JButton("stop");
 			btnStop.addActionListener(onStop);			
-			
+			btnStop.setEnabled(false);
 			
 			add(btnStatistics);
 			add(btnStepForward);
@@ -115,7 +116,8 @@ public class RunPanel extends GridInitializerPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				updateStep();
+				if(!RunPanel.this.timer.isRunning())
+					updateStep();
 			}
 		};
 		
@@ -130,8 +132,13 @@ public class RunPanel extends GridInitializerPanel {
 		ActionListener onStop = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(RunPanel.this.timer.isRunning())
+				if(RunPanel.this.timer.isRunning()) {
+					RunCommandPanel.this.btnStart.setEnabled(true);
+					RunCommandPanel.this.btnStepForward.setEnabled(true);
+					RunCommandPanel.this.btnStop.setEnabled(false);
 					RunPanel.this.timer.stop();
+					System.out.println("Iterazioni effettuate: "+RunPanel.this.updater.getActualIteration());
+				}
 			}
 		};
 		
@@ -139,8 +146,12 @@ public class RunPanel extends GridInitializerPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(!RunPanel.this.timer.isRunning())
+				if(!RunPanel.this.timer.isRunning()) {
+					RunCommandPanel.this.btnStart.setEnabled(false);
+					RunCommandPanel.this.btnStepForward.setEnabled(false);
+					RunCommandPanel.this.btnStop.setEnabled(true);
 					RunPanel.this.timer.start();
+				}
 			}
 		};
 		
@@ -151,10 +162,16 @@ public class RunPanel extends GridInitializerPanel {
 			}
 		};
 		
-		private void updateStep() {
-			RunPanel.this.grid.synchWithGraph(updater.execStep());
+		private boolean updateStep() {
+			Set<Integer> s = updater.execStep(); //esegui step 
+			if(s.size() == 0) {//se non vengono fatti aggiornamenti non fare nulla
+				onStop.actionPerformed(null); //"simula" la pressione del tasto onStop
+				return false;
+			}
+			RunPanel.this.grid.synchWithGraph(s); //altrimenti risincronizza grafo e stampa
 			RunPanel.this.invalidate();
 			RunPanel.this.repaint();
+			return true;
 		}
 		
 	}

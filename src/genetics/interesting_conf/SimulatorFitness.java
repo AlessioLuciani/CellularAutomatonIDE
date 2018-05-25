@@ -41,8 +41,6 @@ public class SimulatorFitness implements FitnessFunc {
 		gene.setGraph(graph); //settiamo lo stato del grafo in base al gene
 		Updater upd = new Updater(graph, rules); //crea updater
 		
-		//da aggiungere: si possono fare ottimizzazioni per terminare prima l'esecuzione dell'evaluate (per esempio vedere se troviamo cicli)
-		
 		Queue<Set<Integer>> history = new LinkedList<Set<Integer>>();
 		
 		int tot = 1;

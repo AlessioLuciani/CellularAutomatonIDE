@@ -22,6 +22,8 @@ public class Updater {
 	/**map usata per operazioni temporanee durante l'update*/
 	protected HashMap<Integer, Color> tmpMapUpd;
 	
+	protected int actualIteration;
+	
 	/**serve griglia della simulazione (gia' inizializzata) e regole*/
 	public Updater(Graph graph, ArrayList<Rule> rules) {
 		this.graph = graph;		
@@ -30,10 +32,18 @@ public class Updater {
 		for(int i=1; i<=this.graph.getNumNodes(); i++)
 			toUpdate.add(i);
 		tmpMapUpd = new HashMap<Integer, Color>();
+		
+		actualIteration = 0;
+	}
+	
+	/**restituisce iterazione attuale (o quante ne sono state effettuate)*/
+	public int getActualIteration() {
+		return actualIteration;
 	}
 	
 	/**esegue uno step della simulazione (restituisce lista delle celle modificate)*/
 	public Set<Integer> execStep() {
+		actualIteration++;
 		tmpMapUpd.clear();
 		
 		for(int cell : toUpdate) { //scorro le celle candidate all'update
