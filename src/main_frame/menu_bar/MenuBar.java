@@ -42,7 +42,6 @@ import simulator.RunPanel;
 import util.ConflictFinder;
 import util.ImageHandler;
 import util.StaticUtil;
-import util.ImageHandler;
 
 // import RunConfiguration;
 

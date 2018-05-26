@@ -58,13 +58,15 @@ public class GridRenderPanel extends JPanel {
 	
 	/**metodo da chiamare nel caso in cui gli stati dei nodi siano stati modificati: ridisegna TUTTI i nodi del grafo sul buffer (che poi sarà stampato a video)*/
 	public void synchWithGraph() {
-		graph.drawGraph(buffer.getGraphics(), borderColor);
-		this.invalidate();
-		this.repaint();
-		if(GridRenderPanel.this.getParent() != null) {
-			GridRenderPanel.this.getParent().invalidate();
-			GridRenderPanel.this.getParent().repaint();
-		}	
+		if(buffer != null && graph != null) {
+			graph.drawGraph(buffer.getGraphics(), borderColor);
+			this.invalidate();
+			this.repaint();
+			if(GridRenderPanel.this.getParent() != null) {
+				GridRenderPanel.this.getParent().invalidate();
+				GridRenderPanel.this.getParent().repaint();
+			}	
+		}
 	}
 	
 	/**ridisegna solo alcune celle del grafo sul buffer, e poi lo ristampa*/

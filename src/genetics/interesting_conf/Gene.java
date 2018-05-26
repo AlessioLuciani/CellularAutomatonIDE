@@ -21,6 +21,28 @@ public class Gene {
 		cells = new HashMap<Integer, Color>();
 	}
 	
+	/**restituisce il risultato del crossover tra questo gene e il gene 'other'*/
+	public Gene crossover(ArrayList<Integer> indCells, Gene other) {
+		Gene ret = new Gene();
+		Random rand = new Random();
+		if(rand.nextBoolean()) //prendiamo uno dei due colori di outside
+			ret.outsideColor = this.outsideColor;
+		else
+			ret.outsideColor = other.outsideColor;
+		
+		boolean rb = rand.nextBoolean(); //in base al valore booleano scelgo quale metà prendere con l'altro gene
+		int start2nd = rb ? 0 : indCells.size()/2;
+		int end2nd = rb ? indCells.size()/2 : indCells.size();
+		
+		for(int i=0; i<indCells.size(); i++)
+			if(i < start2nd || i >= end2nd) //fuori dal range del secondo... prendi da questo gene
+				ret.cells.put(indCells.get(i), this.cells.get(indCells.get(i)));
+			else
+				ret.cells.put(indCells.get(i), other.cells.get(indCells.get(i)));
+		
+		return ret;
+	}
+	
 	/**restituisce un gene mutato (stati disponibili e lista delle celle disponibili)*/
 	public Gene mutate(ArrayList<Color> states, ArrayList<Integer> indCells) {
 		Collections.shuffle(states); //mischiamo gli stati

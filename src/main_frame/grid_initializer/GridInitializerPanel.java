@@ -19,10 +19,12 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
 import genetics.interesting_conf.Optimizer;
 import grid.*;
 import rules.Rule;
+import util.CustomProgressBar;
 import util.colors.ColorPickerResultLabel;
 
 /**
@@ -48,11 +50,17 @@ public class GridInitializerPanel extends JPanel {
 	
 	protected GridRenderPanel grid;
 	
+	protected Graph graph;
+	
+	protected Optimizer optimizer;
+	protected CustomProgressBar optProgressBar;
+	
 	/**
 	 * Carica il pannello con la griglia e i pulsanti necessari.
 	 */
 	public GridInitializerPanel(Graph graph, GridConfiguration gridConfiguration, ArrayList<Color> colors, ArrayList<Rule> rules) {
 		
+		this.graph = graph;
 		
 		// Pannello generale
 		
@@ -62,40 +70,43 @@ public class GridInitializerPanel extends JPanel {
 
 			@Override
 			protected void mouseDraggedCallback(MouseEvent evt) {
-				if (isGridDraggable)
-					super.mouseDraggedCallback(evt);
-				if (areCellsColorable)
-					mousePressedCallback(evt);
+				synchronized(GridInitializerPanel.this) {
+					if (isGridDraggable)
+						super.mouseDraggedCallback(evt);
+					if (areCellsColorable)
+						mousePressedCallback(evt);
+				}
 			}
 
 			@Override
 			protected void mousePressedCallback(MouseEvent evt) {
-				
-				// Prende la posizione del click
-				super.mousePressedCallback(evt);
-				
-				// Gestisce la colorazione delle singole celle
-				if (areCellsColorable) {
-					int c = getCellAtCoordinate(evt.getX(), evt.getY());
-					if(c != -1 && !chosenColor.equals(graph.getCell(c).getState())) {
-						graph.getCell(c).setState(chosenColor);
-						ArrayList<Integer> al = new ArrayList<>();
-						al.add(c);
-						this.synchWithGraph(al);
-						GridInitializerPanel.this.onCellColored(graph, c);
-					}
-				}
-				
-				// Gestisce la colorazione di tutte le celle
-				if (areAllCellsColorable) {
-					ArrayList<Integer> al = new ArrayList<>();
-					for (int i = 1; i <= graph.getNumNodes(); i++) {
-						if(i != -1 && !chosenColor.equals(graph.getCell(i).getState())) {
-							graph.getCell(i).setState(chosenColor);
-							al.add(i);
+				synchronized(GridInitializerPanel.this) {
+					// Prende la posizione del click
+					super.mousePressedCallback(evt);
+					
+					// Gestisce la colorazione delle singole celle
+					if (areCellsColorable) {
+						int c = getCellAtCoordinate(evt.getX(), evt.getY());
+						if(c != -1 && !chosenColor.equals(graph.getCell(c).getState())) {
+							graph.getCell(c).setState(chosenColor);
+							ArrayList<Integer> al = new ArrayList<>();
+							al.add(c);
+							this.synchWithGraph(al);
+							GridInitializerPanel.this.onCellColored(graph, c);
 						}
 					}
-					this.synchWithGraph(al);
+					
+					// Gestisce la colorazione di tutte le celle
+					if (areAllCellsColorable) {
+						ArrayList<Integer> al = new ArrayList<>();
+						for (int i = 1; i <= graph.getNumNodes(); i++) {
+							if(i != -1 && !chosenColor.equals(graph.getCell(i).getState())) {
+								graph.getCell(i).setState(chosenColor);
+								al.add(i);
+							}
+						}
+						this.synchWithGraph(al);
+					}
 				}
 			}
 		};
@@ -207,19 +218,21 @@ public class GridInitializerPanel extends JPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Random random = new Random();
-				int numCells = random.nextInt(graph.getNumNodes() - 1) + 1;
-				HashSet<Integer> randomCells = new HashSet<>();
-				for (int i = 0; i < numCells; i++) {
-					randomCells.add(random.nextInt(graph.getNumNodes() - 1) + 1);
+				synchronized(GridInitializerPanel.this) {
+					Random random = new Random();
+					int numCells = random.nextInt(graph.getNumNodes() - 1) + 1;
+					HashSet<Integer> randomCells = new HashSet<>();
+					for (int i = 0; i < numCells; i++) {
+						randomCells.add(random.nextInt(graph.getNumNodes() - 1) + 1);
+					}
+					for (int cellIndex: randomCells) {
+						Color randomColor = colors.get(random.nextInt(colors.size()));
+						Cell cell = graph.getCell(cellIndex);
+						if (!randomColor.equals(cell.getState())) 
+							cell.setState(randomColor);
+					}
+					grid.synchWithGraph(randomCells);
 				}
-				for (int cellIndex: randomCells) {
-					Color randomColor = colors.get(random.nextInt(colors.size()));
-					Cell cell = graph.getCell(cellIndex);
-					if (!randomColor.equals(cell.getState())) 
-						cell.setState(randomColor);
-				}
-				grid.synchWithGraph(randomCells);
 			}
 		});
 		sideBar.add(btnColorRandom);
@@ -227,15 +240,55 @@ public class GridInitializerPanel extends JPanel {
 		//bottone per trovare una configurazione interessante usando algoritmo genetico
 		btnFindConfiguration.setSize(40, 40);
 		btnFindConfiguration.addActionListener(new ActionListener() {
+			@SuppressWarnings("serial")
 			@Override
 			public void actionPerformed(ActionEvent evt) {
-				
-				int k = 1000; //parametro che dovremo prendere in input
-				int maxIter = 1500;
-				int cycLen = 3;
-				Optimizer optimizer = new Optimizer();
-				optimizer.findSolution(colors, rules, graph, k, maxIter, cycLen); //qui dovremo passare delle copie e poi ripristinarle
-				grid.synchWithGraph();
+				if(btnFindConfiguration.isEnabled()) {
+					btnFindConfiguration.setEnabled(false);
+					int k = 1000; //parametro che dovremo prendere in input
+					int maxIter = 1500;
+					int cycLen = 3;
+					
+					ArrayList<Rule> copyRules = new ArrayList<Rule>();
+					for(Rule r : rules) 
+						copyRules.add(r.copy());
+					
+					optProgressBar = new CustomProgressBar("Sto cercando una configurazione...", 0, maxIter, "") { //creo progress bar mentre si fa ottimizzazione
+						@Override
+						public void taskCancelled() {
+							if(optimizer != null)
+								optimizer.interrupt();
+						}
+					};
+					
+					optimizer = new Optimizer(new ArrayList<>(colors), copyRules, graph.copy(), k, maxIter, cycLen) {
+						@Override
+						public void evolutionCompleted() {
+							synchronized(GridInitializerPanel.this) {
+								if(GridInitializerPanel.this.graph != null) super.getBestGene().setGraph(GridInitializerPanel.this.graph); //quando l'evoluzione è completa settiamo il grafo
+								if(grid != null) grid.synchWithGraph();
+								if(btnFindConfiguration != null) SwingUtilities.invokeLater(() -> btnFindConfiguration.setEnabled(true));
+								if(optProgressBar != null) SwingUtilities.invokeLater(() -> optProgressBar.dispose());
+							}
+						}
+						
+						@Override
+						public void iterationUpdated(int iter) {
+							synchronized(optProgressBar) { //ad ogni iterazione aggiorniamo la progress bar
+								optProgressBar.updateValue(iter);
+							}
+						}
+						
+						@Override
+						public void bestGeneUpdated() {
+							synchronized(optProgressBar) { //quando troviamo una soluzione migliore lo comunichiamo
+								optProgressBar.updateMessage("Migliore soluzione attuale: "+super.bestFitness);
+							}	
+						}
+					};
+					
+					optimizer.start(); //lancia optimizer su altro thread
+				}
 			}
 		});
 		sideBar.add(btnFindConfiguration);
@@ -344,6 +397,10 @@ public class GridInitializerPanel extends JPanel {
 	 * Chiude eventuali pannelli rimasti aperti.
 	 */
 	public void onPanelClosed() {
+		if(optimizer != null && optimizer.isAlive())
+			optimizer.interrupt();
+		if(optProgressBar != null)
+			optProgressBar.dispose();
 		grid.onClosing();
 		btnChosenColor.closeWindow();
 	}
