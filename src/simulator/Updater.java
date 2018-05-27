@@ -72,6 +72,8 @@ public class Updater {
 	
 	public void addCellToUpdate(int cell) {
 		toUpdate.add(cell);
+		for(int i=1; i<=graph.getCell(cell).getNumNeighbors(); i++)
+			toUpdate.add(graph.getCell(cell).getKthNeighbor(i));
 	}
 	
 	public void setCellsToUpdate(HashSet<Integer> cells) {this.toUpdate = cells;}

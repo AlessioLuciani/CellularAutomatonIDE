@@ -22,7 +22,7 @@ public class Gene {
 	}
 	
 	/**restituisce il risultato del crossover tra questo gene e il gene 'other'*/
-	public Gene crossover(ArrayList<Integer> indCells, Gene other) {
+	public Gene crossover(ArrayList<Color> states, ArrayList<Integer> indCells, Gene other) {
 		Gene ret = new Gene();
 		Random rand = new Random();
 		if(rand.nextBoolean()) //prendiamo uno dei due colori di outside
@@ -40,7 +40,7 @@ public class Gene {
 			else
 				ret.cells.put(indCells.get(i), other.cells.get(indCells.get(i)));
 		
-		return ret;
+		return ret.mutate(states, indCells);
 	}
 	
 	/**restituisce un gene mutato (stati disponibili e lista delle celle disponibili)*/

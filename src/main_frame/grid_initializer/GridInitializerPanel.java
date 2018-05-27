@@ -246,14 +246,13 @@ public class GridInitializerPanel extends JPanel {
 				if(btnFindConfiguration.isEnabled()) {
 					btnFindConfiguration.setEnabled(false);
 					int k = 1000; //parametro che dovremo prendere in input
-					int maxIter = 1500;
-					int cycLen = 3;
+					int cycLen = 4;
 					
 					ArrayList<Rule> copyRules = new ArrayList<Rule>();
 					for(Rule r : rules) 
 						copyRules.add(r.copy());
 					
-					optProgressBar = new CustomProgressBar("Sto cercando una configurazione...", 0, maxIter, "") { //creo progress bar mentre si fa ottimizzazione
+					optProgressBar = new CustomProgressBar("Sto cercando una configurazione...", 0, 100, "") { //creo progress bar mentre si fa ottimizzazione
 						@Override
 						public void taskCancelled() {
 							if(optimizer != null)
@@ -261,7 +260,7 @@ public class GridInitializerPanel extends JPanel {
 						}
 					};
 					
-					optimizer = new Optimizer(new ArrayList<>(colors), copyRules, graph.copy(), k, maxIter, cycLen) {
+					optimizer = new Optimizer(new ArrayList<>(colors), copyRules, graph.copy(), k, cycLen) {
 						@Override
 						public void evolutionCompleted() {
 							synchronized(GridInitializerPanel.this) {
