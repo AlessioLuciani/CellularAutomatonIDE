@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map.Entry;
 import java.util.Set;
 
@@ -15,6 +16,7 @@ public class Updater {
 	
 	protected Graph graph;
 	protected ArrayList<Rule> rules;
+	protected HashMap<Color,Integer> FrequencyMap;
 	
 	/**set delle celle che ha senso aggiornare (evitiamo di scorrere tutto il grafo) */
 	protected HashSet<Integer> toUpdate;
@@ -28,12 +30,22 @@ public class Updater {
 	public Updater(Graph graph, ArrayList<Rule> rules) {
 		this.graph = graph;		
 		this.rules = rules;
+		
+
 		toUpdate = new HashSet<Integer>();
 		for(int i=1; i<=this.graph.getNumNodes(); i++)
 			toUpdate.add(i);
 		tmpMapUpd = new HashMap<Integer, Color>();
 		
 		actualIteration = 0;
+	}
+	
+	public Updater(Graph graph, ArrayList<Rule> rules, List<Color> States) {
+		this(graph,rules);
+		
+		//inizializzo la mappa delle frequenze
+		this.FrequencyMap = new HashMap<>();
+		for (Color state : States) FrequencyMap.put(state, 0);
 	}
 	
 	/**restituisce iterazione attuale (o quante ne sono state effettuate)*/
@@ -45,7 +57,8 @@ public class Updater {
 	public Set<Integer> execStep() {
 		actualIteration++;
 		tmpMapUpd.clear();
-		
+		HashMap<Color, Integer> tmpStatesMap = new HashMap<>();
+		tmpStatesMap.putAll(FrequencyMap);
 		for(int cell : toUpdate) { //scorro le celle candidate all'update
 			for(Rule r : rules) //scorro regole 
 				if(r.getRoot().evaluate(graph, cell)) { //regola verificata per questa cella
@@ -53,8 +66,10 @@ public class Updater {
 						tmpMapUpd.put(cell, r.getNewColor()); //mi salvo nella map che la cella verifica la regola e che devo cambiargli colore
 			 		break; //NB: appena verifico una regola esco
 				}
+			tmpStatesMap.replace(graph.getCell(cell).getState(), tmpStatesMap.get(graph.getCell(cell).getState())+1);
 		}
-		
+		FrequencyMap.clear();
+		FrequencyMap.putAll(tmpStatesMap);
 		toUpdate.clear();
 		for(Entry<Integer, Color> e : tmpMapUpd.entrySet()) { //scorro le celle a cui devo cambiare colore
 			graph.getCell(e.getKey()).setState(e.getValue());
@@ -77,5 +92,6 @@ public class Updater {
 	}
 	
 	public void setCellsToUpdate(HashSet<Integer> cells) {this.toUpdate = cells;}
+	public HashMap<Color, Integer> getFrequencyMap() {return FrequencyMap;}
 	
 }

@@ -1,12 +1,9 @@
 package simulator.asynchronous;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Random;
 
-import grid.Cell;
-import grid.Graph;
-import grid.GridConfiguration;
+import grid.GridRenderPanel;
 import simulator.Updater;
 
 public class CellControllerThread extends Thread {
@@ -14,12 +11,12 @@ public class CellControllerThread extends Thread {
 	private int sleepTime;
 	private HashSet<Integer> ControlledCells;
 	private Updater updater;
-	private GridConfiguration grid;
+	private GridRenderPanel grid;
 	protected static int MAX_SLEEP = 4900;
 	protected static int MIN_SLEEP = 100;
 	
 	
-	public CellControllerThread(GridConfiguration grid, HashSet<Integer> cellsList,Updater updater) {
+	public CellControllerThread(GridRenderPanel grid, HashSet<Integer> cellsList,Updater updater) {
 		this.ControlledCells = cellsList;
 		this.updater = updater;
 		this.grid = grid;
@@ -39,7 +36,7 @@ public class CellControllerThread extends Thread {
 
 	private void updateAllCells() {
 		this.updater.setCellsToUpdate(ControlledCells);
-		this.updater.execStep();
+		this.grid.synchWithGraph(this.updater.execStep());
 	}
 	
 	

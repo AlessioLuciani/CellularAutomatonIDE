@@ -5,6 +5,8 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowStateListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -20,7 +22,9 @@ import org.knowm.xchart.XChartPanel;
 
 import grid.Graph;
 import grid.GridConfiguration;
+import simulator.Updater;
 import util.StaticUtil;
+import util.colors.CustomColorPicker;
 
 public class ChartPanel extends JFrame {
 
@@ -31,13 +35,15 @@ public class ChartPanel extends JFrame {
 	
 	private PieChart chart;
 	private JPanel panel;
-	private Graph graph;
+	private Updater updater;
+	private Timer update_timer;
+	public static final int UPDATE_DELAY = 200;
 	
-	public ChartPanel(Graph graph) {
+	public ChartPanel(Updater updater) {
 		setBounds(50,50,400,250);
 		
 		
-		this.graph = graph;
+		this.updater = updater;
 	    chart = new PieChartBuilder().width(400).height(300).build();
 	    
 	    
@@ -47,15 +53,19 @@ public class ChartPanel extends JFrame {
 	    this.add(panel);
 	    setVisible(true);
 	    setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		addWindowListener(WindowListener);
+	    
+		update_timer = new Timer(UPDATE_DELAY, updateListener);
+	    
 	}
 	
-	public ChartPanel(Graph graph,int width, int height) {
-		this(graph);
+	public ChartPanel(Updater updater,int width, int height) {
+		this(updater);
 		setSize(width,height);
 	}
 
-	public void updateChartfromGraph(HashMap<Color, Integer> FrequencyMap) {
-		//FrequencyMap = graph.getFrequencyMap();
+	public void updateChartfromGraph() {
+		HashMap<Color, Integer> FrequencyMap = updater.getFrequencyMap();
 		for (Color key : FrequencyMap.keySet()) {
 			if (chart.getSeriesMap().containsKey(StaticUtil.colorToRgbString(key))) {chart.updatePieSeries(StaticUtil.colorToRgbString(key),FrequencyMap.get(key));}
 			else {
@@ -67,4 +77,26 @@ public class ChartPanel extends JFrame {
 		ChartPanel.this.repaint();
 		
 	}
+	
+	ActionListener updateListener = new ActionListener() {
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {updateChartfromGraph();}
+	};
+	
+	WindowAdapter WindowListener = new WindowAdapter() {
+		
+		@Override
+		public void windowClosed(WindowEvent e) {
+			super.windowClosing(e);
+			update_timer.stop();
+		}
+		
+		@Override
+		public void windowOpened(WindowEvent e) {
+			super.windowOpened(e);
+			update_timer.start();
+		}
+	};
+	
 }

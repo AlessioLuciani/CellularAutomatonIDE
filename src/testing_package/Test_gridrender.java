@@ -73,7 +73,7 @@ public class Test_gridrender {
 		//for(int i : test)
 			//g.getCell(i).setState(Color.BLUE);
 		
-		Updater exe = new Updater(g, rules);
+		Updater exe = new Updater(g, rules, new ArrayList<Color>());
 		
 		GridRenderPanel panel = new GridRenderPanel(g, gconf, Color.BLACK);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -128,8 +128,8 @@ public class Test_gridrender {
 		p2.add(panel);
 		pnl.add(b7, BorderLayout.WEST);
 		pnl.add(p2);*/
-		panelT pnl = new panelT(g, gconf);
-		frame.add(pnl);
+		//panelT pnl = new panelT(g, gconf);
+		//frame.add(pnl);
 		//frame.setVisible(true);
 		
 		//new frameT(g, gconf);

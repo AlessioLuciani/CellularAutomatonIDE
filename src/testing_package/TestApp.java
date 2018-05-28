@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.swing.BoxLayout;
@@ -85,6 +86,27 @@ public class TestApp {
 		labels.add(lbl3);
 		labels.add(lbl4);
 		labels.add(lbl5);*/
-		frame.setVisible(true);
+		//frame.setVisible(true);
+ 		HashMap<Color, Integer> m = new HashMap<>();
+ 		m.put(Color.WHITE, 1);
+ 		m.put(Color.RED, 1);
+ 		m.put(Color.BLUE, 2);
+ 		
+ 		
+ 		for (Color k : m.keySet()) {
+			System.out.println(k+"   ->"+m.get(k));
+		} 
+ 		
+ 		
+
+ 		m.put(Color.BLUE, m.get(Color.BLUE)+1); 		
+ 		for (Color k : m.keySet()) {
+			System.out.println(k+"   ->"+m.get(k));
+		} 
+ 		
+ 		
+ 		
+ 		
+ 		
 	}
 }

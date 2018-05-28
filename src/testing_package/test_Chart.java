@@ -16,7 +16,7 @@ public class test_Chart {
 		
 		FrequencyMap = new HashMap<>();
 		int rand;
-		for(int i =0;i<10000;i++) {
+		/*for(int i =0;i<10000;i++) {
 			FrequencyMap.clear();
 			rand = new Random().nextInt(101);
 		    FrequencyMap.put(Color.RED,rand );
@@ -28,7 +28,15 @@ public class test_Chart {
 		    FrequencyMap.put(Color.ORANGE, rand);
 		    f.updateChartfromGraph(FrequencyMap);
 		    Thread.currentThread().sleep(100);
-		}
+		}*/
+		FrequencyMap.put(Color.GREEN, 800);
+		FrequencyMap.put(Color.GRAY, 200);
+		FrequencyMap.put(Color.RED, 500);
+		
+		f.updateChartfromGraph();
+		
+		
+		
 	  }
 
 }

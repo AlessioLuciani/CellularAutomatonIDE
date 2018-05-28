@@ -21,7 +21,7 @@ import main_frame.grid_initializer.GridInitializerPanel;
 import rules.Rule;
 import simulator.chart_panel.ChartPanel;
 
-public class RunPanel extends GridInitializerPanel {
+public class RunPanel_Prova_Async extends GridInitializerPanel {
 
 	private static final long serialVersionUID = 1L;
 
@@ -32,7 +32,7 @@ public class RunPanel extends GridInitializerPanel {
 	private Timer timer;
 	private Updater updater;
 	
-	public RunPanel(Graph graph, GridConfiguration gridConfiguration, ArrayList<Color> colors, ArrayList<Rule> rules) {
+	public RunPanel_Prova_Async(Graph graph, GridConfiguration gridConfiguration, ArrayList<Color> colors, ArrayList<Rule> rules) {
 		super(graph, gridConfiguration, colors, rules);
 		sideBar.remove(btnColorAll); //rimuoviamo bottoni che qui non servono
 		sideBar.remove(btnColorRandom);
@@ -70,8 +70,8 @@ public class RunPanel extends GridInitializerPanel {
 	protected class SpeedChangeListener implements ChangeListener {
 		@Override
 		public void stateChanged(ChangeEvent evt) {
-			int newDelay = RunPanel.maxDelay - ((JSlider)evt.getSource()).getValue() + RunPanel.minDelay;
-			RunPanel.this.timer.setDelay(newDelay);
+			int newDelay = RunPanel_Prova_Async.maxDelay - ((JSlider)evt.getSource()).getValue() + RunPanel_Prova_Async.minDelay;
+			RunPanel_Prova_Async.this.timer.setDelay(newDelay);
 		}
 	}
 	
@@ -106,17 +106,17 @@ public class RunPanel extends GridInitializerPanel {
 			add(btnStart);
 			add(btnStop);
 			
-			RunPanel.this.setMouseListener(btnStepForward, 0);
-			RunPanel.this.setMouseListener(btnStatistics, 0);
-			RunPanel.this.setMouseListener(btnStart, 0);
-			RunPanel.this.setMouseListener(btnStop, 0);
+			RunPanel_Prova_Async.this.setMouseListener(btnStepForward, 0);
+			RunPanel_Prova_Async.this.setMouseListener(btnStatistics, 0);
+			RunPanel_Prova_Async.this.setMouseListener(btnStart, 0);
+			RunPanel_Prova_Async.this.setMouseListener(btnStop, 0);
 		}
 		
 		ActionListener onStepForward = new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(!RunPanel.this.timer.isRunning())
+				if(!RunPanel_Prova_Async.this.timer.isRunning())
 					updateStep();
 			}
 		};
@@ -125,19 +125,19 @@ public class RunPanel extends GridInitializerPanel {
 					
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					new ChartPanel(updater).setVisible(true);
+					new ChartPanel(null).setVisible(true);
 				}
 			};
 			
 		ActionListener onStop = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(RunPanel.this.timer.isRunning()) {
+				if(RunPanel_Prova_Async.this.timer.isRunning()) {
 					RunCommandPanel.this.btnStart.setEnabled(true);
 					RunCommandPanel.this.btnStepForward.setEnabled(true);
 					RunCommandPanel.this.btnStop.setEnabled(false);
-					RunPanel.this.timer.stop();
-					System.out.println("Iterazioni effettuate: "+RunPanel.this.updater.getActualIteration());
+					RunPanel_Prova_Async.this.timer.stop();
+					System.out.println("Iterazioni effettuate: "+RunPanel_Prova_Async.this.updater.getActualIteration());
 				}
 			}
 		};
@@ -146,11 +146,13 @@ public class RunPanel extends GridInitializerPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(!RunPanel.this.timer.isRunning()) {
+				if(!RunPanel_Prova_Async.this.timer.isRunning()) {
 					RunCommandPanel.this.btnStart.setEnabled(false);
 					RunCommandPanel.this.btnStepForward.setEnabled(false);
 					RunCommandPanel.this.btnStop.setEnabled(true);
-					RunPanel.this.timer.start();
+
+					
+					
 				}
 			}
 		};
@@ -170,9 +172,9 @@ public class RunPanel extends GridInitializerPanel {
 				return false;
 			}
 			
-			RunPanel.this.grid.synchWithGraph(s); //altrimenti risincronizza grafo e stampa
-			RunPanel.this.invalidate();
-			RunPanel.this.repaint();
+			RunPanel_Prova_Async.this.grid.synchWithGraph(s); //altrimenti risincronizza grafo e stampa
+			RunPanel_Prova_Async.this.invalidate();
+			RunPanel_Prova_Async.this.repaint();
 			return true;
 		}
 		
