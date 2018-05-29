@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Random;
 
 import grid.Graph;
@@ -11,7 +12,7 @@ import grid.Graph;
 /**un gene descrive una soluzione (subottimale) al problema*/
 public class Gene {
 	
-	public static final double CHANGE_OUTC_PROB = 0.06; //con quale probabilità cambiare lo sfondo (con 1-cop si cambiano le celle)
+	public static final double CHANGE_OUTC_PROB = 0.2; //0.06; //con quale probabilità cambiare lo sfondo (con 1-cop si cambiano le celle)
 	public static final int CELLS_TO_MUTATE = 2; //numero celle da mutare al massimo
 	
 	HashMap<Integer, Color> cells; //chiave: indice di una cella, colore: stato della cella
@@ -30,12 +31,14 @@ public class Gene {
 		else
 			ret.outsideColor = other.outsideColor;
 		
-		boolean rb = rand.nextBoolean(); //in base al valore booleano scelgo quale metà prendere con l'altro gene
-		int start2nd = rb ? 0 : indCells.size()/2;
-		int end2nd = rb ? indCells.size()/2 : indCells.size();
-		
+		//boolean rb = rand.nextBoolean(); //in base al valore booleano scelgo quale metà prendere con l'altro gene
+		//int start2nd = rb ? 0 : indCells.size()/2;
+		//int end2nd = rb ? indCells.size()/2 : indCells.size();
+		HashSet<Integer> set = new HashSet<Integer>();
+		for(int i=0; i<indCells.size()/2; i++)
+			set.add(rand.nextInt(indCells.size()));
 		for(int i=0; i<indCells.size(); i++)
-			if(i < start2nd || i >= end2nd) //fuori dal range del secondo... prendi da questo gene
+			if(set.contains(i))//if(i < start2nd || i >= end2nd) //fuori dal range del secondo... prendi da questo gene
 				ret.cells.put(indCells.get(i), this.cells.get(indCells.get(i)));
 			else
 				ret.cells.put(indCells.get(i), other.cells.get(indCells.get(i)));
@@ -45,19 +48,19 @@ public class Gene {
 	
 	/**restituisce un gene mutato (stati disponibili e lista delle celle disponibili)*/
 	public Gene mutate(ArrayList<Color> states, ArrayList<Integer> indCells) {
+		Random rand = new Random();
 		Collections.shuffle(states); //mischiamo gli stati
+		int indcolor = rand.nextInt(states.size());  //prendi colore random
 		
 		Gene ng = new Gene();
 		ng.outsideColor = this.outsideColor;
 		for(int i : cells.keySet())
 			ng.cells.put(i, cells.get(i));
 		
-		Random rand = new Random();
-		
-		int ctm = new Random().nextInt(CELLS_TO_MUTATE) + 1;
+		int ctm = rand.nextInt(CELLS_TO_MUTATE) + 1;
 		
 		if(Math.random() < CHANGE_OUTC_PROB) { //con una certa probabilità mutiamo il colore d'outside
-			int r = rand.nextInt(states.size()); //prendi colore random
+			int r = indcolor;
 			if(ng.outsideColor.equals(states.get(r))) //se e' uguale a quello che gia' c'è, prendine un altro
 				r = (r+1)%states.size();
 			ng.outsideColor = states.get(r); //cambia colore esterno
@@ -68,7 +71,7 @@ public class Gene {
 		for(int i=0; i<ctm; i++) {//mutiamo ctm celle interne
 			int ind = rand.nextInt(indCells.size()-i);
 			int key = indCells.get(ind);  //prendi chiave a caso
-			int indc = rand.nextInt(states.size()); //colore a caso
+			int indc = indcolor; //colore a caso
 			if(cells.get(key).equals(states.get(indc))) //se e' uguale a quello gia' presente, cambialo
 				indc = (indc+1)%states.size();
 			
