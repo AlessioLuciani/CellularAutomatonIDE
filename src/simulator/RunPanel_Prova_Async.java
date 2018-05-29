@@ -55,7 +55,7 @@ public class RunPanel_Prova_Async extends GridInitializerPanel {
 	}
 	
 	@Override
-	public void onCellColored(Graph graph, int cell) {
+	public void onCellColored(Graph graph, int cell, Color oldColor) {
 		if(!timer.isRunning())
 			updater.addCellToUpdate(cell);
 	}

@@ -88,11 +88,12 @@ public class GridInitializerPanel extends JPanel {
 					if (areCellsColorable) {
 						int c = getCellAtCoordinate(evt.getX(), evt.getY());
 						if(c != -1 && !chosenColor.equals(graph.getCell(c).getState())) {
+							Color oldColor = graph.getCell(c).getState();
 							graph.getCell(c).setState(chosenColor);
 							ArrayList<Integer> al = new ArrayList<>();
 							al.add(c);
 							this.synchWithGraph(al);
-							GridInitializerPanel.this.onCellColored(graph, c);
+							GridInitializerPanel.this.onCellColored(graph, c, oldColor);
 						}
 					}
 					
@@ -294,7 +295,7 @@ public class GridInitializerPanel extends JPanel {
 	}
 	
 	/**callback richiamata quando si colora una cella del grafo (col pennello)*/
-	protected void onCellColored(Graph graph, int cell) {
+	protected void onCellColored(Graph graph, int cell, Color oldColor) {
 		
 	}
 	

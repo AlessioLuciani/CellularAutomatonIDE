@@ -55,9 +55,10 @@ public class RunPanel extends GridInitializerPanel {
 	}
 	
 	@Override
-	public void onCellColored(Graph graph, int cell) {
-		if(!timer.isRunning())
-			updater.addCellToUpdate(cell);
+	public void onCellColored(Graph graph, int cell, Color oldColor) {
+		if(!timer.isRunning()) 
+			updater.addCellToUpdate(cell); //aggiungo la cella modificata alle candidate da aggiornare
+		updater.updColorSwapped(oldColor, graph.getCell(cell).getState()); //riaggiusto la mappa dopo lo scambio di colore
 	}
 	
 	/**da chiamare quando si vuole interrompere run*/
