@@ -138,7 +138,7 @@ public class RunPanel extends GridInitializerPanel {
 					RunCommandPanel.this.btnStepForward.setEnabled(true);
 					RunCommandPanel.this.btnStop.setEnabled(false);
 					RunPanel.this.timer.stop();
-					System.out.println("Iterazioni effettuate: "+RunPanel.this.updater.getActualIteration());
+					//System.out.println("Iterazioni effettuate: "+RunPanel.this.updater.getActualIteration());
 				}
 			}
 		};

@@ -34,7 +34,7 @@ public class RunPanel_Prova_Async extends GridInitializerPanel {
 	protected CellsThreadsManager CellManager;
 	protected ArrayList<CellControllerThread> Threads;
 	
-	private Timer timer;
+	private Timer timer = new Timer(200, null);
 	private Updater updater;
 	
 	public RunPanel_Prova_Async(Graph graph, GridConfiguration gridConfiguration, ArrayList<Color> colors, ArrayList<Rule> rules) {
@@ -161,7 +161,8 @@ public class RunPanel_Prova_Async extends GridInitializerPanel {
 				RunCommandPanel.this.btnStart.setEnabled(false);
 				RunCommandPanel.this.btnStepForward.setEnabled(false);
 				RunCommandPanel.this.btnStop.setEnabled(true);
-				for (CellControllerThread t : Threads) {t.start();}}
+				for (CellControllerThread t : Threads) {t.start();}
+			}
 		};
 		
 		ActionListener timerEnded = new ActionListener() {

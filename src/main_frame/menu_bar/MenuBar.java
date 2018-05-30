@@ -39,6 +39,7 @@ import rules.BaseExpressionNode1;
 import rules.BaseExpressionNode2;
 import rules.Rule;
 import simulator.RunPanel;
+import simulator.RunPanel_Prova_Async;
 import util.ConflictFinder;
 import util.ImageHandler;
 import util.StaticUtil;
@@ -140,7 +141,7 @@ public class MenuBar extends JMenuBar {
 				for(Rule r : rules.getRuleTrees()) 
 					copyRules.add(r.copy());
 				
-				RunPanel runPanel = new RunPanel(graph.copy(), grid.getGridConfiguration(), new ArrayList<Color>(state.getStates()), copyRules); //crea run panel e setta parametri
+				RunPanel_Prova_Async runPanel = new RunPanel_Prova_Async(graph.copy(), grid.getGridConfiguration(), new ArrayList<Color>(state.getStates()), copyRules);	//new RunPanel(graph.copy(), grid.getGridConfiguration(), new ArrayList<Color>(state.getStates()), copyRules); //crea run panel e setta parametri
 				run.add(runPanel);
 				run.setBounds( (int)(screenSize.getWidth()/4),  (int)(screenSize.getHeight()/4), (int)(screenSize.getWidth()*0.35), (int)(screenSize.getHeight()*0.45));
 				run.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

@@ -31,14 +31,12 @@ public class Gene {
 		else
 			ret.outsideColor = other.outsideColor;
 		
-		//boolean rb = rand.nextBoolean(); //in base al valore booleano scelgo quale metà prendere con l'altro gene
-		//int start2nd = rb ? 0 : indCells.size()/2;
-		//int end2nd = rb ? indCells.size()/2 : indCells.size();
 		HashSet<Integer> set = new HashSet<Integer>();
-		for(int i=0; i<indCells.size()/2; i++)
+		for(int i=0; i<indCells.size()/2; i++) //prendiamo un po' di indici a caso
 			set.add(rand.nextInt(indCells.size()));
-		for(int i=0; i<indCells.size(); i++)
-			if(set.contains(i))//if(i < start2nd || i >= end2nd) //fuori dal range del secondo... prendi da questo gene
+		
+		for(int i=0; i<indCells.size(); i++) //assegno le celle alla nuova generazione prendendo un po' da entrambi
+			if(set.contains(i))
 				ret.cells.put(indCells.get(i), this.cells.get(indCells.get(i)));
 			else
 				ret.cells.put(indCells.get(i), other.cells.get(indCells.get(i)));

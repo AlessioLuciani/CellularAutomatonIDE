@@ -62,9 +62,9 @@ public class Optimizer extends Thread {
 				cells.add(j * w + i + 1);	
 
 		double temperature = 1.0;
-		double minTemp = 0.00001;
-		double alphaPrm = 0.9;
-		int coolLen = 100;
+		final double minTemp = 0.0001;
+		final double alphaPrm = 0.9;
+		final int coolLen = 100;
 		
 		int maxIter = 0; //calcoliamoci massimo numero di iterazioni
 		double tmp = temperature;
@@ -78,7 +78,6 @@ public class Optimizer extends Thread {
 		SimulatorFitness fitFunc = new SimulatorFitness(graph, rules, k, cycLen); //fitness function
 		
 		int actIter = 0;
-		int ent = 0; //solo debug
 		
 		while(bestFitness < k && temperature >= minTemp && !isInterrupted()) { //continuiamo procedura di evoluzione finche' non arriviamo a soluzione cercata (o temperatura troppo bassa) (oppure veniamo interrotti)
 			int ind = actIter % actualGene.length; //aggiorniamo ciclicamente tutti i geni attuali
@@ -114,9 +113,7 @@ public class Optimizer extends Thread {
 				double rnd = rand.nextDouble();
 				
 				if(deltaFitness >= 0 || prob > rnd) { //se il nuovo gene e' migliore di quello attuale (oppure abbiamo deciso di prenderlo, anche se peggiore) lo sostituisco
-					
 					System.out.println("Act Fitness: "+ind+" "+actualFitness[ind]+" "+newFitness+" "+prob+" "+deltaFitness+" "+rnd+" "+(choiceMut?"mutation":"crossover"));
-					ent++;
 					actualFitness[ind] = newFitness;
 					actualGene[ind] = newGene;
 				}
@@ -127,7 +124,6 @@ public class Optimizer extends Thread {
 				bestGene = actualGene[ind];
 				
 				bestGeneUpdated();
-				System.out.println("BEST FITNESS: "+bestFitness);
 			}
 			
 			actIter++;
@@ -138,9 +134,6 @@ public class Optimizer extends Thread {
 		}
 		
 		evolutionCompleted();
-		
-		System.out.println("BEST FITNESS: "+bestFitness);
-		System.out.println("ent: "+ent+"/"+maxIter);
 	}
 	
 	/**callback chiamata quando termina l'algoritmo genetico*/
