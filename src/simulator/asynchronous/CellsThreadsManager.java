@@ -1,6 +1,7 @@
 package simulator.asynchronous;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Random;
 
 import grid.Cell;
@@ -44,6 +45,7 @@ public class CellsThreadsManager {
 	public CellsThreadsManager(int numThreads, Graph graph) {
 		this.numThreads = numThreads;
 		this.numCells = graph.getNumNodes();
+		cells = new ArrayList<>();
 		for (int i = 1; i <= numCells; i++) {
 			this.cells.add(i);
 		}
@@ -55,14 +57,15 @@ public class CellsThreadsManager {
 	 * Restituisce le celle destinate al thread chiamante.
 	 * @return
 	 */
-	public ArrayList<Integer> getCells() {
+	public HashSet<Integer> getCells() {
 		int ran;
-		ArrayList<Integer> randomCells = new ArrayList<>();  //  Celle che vengono affidate al thread
+		HashSet<Integer> randomCells = new HashSet<>();  //  Celle che vengono affidate al thread
 		if (cells.size() > cellsPerThread + remainingCells) {  // Avviene su tutti i thread tranne l'ultimo
 			for (int i = 0; i < cellsPerThread; i++) {
 				ran = new Random().nextInt(cells.size());
 				randomCells.add(cells.get(ran));
-				cells.remove(ran);
+				cells.set(ran, cells.get(cells.size() - 1));
+				cells.remove(cells.size() - 1);
 			}
 		}
 		else {  // Avviene sull'ultimo thread
