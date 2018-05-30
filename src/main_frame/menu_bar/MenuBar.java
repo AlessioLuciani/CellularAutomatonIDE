@@ -142,14 +142,14 @@ public class MenuBar extends JMenuBar {
 					copyRules.add(r.copy());
 				
 				/*if( variabile_sincrono o asincrono) {*/		
-					RunPanel runPanel = new RunPanel(graph.copy(), grid.getGridConfiguration(), new ArrayList<Color>(state.getStates()), copyRules);
-					run.add(runPanel);
-				/*}	//new RunPanel(graph.copy(), grid.getGridConfiguration(), new ArrayList<Color>(state.getStates()), copyRules); //crea run panel e setta parametri
-				else {
+				//	RunPanel runPanel = new RunPanel(graph.copy(), grid.getGridConfiguration(), new ArrayList<Color>(state.getStates()), copyRules);
+				//	run.add(runPanel);
+				//}	//new RunPanel(graph.copy(), grid.getGridConfiguration(), new ArrayList<Color>(state.getStates()), copyRules); //crea run panel e setta parametri
+				//else {
 					RunPanel_Prova_Async runPanel = new RunPanel_Prova_Async(graph.copy(), grid.getGridConfiguration(), new ArrayList<Color>(state.getStates()), copyRules);
 					run.add(runPanel);
-				}	//new RunPanel(graph.copy(), grid.getGridConfiguration(), new ArrayList<Color>(state.getStates()), copyRules); //crea run panel e setta parametri
-				*/
+				//}	//new RunPanel(graph.copy(), grid.getGridConfiguration(), new ArrayList<Color>(state.getStates()), copyRules); //crea run panel e setta parametri
+				
 				
 				
 				run.setBounds( (int)(screenSize.getWidth()/4),  (int)(screenSize.getHeight()/4), (int)(screenSize.getWidth()*0.35), (int)(screenSize.getHeight()*0.45));

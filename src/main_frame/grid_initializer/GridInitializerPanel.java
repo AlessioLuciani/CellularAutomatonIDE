@@ -70,12 +70,12 @@ public class GridInitializerPanel extends JPanel {
 
 			@Override
 			protected void mouseDraggedCallback(MouseEvent evt) {
-				synchronized(this) {
+				//synchronized(this) {
 					if (isGridDraggable)
 						super.mouseDraggedCallback(evt);
 					if (areCellsColorable)
 						mousePressedCallback(evt);
-				}
+				//}
 			}
 
 			@Override
