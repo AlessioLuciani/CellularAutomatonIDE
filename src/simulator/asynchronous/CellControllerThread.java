@@ -36,9 +36,11 @@ public class CellControllerThread extends Thread {
 
 
 	private void updateAllCells() {
-		synchronized(this.updater) {
-			this.updater.setCellsToUpdate(ControlledCells);
-			this.grid.synchWithGraph(this.updater.execStep());
+		synchronized(this.grid) {
+			synchronized(this.updater) {
+				this.updater.setCellsToUpdate(ControlledCells);
+				this.grid.synchWithGraph(this.updater.execStep());
+			}
 		}
 	}
 	

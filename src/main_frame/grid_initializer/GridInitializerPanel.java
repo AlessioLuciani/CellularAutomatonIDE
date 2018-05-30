@@ -70,7 +70,7 @@ public class GridInitializerPanel extends JPanel {
 
 			@Override
 			protected void mouseDraggedCallback(MouseEvent evt) {
-				synchronized(GridInitializerPanel.this) {
+				synchronized(this) {
 					if (isGridDraggable)
 						super.mouseDraggedCallback(evt);
 					if (areCellsColorable)
@@ -80,7 +80,7 @@ public class GridInitializerPanel extends JPanel {
 
 			@Override
 			protected void mousePressedCallback(MouseEvent evt) {
-				synchronized(GridInitializerPanel.this) {
+				synchronized(this) {
 					// Prende la posizione del click
 					super.mousePressedCallback(evt);
 					
@@ -219,7 +219,7 @@ public class GridInitializerPanel extends JPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				synchronized(GridInitializerPanel.this) {
+				synchronized(GridInitializerPanel.this.grid) {
 					Random random = new Random();
 					int numCells = random.nextInt(graph.getNumNodes() - 1) + 1;
 					HashSet<Integer> randomCells = new HashSet<>();
