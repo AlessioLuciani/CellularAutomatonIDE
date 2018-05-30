@@ -6,6 +6,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.swing.JButton;
@@ -19,6 +20,8 @@ import grid.Graph;
 import grid.GridConfiguration;
 import main_frame.grid_initializer.GridInitializerPanel;
 import rules.Rule;
+import simulator.asynchronous.CellControllerThread;
+import simulator.asynchronous.CellsThreadsManager;
 import simulator.chart_panel.ChartPanel;
 
 public class RunPanel_Prova_Async extends GridInitializerPanel {
@@ -28,6 +31,8 @@ public class RunPanel_Prova_Async extends GridInitializerPanel {
 	protected JSlider speedSlider;
 	private static final int minDelay = 1;
 	private static final int maxDelay = 100;
+	protected CellsThreadsManager CellManager;
+	protected ArrayList<CellControllerThread> Threads;
 	
 	private Timer timer;
 	private Updater updater;
@@ -51,7 +56,14 @@ public class RunPanel_Prova_Async extends GridInitializerPanel {
 		
 		updater = new Updater(graph, rules, colors);
 
-		timer = new Timer((minDelay+maxDelay)/2, CommandPanel.timerEnded); //ritardo iniziale: metà del possibile
+		CellManager = new CellsThreadsManager(100, graph);
+		Threads = new ArrayList<>();
+		
+		for (int i = 0; i < 100; i++) {
+			CellControllerThread thread =  new CellControllerThread(Integer.toString(i),grid, CellManager.getCells(), updater);
+			Threads.add(thread);
+		}
+		
 	}
 	
 	@Override
@@ -146,15 +158,10 @@ public class RunPanel_Prova_Async extends GridInitializerPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(!RunPanel_Prova_Async.this.timer.isRunning()) {
-					RunCommandPanel.this.btnStart.setEnabled(false);
-					RunCommandPanel.this.btnStepForward.setEnabled(false);
-					RunCommandPanel.this.btnStop.setEnabled(true);
-
-					
-					
-				}
-			}
+				RunCommandPanel.this.btnStart.setEnabled(false);
+				RunCommandPanel.this.btnStepForward.setEnabled(false);
+				RunCommandPanel.this.btnStop.setEnabled(true);
+				for (CellControllerThread t : Threads) {t.start();}}
 		};
 		
 		ActionListener timerEnded = new ActionListener() {
