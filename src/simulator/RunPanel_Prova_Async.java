@@ -33,7 +33,7 @@ public class RunPanel_Prova_Async extends GridInitializerPanel {
 	private static final int maxDelay = 100;
 	protected CellsThreadsManager CellManager;
 	protected ArrayList<CellControllerThread> Threads;
-	protected static final int MAXTHREADS = 100;
+	protected static final int MAXTHREADS = 10000;
 	
 	private Timer timer = new Timer(200, null);
 	private Updater updater;
@@ -138,7 +138,7 @@ public class RunPanel_Prova_Async extends GridInitializerPanel {
 					
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					new ChartPanel(null).setVisible(true);
+					new ChartPanel(updater).setVisible(true);
 				}
 			};
 			
