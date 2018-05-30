@@ -1,7 +1,9 @@
 /testing_package/
-/simulator/
-/main_frame/
+/.DS_Store
+/.gitignore
 /genetics/
 /grid/
+/main_frame/
 /rules/
+/simulator/
 /util/

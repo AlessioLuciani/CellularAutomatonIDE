@@ -33,6 +33,7 @@ public class RunPanel_Prova_Async extends GridInitializerPanel {
 	private static final int maxDelay = 100;
 	protected CellsThreadsManager CellManager;
 	protected ArrayList<CellControllerThread> Threads;
+	protected static final int MAXTHREADS = 100;
 	
 	private Timer timer = new Timer(200, null);
 	private Updater updater;
@@ -56,10 +57,10 @@ public class RunPanel_Prova_Async extends GridInitializerPanel {
 		
 		updater = new Updater(graph, rules, colors);
 
-		CellManager = new CellsThreadsManager(100, graph);
+		CellManager = new CellsThreadsManager(MAXTHREADS, graph);
 		Threads = new ArrayList<>();
 		
-		for (int i = 0; i < 100; i++) {
+		for (int i = 0; i < MAXTHREADS; i++) {
 			CellControllerThread thread =  new CellControllerThread(Integer.toString(i),grid, CellManager.getCells(), updater);
 			Threads.add(thread);
 		}
