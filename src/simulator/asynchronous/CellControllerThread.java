@@ -16,7 +16,8 @@ public class CellControllerThread extends Thread {
 	protected static int MIN_SLEEP = 100;
 	
 	
-	public CellControllerThread(GridRenderPanel grid, HashSet<Integer> cellsList,Updater updater) {
+	public CellControllerThread(String name,GridRenderPanel grid, HashSet<Integer> cellsList,Updater updater) {
+		this.setName(name);
 		this.ControlledCells = cellsList;
 		this.updater = updater;
 		this.grid = grid;
