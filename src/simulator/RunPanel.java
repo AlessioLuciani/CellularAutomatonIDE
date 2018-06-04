@@ -30,7 +30,7 @@ public class RunPanel extends GridInitializerPanel {
 	private static final int maxDelay = 100;
 	
 	private Timer timer;
-	private Updater updater;
+	protected Updater updater;
 	
 	public RunPanel(Graph graph, GridConfiguration gridConfiguration, ArrayList<Color> colors, ArrayList<Rule> rules) {
 		super(graph, gridConfiguration, colors, rules);
@@ -143,7 +143,7 @@ public class RunPanel extends GridInitializerPanel {
 			}
 		};
 		
-		ActionListener onStart = new ActionListener() {
+		protected ActionListener onStart = new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {

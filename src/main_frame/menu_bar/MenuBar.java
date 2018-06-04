@@ -52,6 +52,8 @@ public class MenuBar extends JMenuBar {
 	
 	private static final String NO_STATE_INSERTED_MESSAGE_ERROR = "Inserisci almeno uno stato!";
 
+	private boolean SYNC_ASYNC_RUN;
+	
 	// Istanza che permette di accedere a info come screenSize etc
 	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
@@ -74,6 +76,7 @@ public class MenuBar extends JMenuBar {
 		this.rules = rules;
 		this.graph = new MatrixGraph();
 		this.errorPanel = err;
+		this.SYNC_ASYNC_RUN = false;
 		
 		// Image
 		image = null;
@@ -121,7 +124,13 @@ public class MenuBar extends JMenuBar {
 			if(state.getStates().size() > 0) {
 				repairGraph(grid.getGridConfiguration(), state.getStates().get(0)); //ripara grafo prima di passarlo
 				
-				JFrame runConf = new RunConfigurationFrame(graph, grid.getGridConfiguration(), state.getStates(), rules.getRuleTrees());
+				JFrame runConf = new RunConfigurationFrame(graph, grid.getGridConfiguration(), state.getStates(), rules.getRuleTrees()) {
+					public void get_exec_mode_callback() {
+						if (this.rdbtnAsincrono.isSelected()) MenuBar.this.SYNC_ASYNC_RUN = true;
+						else MenuBar.this.SYNC_ASYNC_RUN = false;
+						System.out.println("settato: "+MenuBar.this.SYNC_ASYNC_RUN);
+					};
+				};
 				runConf.setBounds( (int)(screenSize.getWidth()/4),  (int)(screenSize.getHeight()/4), (int)(screenSize.getWidth()*0.35), (int)(screenSize.getHeight()*0.45));
 				runConf.setVisible(true);
 			}
@@ -141,25 +150,30 @@ public class MenuBar extends JMenuBar {
 				for(Rule r : rules.getRuleTrees()) 
 					copyRules.add(r.copy());
 				
-				/*if( variabile_sincrono o asincrono) {*/		
-				//	RunPanel runPanel = new RunPanel(graph.copy(), grid.getGridConfiguration(), new ArrayList<Color>(state.getStates()), copyRules);
-				//	run.add(runPanel);
-				//}	//new RunPanel(graph.copy(), grid.getGridConfiguration(), new ArrayList<Color>(state.getStates()), copyRules); //crea run panel e setta parametri
-				//else {
+				if(!SYNC_ASYNC_RUN) {	
+					RunPanel runPanel = new RunPanel(graph.copy(), grid.getGridConfiguration(), new ArrayList<Color>(state.getStates()), copyRules);
+					run.add(runPanel);
+					run.addWindowListener(new WindowAdapter(){
+		                public void windowClosing(WindowEvent e){
+		                   runPanel.onClosing();
+		                }
+		            });
+				}	//new RunPanel(graph.copy(), grid.getGridConfiguration(), new ArrayList<Color>(state.getStates()), copyRules); //crea run panel e setta parametri
+				else {
 					RunPanel_Prova_Async runPanel = new RunPanel_Prova_Async(graph.copy(), grid.getGridConfiguration(), new ArrayList<Color>(state.getStates()), copyRules);
 					run.add(runPanel);
-				//}	//new RunPanel(graph.copy(), grid.getGridConfiguration(), new ArrayList<Color>(state.getStates()), copyRules); //crea run panel e setta parametri
+					run.addWindowListener(new WindowAdapter(){
+		                public void windowClosing(WindowEvent e){
+		                   runPanel.onClosing();
+		                }
+		            });
+				}	//new RunPanel(graph.copy(), grid.getGridConfiguration(), new ArrayList<Color>(state.getStates()), copyRules); //crea run panel e setta parametri
 				
 				
 				
 				run.setBounds( (int)(screenSize.getWidth()/4),  (int)(screenSize.getHeight()/4), (int)(screenSize.getWidth()*0.35), (int)(screenSize.getHeight()*0.45));
 				run.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 				run.setVisible(true);
-				run.addWindowListener(new WindowAdapter(){
-	                public void windowClosing(WindowEvent e){
-	                   runPanel.onClosing();
-	                }
-	            });
 			}
 		}
 	};

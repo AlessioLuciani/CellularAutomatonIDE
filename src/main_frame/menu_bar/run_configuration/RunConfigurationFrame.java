@@ -27,9 +27,9 @@ public class RunConfigurationFrame extends JFrame {
 	
 	private static final long serialVersionUID = 1L;
 	
-	JRadioButton rdbtnSincrono;
-	JRadioButton rdbtnAsincrono;
-	GridInitializerPanel gridInitializerPanel;
+	protected JRadioButton rdbtnSincrono;
+	protected JRadioButton rdbtnAsincrono;
+	protected GridInitializerPanel gridInitializerPanel;
 	
 	public RunConfigurationFrame(Graph graph, GridConfiguration gridConf, ArrayList<Color> colors, ArrayList<Rule> rules) {
 		setAutoRequestFocus(false);
@@ -75,10 +75,13 @@ public class RunConfigurationFrame extends JFrame {
 			@Override
 			public void windowClosing(WindowEvent e) {
 				gridInitializerPanel.onPanelClosed();
+				get_exec_mode_callback();
 				super.windowClosing(e);
 			}
 		});
 	}
+	
+	public void get_exec_mode_callback(){}
 	
 	// Gestione RadioButton Sincrono/Asincrono
 	ActionListener onClickAsincrono = new ActionListener() {

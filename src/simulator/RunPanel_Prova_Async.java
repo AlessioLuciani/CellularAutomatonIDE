@@ -36,7 +36,7 @@ public class RunPanel_Prova_Async extends GridInitializerPanel {
 	protected static final int MAXTHREADS = 100;
 	
 	private Timer timer = new Timer(200, null);
-	private Updater updater;
+	protected Updater updater;
 	
 	public RunPanel_Prova_Async(Graph graph, GridConfiguration gridConfiguration, ArrayList<Color> colors, ArrayList<Rule> rules) {
 		super(graph, gridConfiguration, colors, rules);
