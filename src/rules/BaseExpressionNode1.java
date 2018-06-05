@@ -17,6 +17,7 @@ public class BaseExpressionNode1 extends ExpressionNode {
 
     /**parametri: a <= #num vicini <= b t.c. colore = c*/
     public BaseExpressionNode1(int a, int b, Color c) {
+    	type = TypeNode.BE1;
         num1 = Math.min(a, b);
         num2 = Math.max(a, b);
         colr = c;
@@ -60,5 +61,10 @@ public class BaseExpressionNode1 extends ExpressionNode {
     @Override
     public ExpressionNode copy() {
     	return new BaseExpressionNode1(num1, num2, colr);
+    }
+    
+    @Override
+    public String getAttribute() { 
+    	return this.type + " " + this.num1 + " " + this.num2 + " " + this.colr.getRGB() + " ";
     }
 }

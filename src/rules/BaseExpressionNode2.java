@@ -20,6 +20,7 @@ public class BaseExpressionNode2 extends ExpressionNode {
      * parametri: 'k'-esimo vicino e colore 'c'
      */
     public BaseExpressionNode2(int k, Color c) {
+    	type = TypeNode.BE2;
         indChild = k;
         colr = c;
     }
@@ -55,5 +56,10 @@ public class BaseExpressionNode2 extends ExpressionNode {
     @Override
     public ExpressionNode copy() {
     	return new BaseExpressionNode2(indChild, colr);
+    }
+    
+    @Override
+    public String getAttribute() { 
+    	return this.type + " " + this.indChild + " " + this.colr.getRGB() + " "; 	
     }
 }

@@ -12,24 +12,43 @@ import rules.Rule;
 
 public class ConfigContainer {
 	
-	private Graph graph; 
-	private ArrayList<Color> state;
+	//private Graph graph; 
+	private ArrayList<Integer> state;
 	private GridConfiguration grid;
-	private ArrayList<Rule> rules;
+	public ArrayList<String> rules;
 	
-	public ConfigContainer(Graph graph, StateChoser state, GridConfCreator grid, RuleChoser rules) {
-		this.graph = graph;
-		this.state = state.getStates();
+	public ConfigContainer(ArrayList<Integer> state, GridConfCreator grid, ArrayList<String> rules) {
+		//this.graph = graph.copy();
+		this.state = state;
 		this.grid = grid.getGridConfiguration();
-		this.rules = rules.getRuleTrees();
+		this.rules = rules;
+		
+		
 	}
 	
-	public Graph getGraph() { return this.graph; }
+	//public Graph getGraph() { return this.graph; }
 	
-	public ArrayList<Color> getState() { return this.state; }
+	public ArrayList<Color> getState() { 
+		ArrayList<Color> statelist = new ArrayList<>();
+		for (Integer states : state) {
+			statelist.add(new Color(states));
+		}
+		return statelist;
+	}
 	
 	public GridConfiguration getGrid() { return this.grid; }
 	
-	public ArrayList<Rule> getRule() { return this.rules; }
+	public ArrayList<Rule> getRule() { 
+		ArrayList<Rule> forest = new ArrayList<>();
+		
+		for (String stringRule : rules) {
+			forest.add(Rule.ruleFromString(stringRule));
+		}
+		return forest;
+	}
+	
+	public void print() { System.out.println("n stati = " + this.state.size());
+						  System.out.println("n regole = " + this.rules.size());
+						  System.out.println(this.grid.toString());}
 
 }

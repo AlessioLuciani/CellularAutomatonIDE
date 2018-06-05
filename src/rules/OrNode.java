@@ -8,6 +8,7 @@ public class OrNode extends ExpressionNode {
     /**prende i due operandi dell'or (che sono due espressioni a loro volta)*/
     public OrNode(ExpressionNode left, ExpressionNode right) {
         super();
+        type = TypeNode.OR;
         children = new ExpressionNode[]{left, right};
     }
 
@@ -30,4 +31,7 @@ public class OrNode extends ExpressionNode {
     public ExpressionNode copy() {
     	return new OrNode(children[0].copy(), children[1].copy());
     }
+    
+    @Override
+    public String getAttribute() { return this.type + " "; }
 }
