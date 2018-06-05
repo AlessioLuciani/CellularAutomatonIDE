@@ -6,7 +6,6 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -36,13 +35,9 @@ import main_frame.menu_bar.run_configuration.RunConfigurationFrame;
 import main_frame.rules_creator.RuleChoser;
 import main_frame.states.StateChoser;
 import util.ConfigContainer;
-import rules.AndNode;
-import rules.BaseExpressionNode1;
-import rules.BaseExpressionNode2;
 import rules.Rule;
 import simulator.RunPanel;
 import simulator.RunPanelAsync;
-import simulator.RunPanel_Prova_Async;
 import util.ConflictFinder;
 import util.ImageHandler;
 import util.StaticUtil;
@@ -180,67 +175,39 @@ public class MenuBar extends JMenuBar {
 	// Metodo richiamato dal click di Import che permette di importare configurazioni gia' esistenti
 	ActionListener importConfiguration = new ActionListener() {
 		@Override
-		public void actionPerformed(ActionEvent arg0) {			
-			
-			/*// Frame che permette di scegliere la destinazione e di dare un nome al file
-			JFileChooser importPath = new JFileChooser();
-			importPath.showOpenDialog(new JFrame());
-			GridConfiguration gconf = new GridConfiguration(CellForm.SQUARE, 21, 100, 100);	
-			
-			//blu = vivo, giallo = morto
-			ArrayList<Rule> rs = new ArrayList<>();
-			//qualsiasi cella viva con meno di 2 vicini vivi muore
-			BaseExpressionNode2 e1 = new BaseExpressionNode2(0, Color.BLUE); //cella deve essere viva
-			BaseExpressionNode1 e2 = new BaseExpressionNode1(0, 1, Color.BLUE); //0 <= numero vivi <= 1
-			AndNode e3 = new AndNode(e1, e2);
-			rs.add(new Rule(e3, Color.YELLOW));
-			
-			//qualsiasi cella viva con pi� di 3 vicini vivi muore
-			BaseExpressionNode1 e4 = new BaseExpressionNode1(4, 1000, Color.BLUE); //piu' di 3 vicini vivi
-			AndNode e5 = new AndNode(e1, e4);
-			rs.add(new Rule(e5, Color.YELLOW));
-			
-			//qualsiasi cella morta con esattamente 3 celle vive adiacenti diventa viva
-			BaseExpressionNode2 e6 = new BaseExpressionNode2(0, Color.YELLOW); //cella morta
-			BaseExpressionNode1 e7 = new BaseExpressionNode1(3, 3, Color.BLUE); //3 vivi
-			AndNode e8 = new AndNode(e6, e7);
-			rs.add(new Rule(e8, Color.BLUE));
-			rules.initFromRules(rs);
-			ArrayList<Color> c = new ArrayList<>();
-			c.add(Color.BLUE);
-			c.add(Color.YELLOW);
-			state.initFromStatesList(c);*/
-			
+		public void actionPerformed(ActionEvent arg0) {				
 			// Frame che permette di scegliere la destinazione e di dare un nome al file
 			JFileChooser importPath = new JFileChooser();
-			importPath.showOpenDialog(new JFrame());
+			int ret = importPath.showOpenDialog(new JFrame());
 			
-			// Inizializzo l'istanza JSON e converto l'oggetto
-			Gson gson = new Gson();
-			
-			// Carico il file da importare
-			File importFile = new File(importPath.getSelectedFile().getPath());
-						
-			try {
-				FileReader fr = new FileReader(importFile);
-				char[] cont = new char[(int)importFile.length()];
-				int size = fr.read(cont);
-				String values = String.copyValueOf(cont);
+			if(ret == JFileChooser.APPROVE_OPTION) { //abbiamo selezionato veramente un file
+				// Inizializzo l'istanza JSON e converto l'oggetto
+				Gson gson = new Gson();
 				
-				ConfigContainer confContainer = gson.fromJson(values, ConfigContainer.class);
-				confContainer.print();
-				
-				// Setto il modulo degli stati caricando i colori importati
-				state.setStates(confContainer.getState());
-								
-				// Setto il modulo delle regole caricando quelle importate
-				rules.initFromRules(confContainer.getRule());
-				
-				// Setto il modulo della configurazione della griglia caricando quella importata
-				grid.initFromGridConf(confContainer.getGrid());
-				
-			} catch (FileNotFoundException e) { } 
-			catch (IOException e) { }
+				// Carico il file da importare
+				File importFile = new File(importPath.getSelectedFile().getPath());
+							
+				try {
+					FileReader fr = new FileReader(importFile);
+					char[] cont = new char[(int)importFile.length()];
+					fr.read(cont);
+					fr.close();
+					String values = String.copyValueOf(cont);
+					
+					ConfigContainer confContainer = gson.fromJson(values, ConfigContainer.class);
+					confContainer.print();
+					
+					// Setto il modulo degli stati caricando i colori importati
+					state.setStates(confContainer.getState());
+									
+					// Setto il modulo delle regole caricando quelle importate
+					rules.initFromRules(confContainer.getRule());
+					
+					// Setto il modulo della configurazione della griglia caricando quella importata
+					grid.initFromGridConf(confContainer.getGrid());
+					
+				} catch (Exception e) { StaticUtil.errorDialog("Errore nell'importare l'automa!"); } 
+			}
 		}
 	};
 		
@@ -251,11 +218,11 @@ public class MenuBar extends JMenuBar {
 			
 			// Frame che permette di scegliere la destinazione e di dare un nome al file
 			JFileChooser exportPath = new JFileChooser();
-			exportPath.showSaveDialog(new JFrame());
+			int ret = exportPath.showSaveDialog(new JFrame());
 			
-			// Genero la path dove salvare il file
-			String path = exportPath.getSelectedFile() + ".txt";
-			if (path != "null.agm") {
+			if(ret == JFileChooser.APPROVE_OPTION) { //controlliamo di aver effettivamente preso un file
+				// Genero la path dove salvare il file
+				String path = exportPath.getSelectedFile() + ".agm";	
 				try { 
 					// Creo il file su cui salvare il tutto
 					File exportFile = new File(path); 
@@ -278,7 +245,7 @@ public class MenuBar extends JMenuBar {
 					fw.flush();
 					fw.close();
 				}
-				catch (IOException e) {}
+				catch (Exception e) { StaticUtil.errorDialog("Errore nell'esportare l'automa!"); }
 			}
 		}
 	};
@@ -287,7 +254,6 @@ public class MenuBar extends JMenuBar {
 	ActionListener importImg = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			System.out.println("importImage");
 			
 			// Selettore di immagini
 			JFileChooser imageFinder = new JFileChooser();
