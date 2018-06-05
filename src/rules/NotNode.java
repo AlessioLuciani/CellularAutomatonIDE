@@ -7,6 +7,7 @@ public class NotNode extends ExpressionNode {
 
     /**prende operando del not */
     public NotNode(ExpressionNode child) {
+    	type = TypeNode.NOT;
         children = new ExpressionNode[] {child};
     }
 
@@ -29,4 +30,7 @@ public class NotNode extends ExpressionNode {
     public ExpressionNode copy() {
     	return new NotNode(children[0].copy());
     }
+
+    @Override
+    public String getAttribute() {return this.type + " ";}
 }

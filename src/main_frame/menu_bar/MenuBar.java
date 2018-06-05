@@ -6,6 +6,8 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.awt.event.WindowAdapter;
@@ -183,7 +185,7 @@ public class MenuBar extends JMenuBar {
 			System.out.println("importConfiguration");
 			
 			
-			// Frame che permette di scegliere la destinazione e di dare un nome al file
+			/*// Frame che permette di scegliere la destinazione e di dare un nome al file
 			JFileChooser importPath = new JFileChooser();
 			importPath.showOpenDialog(new JFrame());
 			GridConfiguration gconf = new GridConfiguration(CellForm.SQUARE, 21, 100, 100);	
@@ -210,7 +212,38 @@ public class MenuBar extends JMenuBar {
 			ArrayList<Color> c = new ArrayList<>();
 			c.add(Color.BLUE);
 			c.add(Color.YELLOW);
-			state.initFromStatesList(c);
+			state.initFromStatesList(c);*/
+			
+			// Frame che permette di scegliere la destinazione e di dare un nome al file
+			JFileChooser importPath = new JFileChooser();
+			importPath.showOpenDialog(new JFrame());
+			
+			// Inizializzo l'istanza JSON e converto l'oggetto
+			Gson gson = new Gson();
+			
+			// Carico il file da importare
+			File importFile = new File(importPath.getSelectedFile().getPath());
+			
+			
+			
+			try {
+				FileReader fr = new FileReader(importFile);
+				char[] cont = new char[(int)importFile.length()];
+				int size = fr.read(cont);
+				String values = String.copyValueOf(cont);
+				
+				ConfigContainer confContainer = gson.fromJson(values, ConfigContainer.class);
+				confContainer.print();
+				
+				// Setto il modulo degli stati caricando i colori importati
+				state.setStates(confContainer.getState());
+								
+				// Setto il modulo delle regole caricando i colori importati
+				rules.initFromRules(confContainer.getRule());
+				
+				
+			} catch (FileNotFoundException e) { } 
+			catch (IOException e) { }
 		}
 	};
 		
@@ -231,8 +264,12 @@ public class MenuBar extends JMenuBar {
 					File exportFile = new File(path); 
 					exportFile.createNewFile();
 					
+					// Contenitore di tutte le regole sotto forma di stringhe
+					ArrayList<String> RuleList = new ArrayList<>();
+					rules.getRuleTrees().forEach(rule -> RuleList.add(rule.ruleToString()));
+					
 					// Inizializzo il contenitore di tutte le informazioni da salvare
-					ConfigContainer confContainer = new ConfigContainer(graph, state, grid, rules);
+					ConfigContainer confContainer = new ConfigContainer(state.getStatesRGB(), grid, RuleList);
 					
 					// Inizializzo l'istanza JSON e converto l'oggetto
 					Gson gson = new Gson();

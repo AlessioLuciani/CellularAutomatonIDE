@@ -6,13 +6,15 @@ import java.util.HashSet;
 import grid.Graph;
 
 /**nodo genenerico dell'albero rappresentante un'espressione */
-public abstract class ExpressionNode {
+public class ExpressionNode {
     protected ExpressionNode [] children; //array dei figli
+    
+    protected TypeNode type;
 
     /**valuta l'espressione associata all'albero (restituisce il valore di verita').
      * per una certa cella su un certo grafo (cioe' griglia)
      * */
-    public abstract boolean evaluate(Graph graph, int cell);
+    public boolean evaluate(Graph graph, int cell) {return false;};
     
     /**restituisce tutti i colori presenti nell'espressione*/
     public HashSet<Color> getColors() {
@@ -42,4 +44,7 @@ public abstract class ExpressionNode {
     public ExpressionNode copy() {
     	return null;
     }
+    
+    /**restituisce tutti gli attributi della classe come stringa*/
+    public String getAttribute() {return "";}
 }

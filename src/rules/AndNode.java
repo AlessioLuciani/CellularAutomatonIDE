@@ -8,6 +8,7 @@ public class AndNode extends ExpressionNode {
     /**prende i due operandi dell'and (che sono due espressioni a loro volta)*/
     public AndNode(ExpressionNode left, ExpressionNode right) {
         super();
+        type = TypeNode.AND;
         children = new ExpressionNode[]{left, right};
     }
 
@@ -30,4 +31,7 @@ public class AndNode extends ExpressionNode {
     public ExpressionNode copy() {
     	return new AndNode(children[0].copy(), children[1].copy());
     }
+    
+    @Override
+    public String getAttribute() { return this.type + " "; }
 }

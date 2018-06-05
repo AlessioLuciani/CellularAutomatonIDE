@@ -155,4 +155,23 @@ public class StateChoser extends JPanel{
 			}
 		}
 	}
+	
+	// Semplice funzione che restituisce l'insieme degli stati in formato RGB(intero)
+		public ArrayList<Integer> getStatesRGB(){
+			ArrayList<Integer> colorlist = new ArrayList<>();
+			for (Color color : this.listColor) {
+				colorlist.add(color.getRGB());
+			}
+			return colorlist;
+		}
+		
+		// Funzione che permette di caricare un elenco di stati e visualizzarli nel modulo
+		public void setStates(ArrayList<Color> newStates){
+			this.listColor.removeAll(listColor);
+			for (Color color : newStates) {
+				DefaultListModel<JLabel> model = (DefaultListModel<JLabel>)labelList.getModel();
+				model.addElement(makeLabel(color));
+				this.listColor.add(color);
+			}
+		}
 }
