@@ -133,7 +133,6 @@ public class MenuBar extends JMenuBar {
 					public void get_exec_mode_callback() {
 						if (this.rdbtnAsincrono.isSelected()) MenuBar.this.SYNC_ASYNC_RUN = true;
 						else MenuBar.this.SYNC_ASYNC_RUN = false;
-						System.out.println("settato: "+MenuBar.this.SYNC_ASYNC_RUN);
 					};
 				};
 				runConf.setBounds( (int)(screenSize.getWidth()/4),  (int)(screenSize.getHeight()/4), (int)(screenSize.getWidth()*0.35), (int)(screenSize.getHeight()*0.45));
