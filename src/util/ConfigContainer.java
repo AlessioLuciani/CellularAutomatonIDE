@@ -3,30 +3,24 @@ package util;
 import java.awt.Color;
 import java.util.ArrayList;
 
-import grid.Graph;
 import grid.GridConfCreator;
 import grid.GridConfiguration;
-import main_frame.rules_creator.RuleChoser;
-import main_frame.states.StateChoser;
 import rules.Rule;
 
+/**contiene tutti i dati di un automa: usato per esportarlo/importarlo*/
 public class ConfigContainer {
+	 
+	private ArrayList<Integer> graphStates; //stati per il grafo nella configurazione iniziale
+	private ArrayList<Integer> state; //stati
+	private GridConfiguration grid; //griglia
+	private ArrayList<String> rules; //regole
 	
-	//private Graph graph; 
-	private ArrayList<Integer> state;
-	private GridConfiguration grid;
-	public ArrayList<String> rules;
-	
-	public ConfigContainer(ArrayList<Integer> state, GridConfCreator grid, ArrayList<String> rules) {
-		//this.graph = graph.copy();
+	public ConfigContainer(ArrayList<Integer> state, GridConfCreator grid, ArrayList<String> rules, ArrayList<Integer> graphStates) {
+		this.graphStates = graphStates;
 		this.state = state;
 		this.grid = grid.getGridConfiguration();
 		this.rules = rules;
-		
-		
 	}
-	
-	//public Graph getGraph() { return this.graph; }
 	
 	public ArrayList<Color> getState() { 
 		ArrayList<Color> statelist = new ArrayList<>();
@@ -45,6 +39,10 @@ public class ConfigContainer {
 			forest.add(Rule.ruleFromString(stringRule));
 		}
 		return forest;
+	}
+	
+	public ArrayList<Integer> getGraphStates() {
+		return graphStates;
 	}
 	
 	public void print() { System.out.println("n stati = " + this.state.size());

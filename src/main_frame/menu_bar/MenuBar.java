@@ -206,6 +206,9 @@ public class MenuBar extends JMenuBar {
 					// Setto il modulo della configurazione della griglia caricando quella importata
 					grid.initFromGridConf(confContainer.getGrid());
 					
+					//ricrea grafo da stati e griglia
+					graph = Graph.fromGridConfAndStates(confContainer.getGraphStates(), confContainer.getGrid());
+					
 				} catch (Exception e) { StaticUtil.errorDialog("Errore nell'importare l'automa!"); } 
 			}
 		}
@@ -232,8 +235,11 @@ public class MenuBar extends JMenuBar {
 					ArrayList<String> RuleList = new ArrayList<>();
 					rules.getRuleTrees().forEach(rule -> RuleList.add(rule.ruleToString()));
 					
+					//stati del grafo (per configurazione iniziale)
+					ArrayList<Integer> graphStates = graph.getArrayOfStates();
+					
 					// Inizializzo il contenitore di tutte le informazioni da salvare
-					ConfigContainer confContainer = new ConfigContainer(state.getStatesRGB(), grid, RuleList);
+					ConfigContainer confContainer = new ConfigContainer(state.getStatesRGB(), grid, RuleList, graphStates);
 					
 					// Inizializzo l'istanza JSON e converto l'oggetto
 					Gson gson = new Gson();

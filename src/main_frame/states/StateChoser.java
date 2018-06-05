@@ -3,7 +3,6 @@ package main_frame.states;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-import util.JLabelJListRender;
 import util.StaticUtil;
 import util.colors.ColorSelector;
 import util.colors.ColoredRGBLabel;

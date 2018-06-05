@@ -74,19 +74,19 @@ public class Graph {
     }
     
     /**restituisce gli stati di tutte le celle nel grafo (in ordine: è una lista)*/
-    public ArrayList<Color> getArrayOfStates() {
-    	ArrayList<Color> colors = new ArrayList<Color>();
+    public ArrayList<Integer> getArrayOfStates() {
+    	ArrayList<Integer> colors = new ArrayList<>();
     	for(int i=1; i<=this.getNumNodes(); i++)
-    		colors.add(this.getCell(i).getState());
+    		colors.add(this.getCell(i).getState().getRGB());
     	return colors;
     }
     
     /**crea un grafo prendendo l'array degli stati e la configurazione della griglia*/
-    public static Graph fromGridConfAndStates(ArrayList<Color> states, GridConfiguration gridConf) {
-    	Graph g = buildGraph(gridConf, states.get(0));
+    public static Graph fromGridConfAndStates(ArrayList<Integer> states, GridConfiguration gridConf) {
+    	Graph g = buildGraph(gridConf, Color.BLACK);
     	for(int i=1; i<=g.getNumNodes(); i++)
     		if(states.size() >= i)
-    			g.getCell(i).setState(states.get(i-1));
+    			g.getCell(i).setState(new Color(states.get(i-1)));
     	return g;
     }
     
