@@ -39,6 +39,7 @@ import rules.BaseExpressionNode1;
 import rules.BaseExpressionNode2;
 import rules.Rule;
 import simulator.RunPanel;
+import simulator.RunPanelAsync;
 import simulator.RunPanel_Prova_Async;
 import util.ConflictFinder;
 import util.ImageHandler;
@@ -119,12 +120,14 @@ public class MenuBar extends JMenuBar {
 	
 	// Metodo richiamato dal click di Run Configurations che apre il frame di definzione di caratteristiche avanzate
 	ActionListener setConfiguration = new ActionListener() {
+		@SuppressWarnings("serial")
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			if(state.getStates().size() > 0) {
 				repairGraph(grid.getGridConfiguration(), state.getStates().get(0)); //ripara grafo prima di passarlo
 				
-				JFrame runConf = new RunConfigurationFrame(graph, grid.getGridConfiguration(), state.getStates(), rules.getRuleTrees()) {
+				JFrame runConf = new RunConfigurationFrame(graph, grid.getGridConfiguration(), state.getStates(), rules.getRuleTrees(), SYNC_ASYNC_RUN) {
+					@Override
 					public void get_exec_mode_callback() {
 						if (this.rdbtnAsincrono.isSelected()) MenuBar.this.SYNC_ASYNC_RUN = true;
 						else MenuBar.this.SYNC_ASYNC_RUN = false;
@@ -150,26 +153,21 @@ public class MenuBar extends JMenuBar {
 				for(Rule r : rules.getRuleTrees()) 
 					copyRules.add(r.copy());
 				
-				if(!SYNC_ASYNC_RUN) {	
-					RunPanel runPanel = new RunPanel(graph.copy(), grid.getGridConfiguration(), new ArrayList<Color>(state.getStates()), copyRules);
-					run.add(runPanel);
-					run.addWindowListener(new WindowAdapter(){
-		                public void windowClosing(WindowEvent e){
-		                   runPanel.onClosing();
-		                }
-		            });
-				}	//new RunPanel(graph.copy(), grid.getGridConfiguration(), new ArrayList<Color>(state.getStates()), copyRules); //crea run panel e setta parametri
-				else {
-					RunPanel_Prova_Async runPanel = new RunPanel_Prova_Async(graph.copy(), grid.getGridConfiguration(), new ArrayList<Color>(state.getStates()), copyRules);
-					run.add(runPanel);
-					run.addWindowListener(new WindowAdapter(){
-		                public void windowClosing(WindowEvent e){
-		                   runPanel.onClosing();
-		                }
-		            });
-				}	//new RunPanel(graph.copy(), grid.getGridConfiguration(), new ArrayList<Color>(state.getStates()), copyRules); //crea run panel e setta parametri
+				RunPanel runPanel;
 				
-				
+				if(!SYNC_ASYNC_RUN) { //crea panel per la simulazione sincrona
+					runPanel = new RunPanel(graph.copy(), grid.getGridConfiguration(), new ArrayList<Color>(state.getStates()), copyRules);//crea run panel e setta parametri
+				}	
+				else { //panel per simulazione asincrona
+					//RunPanel_Prova_Async runPanel = new RunPanel_Prova_Async(graph.copy(), grid.getGridConfiguration(), new ArrayList<Color>(state.getStates()), copyRules);
+					runPanel = new RunPanelAsync(graph.copy(), grid.getGridConfiguration(), new ArrayList<Color>(state.getStates()), copyRules);
+				}	
+				run.add(runPanel);
+				run.addWindowListener(new WindowAdapter(){
+	                public void windowClosing(WindowEvent e){
+	                   runPanel.onClosing();
+	                }
+	            });
 				
 				run.setBounds( (int)(screenSize.getWidth()/4),  (int)(screenSize.getHeight()/4), (int)(screenSize.getWidth()*0.35), (int)(screenSize.getHeight()*0.45));
 				run.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

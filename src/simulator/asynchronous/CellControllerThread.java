@@ -11,9 +11,9 @@ public class CellControllerThread extends Thread {
 	private int sleepTime;
 	private HashSet<Integer> ControlledCells;
 	private Updater updater;
-	private GridRenderPanel grid;
-	protected static int MAX_SLEEP = 4900;
-	protected static int MIN_SLEEP = 100;
+	private volatile GridRenderPanel grid;
+	protected static final int MAX_SLEEP = 250;//4900;
+	protected static final int MIN_SLEEP = 100;
 	
 	
 	public CellControllerThread(String name,GridRenderPanel grid, HashSet<Integer> cellsList,Updater updater) {
@@ -27,22 +27,22 @@ public class CellControllerThread extends Thread {
 
 	@Override
 	public void run() {
-		while (!this.isInterrupted()) {
-			this.updateAllCells();
-			try {sleep(sleepTime);} catch (InterruptedException e) {}
-			sleepTime = new Random().nextInt(MAX_SLEEP-MIN_SLEEP+1)+MIN_SLEEP; 
-		}
+		try {
+			while (!this.isInterrupted()) { //continua ad aggiornare celle finchè non è interrotto
+				this.updateAllCells(); //aggiorna celle
+				sleep(sleepTime); //dorme un po'
+				sleepTime = new Random().nextInt(MAX_SLEEP-MIN_SLEEP+1)+MIN_SLEEP; //cambia termo di dormita
+			}
+			//System.out.println("Exit: "+this.getName());
+		}catch(InterruptedException e) {/*System.out.println("Exit exc: "+this.getName());*/}
 	}
 
-
 	private void updateAllCells() {
-		synchronized(this.grid) {
+		synchronized(this.grid) { //prende i lock su griglia e updater e poi può aggiornarsi
 			synchronized(this.updater) {
 				this.updater.setCellsToUpdate(ControlledCells);
 				this.grid.synchWithGraph(this.updater.execStep());
 			}
 		}
 	}
-	
-	
 }

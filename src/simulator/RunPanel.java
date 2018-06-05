@@ -29,8 +29,10 @@ public class RunPanel extends GridInitializerPanel {
 	private static final int minDelay = 1;
 	private static final int maxDelay = 100;
 	
-	private Timer timer;
+	protected Timer timer;
 	protected Updater updater;
+	
+	protected RunCommandPanel commandPanel;
 	
 	public RunPanel(Graph graph, GridConfiguration gridConfiguration, ArrayList<Color> colors, ArrayList<Rule> rules) {
 		super(graph, gridConfiguration, colors, rules);
@@ -38,32 +40,32 @@ public class RunPanel extends GridInitializerPanel {
 		sideBar.remove(btnColorRandom);
 		sideBar.remove(btnFindConfiguration);
 		
-		RunCommandPanel CommandPanel = new RunCommandPanel(sideBar.getWidth());
-		sideBar.add(CommandPanel);
+		commandPanel = new RunCommandPanel(sideBar.getWidth());
+		sideBar.add(commandPanel);
 		
 		speedSlider = new JSlider(JSlider.HORIZONTAL, minDelay, maxDelay, (minDelay+maxDelay)/2);
 		speedSlider.setPreferredSize(new Dimension(sideBar.getWidth(), speedSlider.getHeight()));
 		speedSlider.addChangeListener(new SpeedChangeListener());
 		sideBar.add(speedSlider);
 		
-		setMouseListener(CommandPanel, 0);
+		setMouseListener(commandPanel, 0);
 		setMouseListener(speedSlider, 0);
 		
 		updater = new Updater(graph, rules, colors);
 
-		timer = new Timer((minDelay+maxDelay)/2, CommandPanel.timerEnded); //ritardo iniziale: metà del possibile
+		timer = new Timer((minDelay+maxDelay)/2, commandPanel.timerEnded); //ritardo iniziale: metà del possibile
 	}
 	
 	@Override
 	public void onCellColored(Graph graph, int cell, Color oldColor) {
-		if(!timer.isRunning()) 
+		if(timer != null && !timer.isRunning()) 
 			updater.addCellToUpdate(cell); //aggiungo la cella modificata alle candidate da aggiornare
 		updater.updColorSwapped(oldColor, graph.getCell(cell).getState()); //riaggiusto la mappa dopo lo scambio di colore
 	}
 	
 	/**da chiamare quando si vuole interrompere run*/
 	public void onClosing() {
-		if(timer.isRunning()) //se chiudi mentre sta eseguendo lo stoppo
+		if(timer != null && timer.isRunning()) //se chiudi mentre sta eseguendo lo stoppo
 			timer.stop();
 	}
 	
@@ -113,16 +115,16 @@ public class RunPanel extends GridInitializerPanel {
 			RunPanel.this.setMouseListener(btnStop, 0);
 		}
 		
-		ActionListener onStepForward = new ActionListener() {
+		protected ActionListener onStepForward = new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(!RunPanel.this.timer.isRunning())
+				if(RunPanel.this.timer != null && !RunPanel.this.timer.isRunning())
 					updateStep();
 			}
 		};
 		
-		ActionListener onStatistics = new ActionListener() {
+		protected ActionListener onStatistics = new ActionListener() {
 					
 				@Override
 				public void actionPerformed(ActionEvent e) {
@@ -130,15 +132,14 @@ public class RunPanel extends GridInitializerPanel {
 				}
 			};
 			
-		ActionListener onStop = new ActionListener() {
+		protected ActionListener onStop = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(RunPanel.this.timer.isRunning()) {
+				if(RunPanel.this.timer != null && RunPanel.this.timer.isRunning()) {
 					RunCommandPanel.this.btnStart.setEnabled(true);
 					RunCommandPanel.this.btnStepForward.setEnabled(true);
 					RunCommandPanel.this.btnStop.setEnabled(false);
 					RunPanel.this.timer.stop();
-					//System.out.println("Iterazioni effettuate: "+RunPanel.this.updater.getActualIteration());
 				}
 			}
 		};
@@ -147,7 +148,7 @@ public class RunPanel extends GridInitializerPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(!RunPanel.this.timer.isRunning()) {
+				if(RunPanel.this.timer != null && !RunPanel.this.timer.isRunning()) {
 					RunCommandPanel.this.btnStart.setEnabled(false);
 					RunCommandPanel.this.btnStepForward.setEnabled(false);
 					RunCommandPanel.this.btnStop.setEnabled(true);
@@ -176,7 +177,6 @@ public class RunPanel extends GridInitializerPanel {
 			RunPanel.this.repaint();
 			return true;
 		}
-		
 	}
 
 }

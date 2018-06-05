@@ -4,18 +4,12 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Random;
 
-import grid.Cell;
 import grid.Graph;
 
 /**
  * Gestore di celle affidate ai thread nella simulazione asincrona.
  */
 public class CellsThreadsManager {
-
-	/**
-	 * Numero di thread nella simulazione.
-	 */
-	private int numThreads;
 	
 	/**
 	 * Numero di celle nella simulazione.
@@ -43,7 +37,6 @@ public class CellsThreadsManager {
 	 * @param graph
 	 */
 	public CellsThreadsManager(int numThreads, Graph graph) {
-		this.numThreads = numThreads;
 		this.numCells = graph.getNumNodes();
 		cells = new ArrayList<>();
 		for (int i = 1; i <= numCells; i++) {

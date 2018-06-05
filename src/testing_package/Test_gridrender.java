@@ -135,7 +135,7 @@ public class Test_gridrender {
 		//new frameT(g, gconf);
 		ArrayList<Color> colors = new ArrayList<Color>();
 		colors.add(Color.blue);
-		RunConfigurationFrame rf = new RunConfigurationFrame(g, gconf, colors, rules);
+		RunConfigurationFrame rf = new RunConfigurationFrame(g, gconf, colors, rules, true);
 		rf.setBounds(0, 0, 400, 400);
 	}
 }

@@ -219,20 +219,20 @@ public class GridInitializerPanel extends JPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				synchronized(GridInitializerPanel.this.grid) {
+				synchronized(GridInitializerPanel.this.grid) { //ci sincronizziamo con la griglia perchè ci sono altri modi in cui potrebbe essere modificata
 					Random random = new Random();
-					int numCells = random.nextInt(graph.getNumNodes() - 1) + 1;
+					int numCells = random.nextInt(graph.getNumNodes() - 1) + 1; //prendiamo un po' di celle a caso
 					HashSet<Integer> randomCells = new HashSet<>();
 					for (int i = 0; i < numCells; i++) {
 						randomCells.add(random.nextInt(graph.getNumNodes() - 1) + 1);
 					}
-					for (int cellIndex: randomCells) {
+					for (int cellIndex: randomCells) { //diamo colori a caso
 						Color randomColor = colors.get(random.nextInt(colors.size()));
 						Cell cell = graph.getCell(cellIndex);
 						if (!randomColor.equals(cell.getState())) 
 							cell.setState(randomColor);
 					}
-					grid.synchWithGraph(randomCells);
+					grid.synchWithGraph(randomCells); //risincronizziamo
 				}
 			}
 		});
@@ -264,7 +264,7 @@ public class GridInitializerPanel extends JPanel {
 					optimizer = new Optimizer(new ArrayList<>(colors), copyRules, graph.copy(), k, cycLen) {
 						@Override
 						public void evolutionCompleted() {
-							synchronized(GridInitializerPanel.this) {
+							synchronized(GridInitializerPanel.this.grid) { //ci sincronizziamo con la griglia perchè sono altri modi in cui potrebbe essere modificata
 								if(GridInitializerPanel.this.graph != null) super.getBestGene().setGraph(GridInitializerPanel.this.graph); //quando l'evoluzione è completa settiamo il grafo
 								if(grid != null) grid.synchWithGraph();
 								if(btnFindConfiguration != null) SwingUtilities.invokeLater(() -> btnFindConfiguration.setEnabled(true));

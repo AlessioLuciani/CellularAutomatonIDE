@@ -14,7 +14,7 @@ import rules.Rule;
 /**classe che e' in grado di eseguire step nella simulazione*/
 public class Updater {
 	
-	protected Graph graph;
+	public Graph graph;
 	protected ArrayList<Rule> rules;
 	protected HashMap<Color,Integer> frequencyMap; //map contenente le frequenze dei colori
 	
@@ -104,7 +104,9 @@ public class Updater {
 	}
 	
 	public void setCellsToUpdate(HashSet<Integer> cells) {
-		this.toUpdate = cells;
+		toUpdate.clear();
+		for(int v : cells)
+			toUpdate.add(v);
 	}
 	
 	public HashMap<Color, Integer> getFrequencyMap() {

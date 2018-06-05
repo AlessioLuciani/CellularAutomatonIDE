@@ -31,7 +31,7 @@ public class RunConfigurationFrame extends JFrame {
 	protected JRadioButton rdbtnAsincrono;
 	protected GridInitializerPanel gridInitializerPanel;
 	
-	public RunConfigurationFrame(Graph graph, GridConfiguration gridConf, ArrayList<Color> colors, ArrayList<Rule> rules) {
+	public RunConfigurationFrame(Graph graph, GridConfiguration gridConf, ArrayList<Color> colors, ArrayList<Rule> rules, boolean initAsync) {
 		setAutoRequestFocus(false);
 		setLayout(new BorderLayout());
 		setVisible(true);
@@ -54,7 +54,8 @@ public class RunConfigurationFrame extends JFrame {
 		rdbtnSincrono.addActionListener(onClickSincrono);
 		rdbtnAsincrono = new JRadioButton("Asincrono");
 		rdbtnAsincrono.addActionListener(onClickAsincrono);
-		rdbtnSincrono.setSelected(true); //inizialmente sincrono
+		rdbtnSincrono.setSelected(!initAsync); //inizialmente asincrono o sincrono? 
+		rdbtnAsincrono.setSelected(initAsync);
 		
 		GridBagConstraints gbc_rdbtnAsincrono = new GridBagConstraints();
 		gbc_rdbtnAsincrono.anchor = GridBagConstraints.WEST;
