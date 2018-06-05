@@ -167,9 +167,10 @@ public class StateChoser extends JPanel{
 		
 		// Funzione che permette di caricare un elenco di stati e visualizzarli nel modulo
 		public void setStates(ArrayList<Color> newStates){
+			DefaultListModel<JLabel> model = (DefaultListModel<JLabel>)labelList.getModel();
+			model.removeAllElements();
 			this.listColor.removeAll(listColor);
 			for (Color color : newStates) {
-				DefaultListModel<JLabel> model = (DefaultListModel<JLabel>)labelList.getModel();
 				model.addElement(makeLabel(color));
 				this.listColor.add(color);
 			}

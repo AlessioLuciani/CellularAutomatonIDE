@@ -1,1 +1,1 @@
-{"graph":{"w":0,"h":0,"size":0,"nodes":[]},"state":[],"grid":{"form":"SQUARE","len":17,"numCellsX":100,"numCellsY":100},"rules":[]}
+{"state":[],"grid":{"form":"SQUARE","len":17,"numCellsX":501,"numCellsY":501},"rules":[]}

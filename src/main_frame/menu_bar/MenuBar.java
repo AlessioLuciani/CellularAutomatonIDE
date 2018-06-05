@@ -181,9 +181,7 @@ public class MenuBar extends JMenuBar {
 	// Metodo richiamato dal click di Import che permette di importare configurazioni gia' esistenti
 	ActionListener importConfiguration = new ActionListener() {
 		@Override
-		public void actionPerformed(ActionEvent arg0) {
-			System.out.println("importConfiguration");
-			
+		public void actionPerformed(ActionEvent arg0) {			
 			
 			/*// Frame che permette di scegliere la destinazione e di dare un nome al file
 			JFileChooser importPath = new JFileChooser();
@@ -223,9 +221,7 @@ public class MenuBar extends JMenuBar {
 			
 			// Carico il file da importare
 			File importFile = new File(importPath.getSelectedFile().getPath());
-			
-			
-			
+						
 			try {
 				FileReader fr = new FileReader(importFile);
 				char[] cont = new char[(int)importFile.length()];
@@ -238,9 +234,11 @@ public class MenuBar extends JMenuBar {
 				// Setto il modulo degli stati caricando i colori importati
 				state.setStates(confContainer.getState());
 								
-				// Setto il modulo delle regole caricando i colori importati
+				// Setto il modulo delle regole caricando quelle importate
 				rules.initFromRules(confContainer.getRule());
 				
+				// Setto il modulo della configurazione della griglia caricando quella importata
+				grid.initFromGridConf(confContainer.getGrid());
 				
 			} catch (FileNotFoundException e) { } 
 			catch (IOException e) { }
