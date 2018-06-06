@@ -39,13 +39,13 @@ public class ChartPanel extends JFrame {
 	
 	public ChartPanel(Updater updater) {
 		setBounds(50,50,400,250);
-		
+		setTitle("Statistics");
 		
 		this.updater = updater;
 	    chart = new PieChartBuilder().width(400).height(300).build();
 	    
 	    
-	    chart.setTitle("Mio Grafico");
+	    chart.setTitle("Simulation Chart");
 		   
 	    panel = new XChartPanel<PieChart>(chart);
 	    this.add(panel);

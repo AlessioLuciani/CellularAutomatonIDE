@@ -46,6 +46,7 @@ public class Main {
 	
 	private void initialize() {
 		frame = new JFrame();
+		frame.setTitle("CellularAutomatonIDE");
 		
 		// Istanza che permette di accedere a info come screenSize etc
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();

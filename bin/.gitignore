@@ -1,6 +1,7 @@
 /testing_package/
-/util/
-/main_frame/
+/genetics/
 /grid/
-/simulator/
+/main_frame/
 /rules/
+/simulator/
+/util/

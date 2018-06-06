@@ -35,6 +35,7 @@ public class RunConfigurationFrame extends JFrame {
 		setAutoRequestFocus(false);
 		setLayout(new BorderLayout());
 		setVisible(true);
+		setTitle("Setup Configuration");
 		
 		gridInitializerPanel = new GridInitializerPanel(graph, gridConf, colors, rules);
 		add(gridInitializerPanel);

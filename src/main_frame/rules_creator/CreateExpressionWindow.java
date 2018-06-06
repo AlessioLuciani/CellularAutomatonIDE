@@ -50,6 +50,7 @@ public class CreateExpressionWindow extends JFrame {
 		setBounds(x, y, width, height);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		getContentPane().setLayout(new BorderLayout());
+		setTitle("Rules Creator");
 		
 		//Inizializzazione Attributi
 		exp_list = new JList<JLabel>();

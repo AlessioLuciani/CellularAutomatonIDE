@@ -31,7 +31,8 @@ public class CustomColorPicker extends JFrame {
 	
 	public CustomColorPicker(List<Color> ColorList) {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-
+		setTitle("Palette");
+		
 		GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
         GraphicsDevice defaultScreen = ge.getDefaultScreenDevice();
 		Rectangle rect = defaultScreen.getDefaultConfiguration().getBounds();

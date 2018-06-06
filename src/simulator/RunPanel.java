@@ -36,6 +36,7 @@ public class RunPanel extends GridInitializerPanel {
 	
 	public RunPanel(Graph graph, GridConfiguration gridConfiguration, ArrayList<Color> colors, ArrayList<Rule> rules) {
 		super(graph, gridConfiguration, colors, rules);
+		
 		sideBar.remove(btnColorAll); //rimuoviamo bottoni che qui non servono
 		sideBar.remove(btnColorRandom);
 		sideBar.remove(btnFindConfiguration);

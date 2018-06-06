@@ -53,6 +53,7 @@ public class ColorSelector extends JFrame {
 	public ColorSelector() {
 		// Layout generale
 		setLayout(new GridLayout(3, 1, 0, 0));
+		setTitle("Palette");
 		
 		GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
         GraphicsDevice defaultScreen = ge.getDefaultScreenDevice();

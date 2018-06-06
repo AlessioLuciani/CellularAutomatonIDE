@@ -153,10 +153,12 @@ public class MenuBar extends JMenuBar {
 				
 				if(!SYNC_ASYNC_RUN) { //crea panel per la simulazione sincrona
 					runPanel = new RunPanel(graph.copy(), grid.getGridConfiguration(), new ArrayList<Color>(state.getStates()), copyRules);//crea run panel e setta parametri
+					run.setTitle("Run Panel [Sync mode]");
 				}	
 				else { //panel per simulazione asincrona
 					//RunPanel_Prova_Async runPanel = new RunPanel_Prova_Async(graph.copy(), grid.getGridConfiguration(), new ArrayList<Color>(state.getStates()), copyRules);
 					runPanel = new RunPanelAsync(graph.copy(), grid.getGridConfiguration(), new ArrayList<Color>(state.getStates()), copyRules);
+					run.setTitle("Run Panel [Async mode]");
 				}	
 				run.add(runPanel);
 				run.addWindowListener(new WindowAdapter(){
