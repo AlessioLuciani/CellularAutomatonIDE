@@ -33,7 +33,7 @@ public class ErrorsPanel extends JPanel {
 		Border redline = BorderFactory.createLineBorder(Color.RED);
 		compound = BorderFactory.createCompoundBorder(null, null);
 		compound = BorderFactory.createCompoundBorder(redline, compound);
-		compound = BorderFactory.createTitledBorder(compound, title, TitledBorder.CENTER, TitledBorder.ABOVE_TOP);
+		compound = BorderFactory.createTitledBorder(compound, title, TitledBorder.LEFT, TitledBorder.ABOVE_TOP);
 		this.setBorder(compound);
 		
 		messageList = new List();

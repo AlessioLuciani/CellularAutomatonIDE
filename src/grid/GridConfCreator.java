@@ -1,5 +1,6 @@
 package grid;
 
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 
@@ -8,6 +9,8 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.border.Border;
+import javax.swing.border.TitledBorder;
 
 import util.IntegerDocument;
 
@@ -20,6 +23,7 @@ public class GridConfCreator extends JPanel {
 	private JTextField lenField, xField, yField;
 	private JComboBox<String> shapePicker;
 	private CellForm [] forms = {CellForm.SQUARE, CellForm.HEXAGON, CellForm.TRIANGLE};
+	private String title = "Grid Configuration";
 	
 	/**crea grid creator, bisogna passare limiti per i campi numerici*/
 	public GridConfCreator(int minLen, int maxLen, int minX, int maxX, int minY, int maxY) {
@@ -63,8 +67,13 @@ public class GridConfCreator extends JPanel {
 		shapePicker = new JComboBox<String>(names);
 		tmpPanel4.add(shapePicker);
 		this.add(tmpPanel4);
-		
-		this.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLoweredBevelBorder(), BorderFactory.createRaisedBevelBorder()));
+				
+		Border compound;
+		Border grayline = BorderFactory.createLineBorder(Color.GRAY);
+		compound = BorderFactory.createCompoundBorder(null, null);
+		compound = BorderFactory.createCompoundBorder(grayline, compound);
+		compound = BorderFactory.createTitledBorder(compound, title, TitledBorder.LEFT, TitledBorder.ABOVE_TOP);
+		this.setBorder(compound);
 	}
 	
 	public GridConfCreator() {

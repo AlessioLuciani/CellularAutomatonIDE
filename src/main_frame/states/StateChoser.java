@@ -2,11 +2,14 @@ package main_frame.states;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.border.Border;
+import javax.swing.border.TitledBorder;
 
 import util.StaticUtil;
 import util.colors.ColorSelector;
 import util.colors.ColoredRGBLabel;
 
+import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -29,6 +32,8 @@ public class StateChoser extends JPanel{
 
 	//lista degli stati
 	ArrayList<Color> listColor;
+	
+	private String title = "State List";
 	
 	public StateChoser() {
 		
@@ -82,6 +87,11 @@ public class StateChoser extends JPanel{
 		gbc_btnRemove.gridx = 2;
 		gbc_btnRemove.gridy = 3;
 		add(btnRemove, gbc_btnRemove);
+		
+		Border compound;
+		compound = BorderFactory.createCompoundBorder(null, null);
+		compound = BorderFactory.createTitledBorder(compound, title, TitledBorder.LEFT, TitledBorder.ABOVE_TOP);
+		this.setBorder(compound);
 	}
 	
 	// Apertura modulo per l'inserimento stati

@@ -5,12 +5,15 @@ import rules.Rule;
 import util.JLabelJListRender;
 import util.StaticUtil;
 
+import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.border.Border;
+import javax.swing.border.TitledBorder;
 
 import java.awt.Color;
 import java.awt.GridBagConstraints;
@@ -34,6 +37,8 @@ public class RuleChoser extends JPanel{
 		
 		// Contenitore di tutte le regole di transizione gia' create
 		JList<JLabel> ruleList;
+		
+		private String title = "Rule List";
 			
 		public RuleChoser(ArrayList<Color> listcolor){
 			
@@ -90,6 +95,10 @@ public class RuleChoser extends JPanel{
 			gbc_btnRemove.gridy = 3;
 			add(btnRemove, gbc_btnRemove);
 			
+			Border compound;
+			compound = BorderFactory.createCompoundBorder(null, null);
+			compound = BorderFactory.createTitledBorder(compound, title, TitledBorder.LEFT, TitledBorder.ABOVE_TOP);
+			this.setBorder(compound);
 		}
 	
 	// Apertura modulo per la creazione delle regole
