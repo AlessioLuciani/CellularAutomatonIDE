@@ -1,6 +1,7 @@
 package rules;
 
 import grid.Graph;
+import main_frame.rules_creator.EditExpressionPanel;
 import util.StaticUtil;
 
 import java.awt.Color;
@@ -41,15 +42,10 @@ public class BaseExpressionNode1 extends ExpressionNode {
     }
     
     @Override
-    public String toString() {
-    	String colorStr = StaticUtil.colorToRgbString(colr);
-    	return "Il numero dei vicini di colore " + colorStr + " è compreso tra " + num1 +  " e " + num2;
-    }
-    
-    @Override
     protected String toHtmlStringRec() {
     	String html = StaticUtil.getHtmlColorSpan(colr);
-    	return "Il numero dei vicini di colore " + html + " è compreso tra " + num1 +  " e " + num2;
+    	return EditExpressionPanel.TYPE_A[0] + html + EditExpressionPanel.TYPE_A[1] + num1 + EditExpressionPanel.TYPE_A[2] + num2;
+    	//return "Il numero dei vicini di colore " + html + " è compreso tra " + num1 +  " e " + num2;
     }
     
     @Override

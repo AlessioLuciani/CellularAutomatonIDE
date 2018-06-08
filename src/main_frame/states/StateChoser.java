@@ -5,6 +5,7 @@ import javax.swing.JScrollPane;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 
+import util.AlternativeJLabelJListRender;
 import util.StaticUtil;
 import util.colors.ColorSelector;
 import util.colors.ColoredRGBLabel;
@@ -52,7 +53,7 @@ public class StateChoser extends JPanel{
 		labelList = new JList<>();
 		DefaultListModel<JLabel> listModel = new DefaultListModel<>();
 		labelList.setModel(listModel);
-		labelList.setCellRenderer(new util.colors.AlternativeStateList.JLabelJListRender());
+		labelList.setCellRenderer(new AlternativeJLabelJListRender());
 		labelList.setFixedCellHeight(30);
 		
 		// Pulsante che richiama la procedura che inserisce gli stati

@@ -26,15 +26,9 @@ public class Rule {
     	return newColor;
     }
     
-    @Override
-    public String toString() {
-    	String colorStr = StaticUtil.colorToRgbString(newColor);
-    	return "SE "+root.toString()+" ALLORA nuovo colore = "+colorStr;
-    }
-    
     public String toHtmlString() {
     	String color = StaticUtil.getHtmlColorSpan(newColor);
-    	return "<html>SE "+root.toHtmlStringRec()+" ALLORA nuovo colore = "+color+"</html>";
+    	return "<html>Ogni cella tale che: "+root.toHtmlStringRec()+" assume stato: "+color+"</html>";
     }
     
     /**restituisce copia della regola*/

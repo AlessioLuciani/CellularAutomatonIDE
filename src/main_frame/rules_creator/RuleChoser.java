@@ -108,7 +108,7 @@ public class RuleChoser extends JPanel{
 			if (!listColor.isEmpty()) {
 				
 				@SuppressWarnings("serial")
-				CreateExpressionWindow ruleCreator = new CreateExpressionWindow(100, 100, 450, 300, listColor) {
+				CreateExpressionWindow ruleCreator = new CreateExpressionWindow(100, 100, 430, 300, listColor) {
 					@Override
 					public void ruleCreated(Rule r) {
 						forest.add(r);
@@ -117,7 +117,6 @@ public class RuleChoser extends JPanel{
 						model.addElement(new JLabel(r.toHtmlString()));
 					}
 				};
-				ruleCreator.setBounds(100, 100, 400, 300);
 				ruleCreator.setVisible(true);
 			}
 			else

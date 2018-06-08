@@ -1,4 +1,4 @@
-package util.colors.AlternativeStateList;
+package util;
 
 
 import java.awt.Component;
@@ -9,7 +9,7 @@ import javax.swing.ListCellRenderer;
 import util.colors.ColoredRGBLabel;
 
 /**render per jlabel in jlist*/
-public class JLabelJListRender extends JLabel implements ListCellRenderer<JLabel> {
+public class AlternativeJLabelJListRender extends JLabel implements ListCellRenderer<JLabel> {
 	
 	private static final long serialVersionUID = 1L;
 

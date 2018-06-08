@@ -1,6 +1,7 @@
 package rules;
 
 import grid.Graph;
+import main_frame.rules_creator.EditExpressionPanel;
 import util.StaticUtil;
 
 import java.awt.Color;
@@ -36,15 +37,10 @@ public class BaseExpressionNode2 extends ExpressionNode {
     }
     
     @Override
-    public String toString() {
-    	String colorStr = StaticUtil.colorToRgbString(colr);
-    	return "Il " + indChild + "° vicino è di colore " + colorStr;
-    }
-    
-    @Override
     protected String toHtmlStringRec() {
     	String html = StaticUtil.getHtmlColorSpan(colr);
-    	return "Il " + indChild + "° vicino è di colore " + html;
+    	return EditExpressionPanel.TYPE_B[0] + indChild + EditExpressionPanel.TYPE_B[1] + html;
+    	//return "Il " + indChild + "° vicino è di colore " + html;
     }
     
     @Override

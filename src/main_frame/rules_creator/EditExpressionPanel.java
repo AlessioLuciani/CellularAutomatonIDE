@@ -19,9 +19,9 @@ public class EditExpressionPanel extends JPanel {
 	/* Componente che mostra la frase della condizione e i campi da compilare*/
 	
 	private static final long serialVersionUID = 1L;
-	static private final String[] TYPE_A = {"Il numero dei vicini di colore ", " è compreso tra ", " e "};
-	static private final String[] TYPE_B = {"Il ","° vicino è di colore "};
-	static private final String[] TYPE_THEN = {"La cella assume il colore "};
+	static public final String[] TYPE_A = {"Il numero dei vicini di stato ", " è compreso tra ", " e "};
+	static public final String[] TYPE_B = {"Il ","° vicino è di stato "};
+	static public final String[] TYPE_THEN = {"La cella assume il stato "};
 	
 	//static final private int height = 10;
 	private JLabel colore;

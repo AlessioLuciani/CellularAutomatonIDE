@@ -62,8 +62,8 @@ public class CreateExpressionWindow extends JFrame {
 		ButtonPanel.setLayout(new BoxLayout(ButtonPanel, BoxLayout.X_AXIS));
 		this.availableColors = availableColors;
 		edit_panel = new EditExpressionPanel(this.availableColors);
-		btnA = new JButton("A");btnA.setName("btnA");
-		btnB = new JButton("B");btnB.setName("btnB");
+		btnA = new JButton("Exp1");btnA.setName("btnA");
+		btnB = new JButton("Exp2");btnB.setName("btnB");
 		btnAND = new JButton("AND");btnAND.setName("btnAND");
 		btnOR = new JButton("OR");btnOR.setName("btnOR");
 		btnNOT = new JButton("NOT");btnNOT.setName("btnNOT");
