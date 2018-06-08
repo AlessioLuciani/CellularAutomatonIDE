@@ -22,6 +22,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 import genetics.interesting_conf.Optimizer;
+import genetics.interesting_conf.graphic.InterestingConfInputFrame;
 import grid.*;
 import rules.Rule;
 import util.CustomProgressBar;
@@ -47,18 +48,25 @@ public class GridInitializerPanel extends JPanel {
 	protected JPanel sideBar;
 
 	protected JButton btnFindConfiguration;
+	protected JButton btnFindConfParams;
 	
 	protected GridRenderPanel grid;
 	
 	protected Graph graph;
-	
-	protected Optimizer optimizer;
-	protected CustomProgressBar optProgressBar;
+	 
+	protected int opK, opCycLen, opSizeX, opSizeY; //parametri per l'optimizer
+	protected Optimizer optimizer; //trova configurazione interessante
+	protected CustomProgressBar optProgressBar; //progress bar per mostrare status della configurazione interessante
 	
 	/**
 	 * Carica il pannello con la griglia e i pulsanti necessari.
 	 */
 	public GridInitializerPanel(Graph graph, GridConfiguration gridConfiguration, ArrayList<Color> colors, ArrayList<Rule> rules) {
+		
+		opK = 1000; //per sicurezza diamo parametri per l'optimizer
+		opCycLen = 3;
+		opSizeX = 10;
+		opSizeY = 10;
 		
 		this.graph = graph;
 		
@@ -140,6 +148,7 @@ public class GridInitializerPanel extends JPanel {
 		};
 		btnColorRandom = new JButton("Random");
 		btnFindConfiguration = new JButton("Cerca...");
+		btnFindConfParams = new JButton("<html>Cerca <br> params.</html>");
 
 		// Mouse listener
 		setMouseListener(sideBar, 0);
@@ -148,6 +157,8 @@ public class GridInitializerPanel extends JPanel {
 		setMouseListener(btnColorAll, 0);
 		setMouseListener(btnChosenColor, 0);
 		setMouseListener(btnColorRandom, 0);
+		setMouseListener(btnFindConfiguration, 0);
+		setMouseListener(btnFindConfParams, 0);
 		setMouseListener(grid, -1);
 		
 		// Pulsante mano
@@ -246,8 +257,6 @@ public class GridInitializerPanel extends JPanel {
 			public void actionPerformed(ActionEvent evt) {
 				if(btnFindConfiguration.isEnabled()) {
 					btnFindConfiguration.setEnabled(false);
-					int k = 1000; //parametro che dovremo prendere in input
-					int cycLen = 4;
 					
 					ArrayList<Rule> copyRules = new ArrayList<Rule>();
 					for(Rule r : rules) 
@@ -261,7 +270,7 @@ public class GridInitializerPanel extends JPanel {
 						}
 					};
 					
-					optimizer = new Optimizer(new ArrayList<>(colors), copyRules, graph.copy(), k, cycLen) {
+					optimizer = new Optimizer(new ArrayList<>(colors), copyRules, graph.copy(), opK, opCycLen, opSizeX, opSizeY) {
 						@Override
 						public void evolutionCompleted() {
 							synchronized(GridInitializerPanel.this.grid) { //ci sincronizziamo con la griglia perchè sono altri modi in cui potrebbe essere modificata
@@ -292,6 +301,25 @@ public class GridInitializerPanel extends JPanel {
 			}
 		});
 		sideBar.add(btnFindConfiguration);
+		
+		btnFindConfParams.setSize(40, 20);
+		btnFindConfParams.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				@SuppressWarnings("serial")
+				InterestingConfInputFrame frame = new InterestingConfInputFrame(opSizeX, opSizeY, opCycLen+1, opK) {
+					@Override
+					public void onClosed(int sx, int sy, int cl, int k) {
+						opSizeX = sx;
+						opSizeY = sy;
+						opCycLen = cl;
+						opK = k;
+					}
+				};
+				frame.setBounds(0, 0, 300, 300);
+			}
+		});
+		sideBar.add(btnFindConfParams);
 	}
 	
 	/**callback richiamata quando si colora una cella del grafo (col pennello)*/
@@ -392,7 +420,7 @@ public class GridInitializerPanel extends JPanel {
 		}
 		
 	}
-
+	
 	/**
 	 * Chiude eventuali pannelli rimasti aperti.
 	 */

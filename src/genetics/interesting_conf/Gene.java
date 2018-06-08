@@ -67,7 +67,7 @@ public class Gene {
 		}
 		
 		for(int i=0; i<ctm; i++) {//mutiamo ctm celle interne
-			int ind = rand.nextInt(indCells.size()-i);
+			int ind = rand.nextInt(Math.max(1, indCells.size()-i));
 			int key = indCells.get(ind);  //prendi chiave a caso
 			int indc = indcolor; //colore a caso
 			if(cells.get(key).equals(states.get(indc))) //se e' uguale a quello gia' presente, cambialo
@@ -75,8 +75,9 @@ public class Gene {
 			
 			ng.cells.replace(key, states.get(indc)); //sostituisci valore per questa cella
 			
-			indCells.set(ind, indCells.get(indCells.size()-i-1)); //metti indice scelto in fondo cosi non la estraiamo di nuovo
-			indCells.set(indCells.size()-i-1, key);
+			int otherInd = Math.max(0, indCells.size()-i-1);
+			indCells.set(ind, indCells.get(otherInd)); //metti indice scelto in fondo cosi non la estraiamo di nuovo
+			indCells.set(otherInd, key);
 		}
 	
 		return ng;

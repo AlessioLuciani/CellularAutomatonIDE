@@ -197,7 +197,7 @@ public class MenuBar extends JMenuBar {
 					String values = String.copyValueOf(cont);
 					
 					ConfigContainer confContainer = gson.fromJson(values, ConfigContainer.class);
-					confContainer.print();
+					//confContainer.print();
 					
 					// Setto il modulo degli stati caricando i colori importati
 					state.setStates(confContainer.getState());

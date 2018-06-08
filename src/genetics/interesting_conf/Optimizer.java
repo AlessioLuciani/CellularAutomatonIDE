@@ -13,8 +13,8 @@ import rules.Rule;
  * */
 public class Optimizer extends Thread {
 	
-	public static final int SIZE_X = 10; //dimensioni del rettangolo in cui vogliamo generare la configurazione
-	public static final int SIZE_Y = 10;
+	protected int sizeX = 10; //dimensioni del rettangolo in cui vogliamo generare la configurazione
+	protected int sizeY = 10;
 	public static final int POOL_SIZE = 5; //numero di geni attuali che manteniamo
 	
 	protected Gene actualGene []; //informazioni sui geni attuali (magari da raggruppare in una classe)
@@ -28,9 +28,13 @@ public class Optimizer extends Thread {
 	protected Graph graph;
 	protected int k, cycLen;
 	
-	public Optimizer(ArrayList<Color> states, ArrayList<Rule> rules, Graph graph, int k, int cycLen) {
+	/**ottimizzatore per cercare configurazioni interessanti: prende stati, regole, grafo, k, cycLen (cioè scarta cicli di lunghezza <= cyclen), width rettangolo centrale, height rettangolo centrale*/
+	public Optimizer(ArrayList<Color> states, ArrayList<Rule> rules, Graph graph, int k, int cycLen, int sizeX, int sizeY) {
 		actualGene = new Gene[POOL_SIZE];
 		actualFitness = new int[POOL_SIZE];
+		
+		this.sizeX = sizeX;
+		this.sizeY = sizeY;
 		
 		this.states = states;
 		this.rules = rules;
@@ -51,8 +55,8 @@ public class Optimizer extends Thread {
 		Random rand = new Random();
 		int w = ((MatrixGraph)graph).getWidth();
 		int h = ((MatrixGraph)graph).getHeight();
-		int sx = Math.min(w, SIZE_X);
-		int sy = Math.min(h, SIZE_Y);
+		int sx = Math.min(w, sizeX);
+		int sy = Math.min(h, sizeY);
 		
 		ArrayList<Integer> cells = new ArrayList<>();
 		int startx = w/2-sx/2; //il nostro gene e' un rettangolino al centro della configurazione
@@ -113,7 +117,7 @@ public class Optimizer extends Thread {
 				double rnd = rand.nextDouble();
 				
 				if(deltaFitness >= 0 || prob > rnd) { //se il nuovo gene e' migliore di quello attuale (oppure abbiamo deciso di prenderlo, anche se peggiore) lo sostituisco
-					System.out.println("Act Fitness: "+ind+" "+actualFitness[ind]+" "+newFitness+" "+prob+" "+deltaFitness+" "+rnd+" "+(choiceMut?"mutation":"crossover"));
+					//System.out.println("Act Fitness: "+ind+" "+actualFitness[ind]+" "+newFitness+" "+prob+" "+deltaFitness+" "+rnd+" "+(choiceMut?"mutation":"crossover"));
 					actualFitness[ind] = newFitness;
 					actualGene[ind] = newGene;
 				}

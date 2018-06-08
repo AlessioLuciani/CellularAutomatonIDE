@@ -40,6 +40,7 @@ public class RunPanel extends GridInitializerPanel {
 		sideBar.remove(btnColorAll); //rimuoviamo bottoni che qui non servono
 		sideBar.remove(btnColorRandom);
 		sideBar.remove(btnFindConfiguration);
+		sideBar.remove(btnFindConfParams);
 		
 		commandPanel = new RunCommandPanel(sideBar.getWidth());
 		sideBar.add(commandPanel);
