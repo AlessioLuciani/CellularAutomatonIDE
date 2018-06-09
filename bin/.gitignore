@@ -1,4 +1,6 @@
 /testing_package/
+/.DS_Store
+/.gitignore
 /genetics/
 /grid/
 /main_frame/
