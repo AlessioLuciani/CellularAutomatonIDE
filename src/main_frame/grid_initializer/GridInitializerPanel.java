@@ -58,6 +58,8 @@ public class GridInitializerPanel extends JPanel {
 	protected Optimizer optimizer; //trova configurazione interessante
 	protected CustomProgressBar optProgressBar; //progress bar per mostrare status della configurazione interessante
 	
+	private static String OS; // Sistema operativo attuale
+	
 	/**
 	 * Carica il pannello con la griglia e i pulsanti necessari.
 	 */
@@ -67,6 +69,8 @@ public class GridInitializerPanel extends JPanel {
 		opCycLen = 3;
 		opSizeX = 10;
 		opSizeY = 10;
+		
+		OS = System.getProperty("os.name").toLowerCase();
 		
 		this.graph = graph;
 		
@@ -230,7 +234,7 @@ public class GridInitializerPanel extends JPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				synchronized(GridInitializerPanel.this.grid) { //ci sincronizziamo con la griglia perchè ci sono altri modi in cui potrebbe essere modificata
+				synchronized(GridInitializerPanel.this.grid) { //ci sincronizziamo con la griglia perchï¿½ ci sono altri modi in cui potrebbe essere modificata
 					Random random = new Random();
 					int numCells = random.nextInt(graph.getNumNodes() - 1) + 1; //prendiamo un po' di celle a caso
 					HashSet<Integer> randomCells = new HashSet<>();
@@ -273,8 +277,8 @@ public class GridInitializerPanel extends JPanel {
 					optimizer = new Optimizer(new ArrayList<>(colors), copyRules, graph.copy(), opK, opCycLen, opSizeX, opSizeY) {
 						@Override
 						public void evolutionCompleted() {
-							synchronized(GridInitializerPanel.this.grid) { //ci sincronizziamo con la griglia perchè sono altri modi in cui potrebbe essere modificata
-								if(GridInitializerPanel.this.graph != null) super.getBestGene().setGraph(GridInitializerPanel.this.graph); //quando l'evoluzione è completa settiamo il grafo
+							synchronized(GridInitializerPanel.this.grid) { //ci sincronizziamo con la griglia perchï¿½ sono altri modi in cui potrebbe essere modificata
+								if(GridInitializerPanel.this.graph != null) super.getBestGene().setGraph(GridInitializerPanel.this.graph); //quando l'evoluzione ï¿½ completa settiamo il grafo
 								if(grid != null) grid.synchWithGraph();
 								if(btnFindConfiguration != null) SwingUtilities.invokeLater(() -> btnFindConfiguration.setEnabled(true));
 								if(optProgressBar != null) SwingUtilities.invokeLater(() -> optProgressBar.dispose());
@@ -393,13 +397,15 @@ public class GridInitializerPanel extends JPanel {
 		case -2: 
 			image = toolkit.getImage(GridInitializerPanel.class.getResource("res/hand_closed_small.png"));
 			c = toolkit.createCustomCursor(image , new Point(getX(), 
-			           getY()), "img");
+			           getY()), "img"); 
 			setCursor(c);
 			break;
 			
 		// Cursore colore
 		case -3:
+			if (OS.indexOf("win") >= 0) // Se siamo su Windows
 			image = toolkit.getImage(GridInitializerPanel.class.getResource("res/brush_small.png"));
+			else image = toolkit.getImage(GridInitializerPanel.class.getResource("res/brush_small1.png"));
 			c = toolkit.createCustomCursor(image , new Point(getX(), 
 			           getY()), "img");
 			setCursor(c);
@@ -407,7 +413,9 @@ public class GridInitializerPanel extends JPanel {
 			
 		// Cursore colora tutto
 		case -4:
+			if (OS.indexOf("win") >= 0) // Se siamo su Windows
 			image = toolkit.getImage(GridInitializerPanel.class.getResource("res/bucket_small.png"));
+			else image = toolkit.getImage(GridInitializerPanel.class.getResource("res/bucket_small1.png"));
 			c = toolkit.createCustomCursor(image , new Point(getX(), 
 			           getY()), "img");
 			setCursor(c);
