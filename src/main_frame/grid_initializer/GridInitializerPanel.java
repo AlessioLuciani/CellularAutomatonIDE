@@ -11,6 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Random;
@@ -175,7 +176,11 @@ public class GridInitializerPanel extends JPanel {
 				// Cambia l'icona del cursore
 				changeCursor(-1);
 				currentCursor = -1;
-				setMouseListener(grid, -1);
+				
+				MouseListener lastListener = grid.getMouseListeners()[grid.getMouseListeners().length-1]; //rimuoviamo ultimo mouse listener dalla griglia prima di aggiungerne uno nuovo
+				grid.removeMouseListener(lastListener);
+				setMouseListener(grid, -1); 
+				
 				isGridDraggable = true;
 				areCellsColorable = false;
 				areAllCellsColorable = false;
@@ -193,7 +198,11 @@ public class GridInitializerPanel extends JPanel {
 				// Cambia l'icona del cursore
 				changeCursor(-3);
 				currentCursor = -3;
+				
+				MouseListener lastListener = grid.getMouseListeners()[grid.getMouseListeners().length-1]; //rimuoviamo ultimo mouse listener dalla griglia prima di aggiungerne uno nuovo
+				grid.removeMouseListener(lastListener);
 				setMouseListener(grid, currentCursor);
+				
 				isGridDraggable = false;
 				areCellsColorable = true;
 				areAllCellsColorable = false;
@@ -212,7 +221,11 @@ public class GridInitializerPanel extends JPanel {
 				// Cambia l'icona del cursore
 				changeCursor(-4);
 				currentCursor = -4;
+				
+				MouseListener lastListener = grid.getMouseListeners()[grid.getMouseListeners().length-1]; //rimuoviamo ultimo mouse listener dalla griglia prima di aggiungerne uno nuovo
+				grid.removeMouseListener(lastListener);
 				setMouseListener(grid, currentCursor);
+				
 				isGridDraggable = false;
 				areCellsColorable = false;
 				areAllCellsColorable = true;
@@ -342,11 +355,13 @@ public class GridInitializerPanel extends JPanel {
 			public void mouseEntered(MouseEvent evt) {
 				if (cursorInt == 0)
 					changeCursor(Cursor.DEFAULT_CURSOR);
+				else
+					changeCursor(currentCursor);
 		    }
 
 		    public void mouseExited(MouseEvent evt) {
-		    	if (cursorInt == 0)
-		    		changeCursor(currentCursor);
+		    	//if (cursorInt == 0)
+		    	//	changeCursor(currentCursor);
 		    }
 		    
 		    public void mousePressed(MouseEvent evt) {
