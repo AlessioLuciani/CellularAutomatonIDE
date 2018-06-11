@@ -36,9 +36,11 @@ public class Optimizer extends Thread {
 		this.sizeX = sizeX;
 		this.sizeY = sizeY;
 		
-		this.states = states;
-		this.rules = rules;
-		this.graph = graph;
+		this.states = new ArrayList<>(states);
+		this.rules = new ArrayList<>();
+		for(Rule r : rules)
+			this.rules.add(r.copy());
+		this.graph = graph.copy();
 		this.k = k;
 		this.cycLen = cycLen;
 	}
